@@ -5,22 +5,41 @@
              x:Class="BudgetUnderControl.Views.AppShell"
              Title="Budget Under Control">
     
-    <FlyoutItem Route="Overview" Title="Overview" Icon="Overview.png">
+    <FlyoutItem Route="Overview" Title="Overview">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf015;" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:OverviewPage}" />
     </FlyoutItem>
-    <FlyoutItem  Route="Accounts"  Title="Accounts" Icon="Accounts.png">
+    <FlyoutItem  Route="Accounts"  Title="Accounts">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf0c0;" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Accounts}" />
     </FlyoutItem>
-    <FlyoutItem Route="Transactions"  Title="Transactions" Icon="Transactions.png">
+    <FlyoutItem Route="Transactions"  Title="Transactions">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf3d1;" FontFamily="FAR" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Transactions}" />
     </FlyoutItem>
-    <FlyoutItem  Route="Currencies" Title="Currencies" Icon="Currencies.png">
+    <FlyoutItem  Route="Currencies" Title="Currencies">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf155;" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Currencies}" />
     </FlyoutItem>
-    <FlyoutItem  Route="Tags" Title="Tags" Icon="Tags.png">
+    <FlyoutItem  Route="Tags" Title="Tags">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf02c;" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Tags}" />
     </FlyoutItem>
-    <FlyoutItem  Route="Settings" Title="Settings" Icon="Settings.png">
+    <FlyoutItem  Route="Settings" Title="Settings" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="&#xf013;" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" />
+
     </FlyoutItem>
 </Shell>

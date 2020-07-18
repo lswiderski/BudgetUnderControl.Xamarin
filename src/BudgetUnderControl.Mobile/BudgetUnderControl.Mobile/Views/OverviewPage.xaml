@@ -21,9 +21,11 @@
                 <Label x:Name="eur" />
                 <Label Text="Total:" />
                 <Label x:Name="total" />
-           
-             
-            </StackLayout>
+     
+                    <Label FontFamily="FAS" Text="&#xf2b9;"  FontSize="44" />
+
+
+                </StackLayout>
             </Frame>
             <local:AdMobView HeightRequest="100" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,.1"/>
         </AbsoluteLayout>

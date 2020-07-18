@@ -9,6 +9,9 @@ using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using BudgetUnderControl.Mobile.IoC;
 
+[assembly: ExportFont("FontAwesome5Brands.otf", Alias = "FAB")]
+[assembly: ExportFont("FontAwesome5Regular.otf", Alias = "FAR")]
+[assembly: ExportFont("FontAwesome5Solid.otf", Alias = "FAS")]
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace BudgetUnderControl
 {

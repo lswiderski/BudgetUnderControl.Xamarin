@@ -6,6 +6,15 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+ <ItemGroup>
+   <None Remove="Resources\Fonts\FontAwesome5Brands.otf" />
+   <None Remove="Resources\Fonts\FontAwesome5Regular.otf" />
+   <None Remove="Resources\Fonts\FontAwesome5Solid.otf" />
+ </ItemGroup>
+ <ItemGroup>
+   <EmbeddedResource Include="Resources\Fonts\FontAwesome5Brands.otf" />
+   <EmbeddedResource Include="Resources\Fonts\FontAwesome5Regular.otf" />
+ </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Autofac.Extras.CommonServiceLocator" Version="6.0.0" />
@@ -112,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\Navigation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\FontAwesome5Solid.otf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\AppShell.xaml.cs">

@@ -83,15 +83,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
     <None Include="app.config" />
-    <AndroidAsset Include="Assets\fa-brands-400.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\fa-regular-400.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\fa-solid-900.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

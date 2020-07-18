@@ -15,16 +15,10 @@
                 <Button Text="Clear Local Data"  Clicked="ClearLocalDataButton_Clicked"/>
                 <Label Text="Remote Server Address"></Label>
                 <Entry x:Name="apiUrl" Text="{Binding ApiUrl}" Placeholder="http://host:port"></Entry>
-            <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" IsVisible="{Binding IsNotLogged}">
-                <Button.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String" Android="fa-solid-900.ttf#Font Awesome 5 Free Solid" iOS="Font Awesome 5 Free" />
-                </Button.FontFamily>
-            </Button>
-            <Button x:Name="logout" Text="&#xf2f5; Logout" Clicked="OnLogoutButtonClicked" IsVisible="{Binding IsLogged}">
-                <Button.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String" Android="fa-solid-900.ttf#Font Awesome 5 Free Solid" iOS="Font Awesome 5 Free" />
-                </Button.FontFamily>
-            </Button>
+            <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" IsVisible="{Binding IsNotLogged}" FontFamily="FAS" />
+
+            <Button x:Name="logout" Text="&#xf2f5; Logout" Clicked="OnLogoutButtonClicked" IsVisible="{Binding IsLogged}" FontFamily="FAS" />
+
             <Label Text="Please Wait, Working in Background..." IsVisible="{Binding IsLoading}"></Label>
             <ActivityIndicator IsRunning="{Binding IsLoading, Mode =TwoWay}" IsVisible="{Binding IsLoading, Mode=TwoWay}"
                                AbsoluteLayout.LayoutFlags="PositionProportional"

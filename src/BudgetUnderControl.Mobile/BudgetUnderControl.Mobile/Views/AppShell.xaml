@@ -2,12 +2,13 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
              x:Class="BudgetUnderControl.Views.AppShell"
              Title="Budget Under Control">
     
     <FlyoutItem Route="Overview" Title="Overview">
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf015;" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.Home}" FontFamily="FAS" Size="24" Color="Black" />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:OverviewPage}" />
     </FlyoutItem>

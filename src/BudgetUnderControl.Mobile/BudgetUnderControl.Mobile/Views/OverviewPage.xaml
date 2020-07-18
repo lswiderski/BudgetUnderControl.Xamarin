@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.OverviewPage"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
              Title="Overview Page">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -21,9 +22,6 @@
                 <Label x:Name="eur" />
                 <Label Text="Total:" />
                 <Label x:Name="total" />
-     
-                    <Label FontFamily="FAS" Text="&#xf2b9;"  FontSize="44" />
-
 
                 </StackLayout>
             </Frame>

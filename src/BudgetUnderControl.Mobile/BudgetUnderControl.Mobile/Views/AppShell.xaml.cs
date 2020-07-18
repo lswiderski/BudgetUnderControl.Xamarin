@@ -24,10 +24,5 @@ namespace BudgetUnderControl.Views
             Routing.RegisterRoute("editTag", typeof(EditTag));
             Routing.RegisterRoute("accountDetails", typeof(AccountDetails));
         }
-
-        public void NavigateTo(string query)
-        {
-            Shell.Current.GoToAsync(query);
-        }
     }
 }

@@ -20,6 +20,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -146,7 +147,7 @@ namespace BudgetUnderControl.Mobile.Services
                 var token = Preferences.Get(PreferencesKeys.JWTTOKEN, string.Empty);
                 if(string.IsNullOrEmpty(token))
                 {
-                    App.MasterPage.NavigateTo("Login");
+                    await Shell.Current.GoToAsync("Login");
                     return;
                 }
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -154,7 +155,7 @@ namespace BudgetUnderControl.Mobile.Services
 
                 if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    App.MasterPage.NavigateTo("Login");
+                    await Shell.Current.GoToAsync("Login");
                     return;
                 }
                 response.EnsureSuccessStatusCode();

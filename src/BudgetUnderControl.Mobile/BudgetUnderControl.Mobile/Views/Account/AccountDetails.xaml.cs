@@ -74,7 +74,7 @@ namespace BudgetUnderControl.Views
             if (!remove) return;
 
             await vm.RemoveAccount();
-            App.MasterPage.NavigateTo("Accounts");
+            await Shell.Current.GoToAsync("Accounts");
         }
 
         protected override async void OnAppearing()

@@ -43,10 +43,10 @@ namespace BudgetUnderControl.Views
             base.OnDisappearing();
         }
 
-        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             Guid accountId = vm.SelectedAccount.ExternalId;
-            App.MasterPage.NavigateTo($"accountDetails?AccountId={accountId}");
+            await Shell.Current.GoToAsync($"accountDetails?AccountId={accountId}");
         }
 
     }

@@ -16,6 +16,7 @@ using BudgetUnderControl.CommonInfrastructure.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using BudgetUnderControl.ViewModel;
+using Xamarin.Forms;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -81,11 +82,6 @@ namespace BudgetUnderControl.Mobile.Services
 
         }
 
-        public async Task LogoutAndRedirectAsync()
-        {
-            await this.LogoutAsync();
-            App.MasterPage.NavigateTo("Overview");
-        }
         public async Task LogoutAsync()
         {
             Preferences.Set(PreferencesKeys.IsUserLogged, false);

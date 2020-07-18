@@ -26,7 +26,8 @@ namespace BudgetUnderControl.Views
 
         async void OnLogoutButtonClickedAsync(object sender, EventArgs args)
         {
-            await vm.LogoutAndRedirectAsync();
+            await vm.LogoutAsync();
+            await Shell.Current.GoToAsync("..");
 
         }
     }

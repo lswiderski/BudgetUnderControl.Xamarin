@@ -2,15 +2,17 @@
 using BudgetUnderControl.Common;
 using BudgetUnderControl.Common.Contracts.System;
 using BudgetUnderControl.Common.Enums;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.Mobile.PlatformSpecific;
 using BudgetUnderControl.ViewModel;
 using Plugin.LocalNotifications;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,6 +31,12 @@ namespace BudgetUnderControl.Views
 
             InitializeComponent();
             apiUrl.Unfocused += (object sender, FocusEventArgs e) => { vm.OnApiUrlChange(); };
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            vm.IsLogged = Preferences.Get(PreferencesKeys.IsUserLogged, false);
         }
 
         private async void ExportButton_Clicked(object sender, EventArgs e)
@@ -71,12 +79,12 @@ namespace BudgetUnderControl.Views
 
         async void OnLoginButtonClicked(object sender, EventArgs args)
         {
-            App.MasterPage.NavigateTo("login");
+            await Shell.Current.GoToAsync("login");
         }
 
         async void OnLogoutButtonClicked(object sender, EventArgs args)
         {
-            App.MasterPage.NavigateTo("logout");
+            await Shell.Current.GoToAsync("logout");
         }
 
 

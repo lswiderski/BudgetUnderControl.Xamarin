@@ -45,7 +45,7 @@ namespace BudgetUnderControl.Views
         protected async void OnEditButtonClicked(object sender, EventArgs args)
         {
             await vm.EditTagAsync();
-            App.MasterPage.NavigateTo("Tags");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

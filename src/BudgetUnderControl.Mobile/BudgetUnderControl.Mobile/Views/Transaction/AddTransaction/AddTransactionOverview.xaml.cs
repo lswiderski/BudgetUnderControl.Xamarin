@@ -44,7 +44,7 @@ namespace BudgetUnderControl.Views
             }
             else
             {
-                App.MasterPage.NavigateTo("Transactions");
+                await Shell.Current.GoToAsync("Transactions");
             }
         }
 

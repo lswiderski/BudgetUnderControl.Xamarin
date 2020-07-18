@@ -28,7 +28,7 @@ namespace BudgetUnderControl
             
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             
             AutoFacInit();
@@ -42,7 +42,7 @@ namespace BudgetUnderControl
                         var value = Mobile.PlatformSpecific.Properties.ADD_TRANSACTION_VALUE;
                         var title = Mobile.PlatformSpecific.Properties.ADD_TRANSACTION_TITLE;
                         //MasterPage.NavigateTo(typeof(AddTransaction), value.ToString(), title);
-                        MasterPage.NavigateTo("AddTransaction");
+                        await Shell.Current.GoToAsync("AddTransaction");
                         break;
                     default:
                         break;

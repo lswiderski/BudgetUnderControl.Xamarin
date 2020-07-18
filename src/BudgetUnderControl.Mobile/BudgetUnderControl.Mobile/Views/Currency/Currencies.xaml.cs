@@ -41,9 +41,9 @@ namespace BudgetUnderControl.Views
             curriences.ItemsSource =  model;
         }
 
-        private void OnExchangeRatesButtonClicked(object sender, EventArgs e)
+        private async void OnExchangeRatesButtonClicked(object sender, EventArgs e)
         {
-            App.MasterPage.NavigateTo("exchangeRates");
+            await Shell.Current.GoToAsync("exchangeRates");
         }
     }
 }

@@ -19,17 +19,15 @@ namespace BudgetUnderControl.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private bool isLogged;
         public bool IsLogged
         {
-            get => Preferences.Get(PreferencesKeys.IsUserLogged, false);
+            get => isLogged;
             set
             {
-                if (Preferences.Get(PreferencesKeys.IsUserLogged, false) != value)
-                {
-                    Preferences.Set(PreferencesKeys.IsUserLogged, value);
+                    isLogged = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLogged)));
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotLogged)));
-                }
             }
         }
 

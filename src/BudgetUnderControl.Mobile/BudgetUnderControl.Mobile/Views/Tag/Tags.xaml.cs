@@ -42,10 +42,10 @@ namespace BudgetUnderControl.Views
             base.OnDisappearing();
         }
 
-        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             Guid tagId = vm.SelectedTag.ExternalId;
-            App.MasterPage.NavigateTo($"editTag?TagId={tagId}");
+            await Shell.Current.GoToAsync($"editTag?TagId={tagId}");
         }
 
     }

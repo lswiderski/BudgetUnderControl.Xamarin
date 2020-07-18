@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BudgetUnderControl.Mobile.ViewModels
 {
@@ -83,7 +84,7 @@ namespace BudgetUnderControl.Mobile.ViewModels
             var result = await loginMobileService.LoginAsync(Username, Password, ClearLocalData);
             if(result)
             {
-                App.MasterPage.NavigateTo("Overview");
+                await Shell.Current.GoToAsync("..");
             }
             else
             {
@@ -91,10 +92,6 @@ namespace BudgetUnderControl.Mobile.ViewModels
             }
         }
 
-        public async Task LogoutAndRedirectAsync()
-        {
-            await loginMobileService.LogoutAndRedirectAsync();
-        }
         public async Task LogoutAsync()
         {
             await loginMobileService.LogoutAsync();

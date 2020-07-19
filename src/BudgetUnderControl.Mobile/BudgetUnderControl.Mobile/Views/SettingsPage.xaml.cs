@@ -30,51 +30,12 @@ namespace BudgetUnderControl.Views
             }
 
             InitializeComponent();
-            apiUrl.Unfocused += (object sender, FocusEventArgs e) => { vm.OnApiUrlChange(); };
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
             vm.IsLogged = Preferences.Get(PreferencesKeys.IsUserLogged, false);
-        }
-
-        private async void ExportButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.ExportBackupAsync();
-        }
-
-        private async void ImportButton_Clicked(object sender, EventArgs e)
-        {
-            vm.IsLoading = true;
-
-            vm.ImportBackupAsync().Wait();
-            vm.IsLoading = false;
-        }
-
-        private async void ExportCSVButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.ExportCSVAsync();
-        }
-
-        private async void ExportSQLDBButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.ExportDBAsync();
-        }
-
-        private async void SyncButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.SyncAsync();
-        }
-
-        private async void ClearSyncDBButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.ClearSyncDB();
-        }
-
-        private async void ClearLocalDataButton_Clicked(object sender, EventArgs e)
-        {
-            await vm.ClearLocalData();
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs args)
@@ -86,7 +47,6 @@ namespace BudgetUnderControl.Views
         {
             await Shell.Current.GoToAsync("logout");
         }
-
 
     }
 }

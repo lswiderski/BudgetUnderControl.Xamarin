@@ -4,17 +4,8 @@
              x:Class="BudgetUnderControl.Views.SettingsPage"
              Title="Settings Page">
     <ContentPage.Content>
-       
-            <StackLayout>
-                <Button Text="Export JSON"  Clicked="ExportButton_Clicked"/>
-                <Button Text="Import JSON"  Clicked="ImportButton_Clicked"/>
-                <Button Text="Export CSV"  Clicked="ExportCSVButton_Clicked"/>
-                <Button Text="Export SQLite DB"  Clicked="ExportSQLDBButton_Clicked"/>
-                <Button Text="Sync" Clicked="SyncButton_Clicked" IsVisible="{Binding IsLogged}"/>
-                <Button Text="Clear Sync DB"  Clicked="ClearSyncDBButton_Clicked"/>
-                <Button Text="Clear Local Data"  Clicked="ClearLocalDataButton_Clicked"/>
-                <Label Text="Remote Server Address"></Label>
-                <Entry x:Name="apiUrl" Text="{Binding ApiUrl}" Placeholder="http://host:port"></Entry>
+
+        <StackLayout>
             <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" IsVisible="{Binding IsNotLogged}" FontFamily="FAS" />
 
             <Button x:Name="logout" Text="&#xf2f5; Logout" Clicked="OnLogoutButtonClicked" IsVisible="{Binding IsLogged}" FontFamily="FAS" />

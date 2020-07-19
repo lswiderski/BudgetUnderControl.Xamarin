@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BudgetUnderControl.Views.DebugMenu">
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Button Text="Export JSON"  Clicked="ExportButton_Clicked"/>
+            <Button Text="Import JSON"  Clicked="ImportButton_Clicked"/>
+            <Button Text="Export CSV"  Clicked="ExportCSVButton_Clicked"/>
+            <Button Text="Export SQLite DB"  Clicked="ExportSQLDBButton_Clicked"/>
+            <Button Text="Sync" Clicked="SyncButton_Clicked" IsVisible="{Binding IsLogged}"/>
+            <Button Text="Clear Sync DB"  Clicked="ClearSyncDBButton_Clicked"/>
+            <Button Text="Clear Local Data"  Clicked="ClearLocalDataButton_Clicked"/>
+            <Label Text="Remote Server Address"></Label>
+            <Entry x:Name="apiUrl" Text="{Binding ApiUrl}" Placeholder="http://host:port"></Entry>
+        </StackLayout>
+
+
+    </ContentPage.Content>
+</ContentPage>

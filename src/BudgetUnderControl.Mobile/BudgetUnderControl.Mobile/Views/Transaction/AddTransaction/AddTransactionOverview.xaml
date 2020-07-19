@@ -29,8 +29,16 @@
                         </DataTemplate>
                     </syncfusion:SfComboBox.ItemTemplate>
                 </syncfusion:SfComboBox>
-                <Picker x:Name="categories" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}"  SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Title="Category" />
-
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="categories" DataSource="{ Binding Categories}" DisplayMemberPath="Name" SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Watermark="Category" >
+                    <syncfusion:SfComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Icon.Glyph}" FontFamily="{Binding Icon.FontFamily}" FontSize="18" Padding="10,10,0,10" WidthRequest="40"/>
+                                <Label Text="{Binding Name}" Padding="0,7,0,0" FontSize="18"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </syncfusion:SfComboBox.ItemTemplate>
+                </syncfusion:SfComboBox>
 
                 <StackLayout Orientation="Horizontal">
                     <DatePicker Date="{Binding Date}" Format="d"></DatePicker>

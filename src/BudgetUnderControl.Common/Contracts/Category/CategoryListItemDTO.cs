@@ -11,5 +11,6 @@ namespace BudgetUnderControl.Common.Contracts
         public int Id { get; set; }
         public string Name { get; set; }
         public Guid ExternalId { get; set; }
+        public IconDto Icon { get; set; }
     }
 }

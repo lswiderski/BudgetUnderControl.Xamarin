@@ -17,6 +17,11 @@ namespace BudgetUnderControl.MobileDomain
         public string Name { get; set; }
         public bool IsDefault { get; set; }
 
+        public string IconGlyph { get; protected set; }
+        public string IconFont { get; protected set; }
+        public string IconColor { get; protected set; }
+        public string IconBackgroundColor { get; protected set; }
+
         public int OwnerId { get; protected set; }
         public DateTime? ModifiedOn { get; protected set; }
         public string ExternalId { get; protected set; }

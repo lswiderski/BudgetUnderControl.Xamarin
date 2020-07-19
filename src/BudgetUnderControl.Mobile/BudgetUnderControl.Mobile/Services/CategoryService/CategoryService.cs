@@ -28,6 +28,11 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = x.Id,
                 Name = x.Name,
+                Icon = new IconDto
+                {
+                    FontFamily = x.IconFont,
+                    Glyph = x.IconGlyph,
+                },
                 ExternalId = Guid.Parse(x.ExternalId)
             })
                .ToList();
@@ -43,6 +48,11 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = category.Id,
                 Name = category.Name,
+                Icon = new IconDto
+                {
+                    FontFamily = category.IconFont,
+                    Glyph = category.IconGlyph,
+                },
                 ExternalId = Guid.Parse(category.ExternalId)
             };
 

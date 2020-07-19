@@ -113,6 +113,8 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<LoginViewModel>().As<ILoginViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<TagViewModel>().As<ITagViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<CurrencyViewModel>().As<ICurrencyViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<IconService>().As<IIconService>().InstancePerLifetimeScope();
+            
 
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             var apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;

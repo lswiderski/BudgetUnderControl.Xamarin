@@ -4,6 +4,7 @@
              x:Class="BudgetUnderControl.Views.AddAccount"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              >
     <ContentPage.Content>
         <ScrollView>
@@ -31,6 +32,23 @@
                         <behaviors:NumericValidationBehavior />
                     </Entry.Behaviors>
                 </Entry>
+                <Label Text="Icon"></Label>
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="iconComboBox" DataSource="{ Binding Icons}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedIcon}">
+                    <syncfusion:SfComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Glyph}" FontFamily="{Binding FontFamily}" FontSize="18" Padding="10,10,0,10" WidthRequest="40"/>
+                                <Label Text="{Binding Name}" FontSize="18" Padding="0,7,0,0" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </syncfusion:SfComboBox.ItemTemplate>
+                    <syncfusion:SfComboBox.CustomView>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding SelectedIcon.Glyph}"  FontFamily="{Binding SelectedIcon.FontFamily}" FontSize="18"/>
+                            <Label Text="{Binding SelectedIcon.Name}" FontSize="18"/>
+                        </StackLayout>
+                    </syncfusion:SfComboBox.CustomView>
+                </syncfusion:SfComboBox>
                 <Label x:Name="commentLabel" Text="Comment"></Label>
                 <Editor x:Name="comment"  Text="{Binding Comment}" ></Editor>
                 <Button x:Name="addButton" Text="Add" Clicked="OnAddButtonClicked" />

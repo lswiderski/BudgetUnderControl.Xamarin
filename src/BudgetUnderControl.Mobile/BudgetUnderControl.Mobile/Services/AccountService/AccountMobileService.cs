@@ -37,6 +37,7 @@ namespace BudgetUnderControl.Mobile.Services
                 Id = account.Id,
                 ExternalId = Guid.Parse(account.ExternalId),
                 Name = account.Name,
+                Number = account.Number,
                 Comment = account.Comment,
                 IsActive = account.IsActive,
                 Type = account.Type,
@@ -47,7 +48,14 @@ namespace BudgetUnderControl.Mobile.Services
                 CurrencyId = account.CurrencyId,
                 IsIncludedInTotal = account.IsIncludedToTotal,
                 AccountGroupId = account.AccountGroupId,
-                ParentAccountId = account.ParentAccountId
+                ParentAccountId = account.ParentAccountId,
+                Icon = new IconDto
+                {
+                    Glyph = account.IconGlyph,
+                    FontFamily = account.IconFont,
+                    Color = account.IconColor,
+                    BackGround = account.IconBackgroundColor
+                },
             };
             return dto;
         }
@@ -66,6 +74,11 @@ namespace BudgetUnderControl.Mobile.Services
                 IsIncludedInTotal = y.IsIncludedToTotal,
                 Name = y.Name,
                 ParentAccountId = y.ParentAccountId,
+                Icon = new IconDto
+                {
+                    FontFamily = y.IconFont,
+                    Glyph = y.IconGlyph,
+                },
 
             }).ToList();
             accountsWithBalance.ForEach(async x => { x.Balance = await accountRepository.GetActualBalanceAsync(x.Id); });
@@ -84,17 +97,22 @@ namespace BudgetUnderControl.Mobile.Services
             var accountsWithBalance = accounts
                 .OrderBy(x => x.Order)
                 .Select(y => new AccountListItemDTO
-            {
-                Id = y.Id,
-                ExternalId = Guid.Parse(y.ExternalId),
-                Currency = y.Currency.Code,
-                CurrencyId = y.CurrencyId,
-                CurrencySymbol = y.Currency.Symbol,
-                IsIncludedInTotal = y.IsIncludedToTotal,
-                Name = y.Name,
-                ParentAccountId = y.ParentAccountId,
+                {
+                    Id = y.Id,
+                    ExternalId = Guid.Parse(y.ExternalId),
+                    Currency = y.Currency.Code,
+                    CurrencyId = y.CurrencyId,
+                    CurrencySymbol = y.Currency.Symbol,
+                    IsIncludedInTotal = y.IsIncludedToTotal,
+                    Name = y.Name,
+                    ParentAccountId = y.ParentAccountId,
+                    Icon = new IconDto
+                    {
+                        FontFamily = y.IconFont,
+                        Glyph = y.IconGlyph,
+                    },
 
-            }).ToList();
+                }).ToList();
             accountsWithBalance.ForEach(async x => { x.Balance = await accountRepository.GetActualBalanceAsync(x.Id); });
             return accountsWithBalance;
         }
@@ -141,7 +159,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task AddAccountAsync(AddAccount command)
         {
             var user = await userRepository.GetFirstUserAsync();
-            var account = Account.Create(command.Name, command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, true, user.Id, command.ExternalId.ToString());
+            var account = Account.Create(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, true, user.Id, command.ExternalId.ToString(), icon: command.Icon);
             await accountRepository.AddAccountAsync(account);
 
             if (account.Id <= 0)
@@ -158,7 +176,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task EditAccountAsync(EditAccount command)
         {
             var account = await accountRepository.GetAccountAsync(command.Id);
-            account.Edit(command.Name, command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive);
+            account.Edit(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive, icon: command.Icon);
             await accountRepository.UpdateAsync(account);
 
             if (account.Type != AccountType.Card)

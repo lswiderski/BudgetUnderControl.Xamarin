@@ -17,6 +17,7 @@ namespace BudgetUnderControl.Common.Contracts
         public decimal Balance { get; set; }
         public bool IsIncludedInTotal { get; set; }
         public int? ParentAccountId { get; set; }
+        public IconDto Icon { get; set; }
         public string AmountWithCurrency
         {
             get

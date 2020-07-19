@@ -21,6 +21,7 @@ namespace BudgetUnderControl.ViewModel
         ICurrencyService currencyService;
         IAccountGroupService accountGroupService;
         ICommandDispatcher commandDispatcher;
+        IIconService iconService;
 
         int accountId;
         Guid ExternalId;
@@ -34,6 +35,29 @@ namespace BudgetUnderControl.ViewModel
         public List<AccountTypeDTO> AccountTypes => accountTypes;
         List<AccountListItemDTO> accounts;
         public List<AccountListItemDTO> Accounts => accounts;
+
+
+        private IconDto currentIcon;
+        List<SelectIconDto> icons;
+        public List<SelectIconDto> Icons => icons;
+
+        public SelectIconDto selectedIcon;
+        public SelectIconDto SelectedIcon
+        {
+            get
+            {
+                return selectedIcon;
+            }
+            set
+            {
+                if (selectedIcon != value)
+                {
+                    selectedIcon = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIcon)));
+                }
+
+            }
+        }
 
         int selectedCurrencyIndex;
 
@@ -124,6 +148,20 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+        private string number;
+        public string Number
+        {
+            get => number;
+            set
+            {
+                if (number != value)
+                {
+                    number = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Number)));
+                }
+            }
+        }
+
         private string comment;
         public string Comment
         {
@@ -181,12 +219,16 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
-        public EditAccountViewModel(ICurrencyService currencyService, IAccountGroupService accountGroupService, IAccountService accountService, ICommandDispatcher commandDispatcher)
+        public EditAccountViewModel(ICurrencyService currencyService, IAccountGroupService accountGroupService,
+            IAccountService accountService, IIconService iconService, 
+            ICommandDispatcher commandDispatcher)
         {
             this.currencyService = currencyService;
             this.accountGroupService = accountGroupService;
             this.accountService = accountService;
+            this.iconService = iconService;
             this.commandDispatcher = commandDispatcher;
+            
             GetDropdowns();
         }
 
@@ -196,6 +238,7 @@ namespace BudgetUnderControl.ViewModel
             accountGroups = (await accountGroupService.GetAccountGroupsAsync()).ToList();
             accounts = (await accountService.GetAccountsWithBalanceAsync()).ToList();
             accountTypes = this.GetAccountTypes().ToList();
+            icons = this.iconService.GetAvailableAccountIcons();
         }
 
         public async void LoadAccount(Guid accountId)
@@ -203,6 +246,7 @@ namespace BudgetUnderControl.ViewModel
             var account = await this.accountService.GetAccountAsync(accountId);
             Amount = account.Amount.ToString();
             Name = account.Name;
+            Number = account.Number;
             Comment = account.Comment;
             IsInTotal = account.IsIncludedInTotal;
             IsActive = account.IsActive;
@@ -211,14 +255,23 @@ namespace BudgetUnderControl.ViewModel
             SelectedAccountIndex = account.ParentAccountId.HasValue ? Accounts.IndexOf(Accounts.FirstOrDefault(y => y.Id == account.ParentAccountId)) : -1;
             SelectedAccountTypeIndex = AccountTypes.IndexOf(AccountTypes.FirstOrDefault(y => y.Id == (int)account.Type));
             Order = account.Order.ToString();
+            currentIcon = account.Icon;
+            if(currentIcon != null)
+            {
+                SelectedIcon = this.iconService.GetIcon(this.icons, currentIcon.Glyph, currentIcon.FontFamily);
+            }
+            
             this.ExternalId = accountId;
             this.accountId = account.Id;
         }
 
         public async Task SaveAccount()
         {
-            decimal value;
-            decimal.TryParse(amount.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value);
+            decimal amountValue;
+            if(!decimal.TryParse(Amount.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amountValue))
+            {
+                amountValue = decimal.Parse(Amount);
+            }
             int _order = 0;
             int.TryParse(order, out _order);
 
@@ -226,7 +279,7 @@ namespace BudgetUnderControl.ViewModel
             {
                 Name = Name,
                 Comment = Comment,
-                Amount = value,
+                Amount = amountValue,
                 Order = _order,
                 AccountGroupId = AccountGroups[SelectedAccountGroupIndex].Id,
                 CurrencyId = Currencies[SelectedCurrencyIndex].Id,
@@ -235,7 +288,13 @@ namespace BudgetUnderControl.ViewModel
                 IsActive = IsActive,
                 Type = (AccountType)AccountTypes[SelectedAccountTypeIndex].Id,
                 ParentAccountId = selectedAccountIndex > -1 ? Accounts[SelectedAccountIndex].Id : (int?)null,
-                ExternalId = ExternalId
+                ExternalId = ExternalId,
+                Number = number,
+                Icon = selectedIcon != null ? new IconDto
+                {
+                     FontFamily = selectedIcon?.FontFamily,
+                     Glyph = selectedIcon?.Glyph,
+                } : currentIcon
             };
            
             using (var scope = App.Container.BeginLifetimeScope())

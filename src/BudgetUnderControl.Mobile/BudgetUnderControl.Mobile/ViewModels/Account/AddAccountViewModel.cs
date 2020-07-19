@@ -20,6 +20,7 @@ namespace BudgetUnderControl.ViewModel
         ICurrencyService currencyService;
         IAccountGroupService accountGroupService;
         ICommandDispatcher commandDispatcher;
+        IIconService iconService;
 
         List<CurrencyDTO> currencies;
         List<AccountGroupItemDTO> accountGroups;
@@ -31,6 +32,28 @@ namespace BudgetUnderControl.ViewModel
         public List<AccountTypeDTO> AccountTypes => accountTypes;
         List<AccountListItemDTO> accounts;
         public List<AccountListItemDTO> Accounts => accounts;
+
+        private IconDto currentIcon;
+        List<SelectIconDto> icons;
+        public List<SelectIconDto> Icons => icons;
+
+        public SelectIconDto selectedIcon;
+        public SelectIconDto SelectedIcon
+        {
+            get
+            {
+                return selectedIcon;
+            }
+            set
+            {
+                if (selectedIcon != value)
+                {
+                    selectedIcon = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIcon)));
+                }
+
+            }
+        }
 
         int selectedCurrencyIndex;
         public int SelectedCurrencyIndex
@@ -120,6 +143,20 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+        private string number;
+        public string Number
+        {
+            get => number;
+            set
+            {
+                if (number != value)
+                {
+                    number = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Number)));
+                }
+            }
+        }
+
         private string comment;
         public string Comment
         {
@@ -176,11 +213,14 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
-        public AddAccountViewModel(IAccountService accountService, ICurrencyService currencyService, IAccountGroupService accountGroupService, ICommandDispatcher commandDispatcher)
+        public AddAccountViewModel(IAccountService accountService, ICurrencyService currencyService, 
+            IAccountGroupService accountGroupService, IIconService iconService,
+            ICommandDispatcher commandDispatcher)
         {
             this.accountService = accountService;
             this.currencyService = currencyService;
             this.accountGroupService = accountGroupService;
+            this.iconService = iconService;
             this.commandDispatcher = commandDispatcher;
             GetDropdowns();
 
@@ -193,7 +233,8 @@ namespace BudgetUnderControl.ViewModel
             accountGroups = (await accountGroupService.GetAccountGroupsAsync()).ToList();
             accounts = (await accountService.GetAccountsWithBalanceAsync()).ToList();
             accountTypes = this.GetAccountTypes().ToList();
-           
+            icons = this.iconService.GetAvailableAccountIcons();
+
         }
 
         public async Task AddAccount()
@@ -208,6 +249,7 @@ namespace BudgetUnderControl.ViewModel
             var command = new AddAccount
             {
                 Name = Name,
+                Number = Number,
                 Comment = Comment,
                 Amount = value,
                 Order = _order,
@@ -216,7 +258,11 @@ namespace BudgetUnderControl.ViewModel
                 IsIncludedInTotal = IsInTotal,
                 Type = (AccountType)AccountTypes[SelectedAccountTypeIndex].Id,
                 ParentAccountId = selectedAccountIndex > -1 ? Accounts[SelectedAccountIndex].Id : (int?)null,
-                
+                Icon = selectedIcon != null ? new IconDto
+                 {
+                      FontFamily = selectedIcon.FontFamily,
+                      Glyph = selectedIcon.Glyph,
+                 } : null,
             };
 
             using (var scope = App.Container.BeginLifetimeScope())

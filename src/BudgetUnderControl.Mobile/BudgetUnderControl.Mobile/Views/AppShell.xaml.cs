@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BudgetUnderControl;
 using BudgetUnderControl.Mobile.Views;
+using Autofac;
+using BudgetUnderControl.CommonInfrastructure.Settings;
 
 namespace BudgetUnderControl.Views
 {
@@ -16,8 +18,14 @@ namespace BudgetUnderControl.Views
     {
         public AppShell()
         {
-            InitializeComponent();
+            using (var scope = App.Container.BeginLifetimeScope())
+            {
+                var settings = scope.Resolve<GeneralSettings>();
+                Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(settings.SyncfusionLicenseKey);
+            }
 
+            InitializeComponent();
+          
             Routing.RegisterRoute("login", typeof(Login));
             Routing.RegisterRoute("logout", typeof(Logout));
             Routing.RegisterRoute("exchangeRates", typeof(ExchangeRates));

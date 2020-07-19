@@ -4,39 +4,58 @@
              x:Class="BudgetUnderControl.Views.EditAccount"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              >
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
-            <Label Text="Edit Account" />
-            <Picker x:Name="group" ItemsSource="{Binding AccountGroups}" ItemDisplayBinding="{Binding Name}" SelectedIndex="{Binding  SelectedAccountGroupIndex, Mode=TwoWay}" Title="Type"/>
-            <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name"></Entry>
+            <StackLayout>
+                <Label Text="Edit Account" />
+                <Picker x:Name="group" ItemsSource="{Binding AccountGroups}" ItemDisplayBinding="{Binding Name}" SelectedIndex="{Binding  SelectedAccountGroupIndex, Mode=TwoWay}" Title="Type"/>
+                <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name"></Entry>
                 <Picker x:Name="currency" ItemsSource="{Binding Currencies}" ItemDisplayBinding="{Binding CodeWithName}"  SelectedIndex="{Binding  SelectedCurrencyIndex, Mode=TwoWay}" Title="Currency" />
-            <Entry x:Name="amount" Text="{Binding Amount}" Placeholder="Amount" Keyboard="Numeric">
-                <Entry.Behaviors>
-                    <behaviors:NumericValidationBehavior />
-                </Entry.Behaviors>
-            </Entry>
-            <Label x:Name="switchLabel" Text="Is Counted in Total"></Label>
-            <Switch x:Name="isTotal" IsToggled="{Binding IsInTotal}"></Switch>
-             <Label x:Name="switchLabelActive" Text="Is Active"></Label>
-            <Switch x:Name="isActive" IsToggled="{Binding IsActive}"></Switch>
+                <Entry x:Name="amount" Text="{Binding Amount}" Placeholder="Amount" Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <behaviors:NumericValidationBehavior />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="switchLabel" Text="Is Counted in Total"></Label>
+                <Switch x:Name="isTotal" IsToggled="{Binding IsInTotal}"></Switch>
+                <Label x:Name="switchLabelActive" Text="Is Active"></Label>
+                <Switch x:Name="isActive" IsToggled="{Binding IsActive}"></Switch>
                 <Picker x:Name="type" ItemsSource="{Binding AccountTypes}" ItemDisplayBinding="{Binding Name}" SelectedIndex="{Binding  SelectedAccountTypeIndex, Mode=TwoWay}" Title="Type"/>
-            <Label Text="Parent Account"></Label>
-            <StackLayout Orientation="Horizontal">
-                <Picker x:Name="account" ItemsSource="{Binding Accounts}" ItemDisplayBinding="{Binding Name}"  SelectedIndex="{Binding  SelectedAccountIndex, Mode=TwoWay}" Title="Account" />
-                <Button x:Name="clearParentButton" Text="X" Clicked="OnClearParentButtonClicked" />
+                <Label Text="Parent Account"></Label>
+                <StackLayout Orientation="Horizontal">
+                    <Picker x:Name="account" ItemsSource="{Binding Accounts}" ItemDisplayBinding="{Binding Name}"  SelectedIndex="{Binding  SelectedAccountIndex, Mode=TwoWay}" Title="Account" />
+                    <Button x:Name="clearParentButton" Text="X" Clicked="OnClearParentButtonClicked" />
+                </StackLayout>
+                <Label Text="Order"></Label>
+                <Entry x:Name="order" Text="{Binding Order}" Placeholder="Order"  Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <behaviors:NumericValidationBehavior />
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry x:Name="number" Text="{Binding Number}" Placeholder="Number"></Entry>
+                <Label Text="Icon"></Label>
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="iconComboBox" DataSource="{ Binding Icons}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedIcon}">
+                    <syncfusion:SfComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Glyph}"  FontFamily="{Binding FontFamily}"  FontSize="18" Padding="10,10,0,10" WidthRequest="40"/>
+                                <Label Text="{Binding Name}" FontSize="18" Padding="0,7,0,0" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </syncfusion:SfComboBox.ItemTemplate>
+                    <syncfusion:SfComboBox.CustomView>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding SelectedIcon.Glyph}" FontFamily="{Binding SelectedIcon.FontFamily}" FontSize="18"/>
+                            <Label Text="{Binding SelectedIcon.Name}" FontSize="18"/>
+                        </StackLayout>
+                    </syncfusion:SfComboBox.CustomView>
+                </syncfusion:SfComboBox>
+                <Label x:Name="commentLabel" Text="Comment"></Label>
+                <Editor x:Name="comment"  Text="{Binding Comment}" ></Editor>
+                <Button x:Name="addButton" Text="Save" Clicked="OnEditButtonClicked"  />
             </StackLayout>
-            <Label Text="Order"></Label>
-            <Entry x:Name="order" Text="{Binding Order}" Placeholder="Order"  Keyboard="Numeric">
-                <Entry.Behaviors>
-                    <behaviors:NumericValidationBehavior />
-                </Entry.Behaviors>
-            </Entry>
-            <Label x:Name="commentLabel" Text="Comment"></Label>
-            <Editor x:Name="comment"  Text="{Binding Comment}" ></Editor>
-            <Button x:Name="addButton" Text="Save" Clicked="OnEditButtonClicked"  />
-        </StackLayout>
-            </ScrollView>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

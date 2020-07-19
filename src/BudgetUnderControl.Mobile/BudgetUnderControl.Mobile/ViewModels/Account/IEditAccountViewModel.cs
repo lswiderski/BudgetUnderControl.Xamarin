@@ -14,6 +14,7 @@ namespace BudgetUnderControl.ViewModel
     public interface IEditAccountViewModel
     {
         string Name { get; set; }
+        string Number { get; set; }
         string Comment { get; set; }
         bool IsInTotal { get; set; }
         bool IsActive { get; set; }
@@ -27,6 +28,8 @@ namespace BudgetUnderControl.ViewModel
         List<CurrencyDTO> Currencies { get;}
         List<AccountListItemDTO> Accounts { get; }
         List<AccountTypeDTO> AccountTypes { get; }
+        List<SelectIconDto> Icons { get; }
+        SelectIconDto SelectedIcon { get; }
 
         void LoadAccount(Guid accountId);
         Task SaveAccount();

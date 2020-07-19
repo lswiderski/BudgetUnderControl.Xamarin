@@ -16,10 +16,12 @@ namespace BudgetUnderControl.Common.Contracts
         public string CurrencySymbol { get; set; }
         public int AccountGroupId { get; set; }
         public string Name { get; set; }
+        public string Number { get; set; }
         public decimal Amount { get; set; }
         public bool IsIncludedInTotal { get; set; }
         public bool IsActive { get; set; }
         public string Comment { get; set; }
+        public IconDto Icon { get; set; }
 
         public AccountType Type { get; set; }
         public int? ParentAccountId { get; set; }

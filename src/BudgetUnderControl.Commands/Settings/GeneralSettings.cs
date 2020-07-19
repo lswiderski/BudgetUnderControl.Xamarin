@@ -31,6 +31,8 @@ namespace BudgetUnderControl.CommonInfrastructure.Settings
 
         public string AdMobAdId { get; set; }
 
+        public string SyncfusionLicenseKey { get; set; }
+
         public GeneralSettings InjectEnvVariables()
         {
             this.BUC_DB_Address = Environment.GetEnvironmentVariable(nameof(this.BUC_DB_Address)) ?? this.BUC_DB_Address;

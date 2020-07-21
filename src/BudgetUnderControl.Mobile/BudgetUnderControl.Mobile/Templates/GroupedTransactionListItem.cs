@@ -1,4 +1,5 @@
 ﻿using BudgetUnderControl.Common.Contracts;
+using Syncfusion.XForms.Border;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BudgetUnderControl.Views
 
         public static readonly BindableProperty TransactionProperty = BindableProperty.Create("GroupedTransaction", typeof(TransactionListItemDTO), typeof(GroupedTransactionListItem));
 
-        Label nameLabel, accountLabel, valueLabel, tagsLabel, categoryLabel;
+        Label nameLabel, accountLabel, valueLabel, tagsLabel, categoryLabel, dayLabel, monthLabel, categoryIconLabel, accountIconLabel;
 
         public TransactionListItemDTO Transaction
         {
@@ -23,26 +24,51 @@ namespace BudgetUnderControl.Views
 
         public GroupedTransactionListItem()
         {
-            var frame = new Frame { Margin = new Thickness(10)};
-            var grid = new Grid { Padding = new Thickness(10), VerticalOptions = LayoutOptions.FillAndExpand };
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.4, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.4, GridUnitType.Star) });
+            var frame = new Frame { Margin = new Thickness(10,5), Padding= new Thickness(5)};
+            var grid = new Grid { Padding = new Thickness(1), VerticalOptions = LayoutOptions.FillAndExpand };
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.7, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.2, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.5, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.5, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
             nameLabel = new Label { FontAttributes = FontAttributes.Bold, VerticalOptions = LayoutOptions.CenterAndExpand };
             accountLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 10 };
-            valueLabel = new Label();
+            valueLabel = new Label { VerticalTextAlignment = TextAlignment.Center, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment = TextAlignment.Center, HorizontalOptions = LayoutOptions.FillAndExpand};
             tagsLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 10 };
             categoryLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 10 };
 
-            Grid.SetRowSpan(valueLabel, 2);
-            grid.Children.Add(accountLabel,0 ,1);
-            grid.Children.Add(nameLabel, 0, 0);
-            grid.Children.Add(categoryLabel, 1, 0);
-            grid.Children.Add(tagsLabel, 1, 1);
+            dayLabel = new Label {  HorizontalTextAlignment = TextAlignment.Center, FontSize = 16, VerticalTextAlignment = TextAlignment.End , VerticalOptions = LayoutOptions.CenterAndExpand, FontAttributes = FontAttributes.Bold};
+            monthLabel = new Label {  HorizontalTextAlignment = TextAlignment.Center, FontSize = 10,  VerticalTextAlignment= TextAlignment.Start, VerticalOptions = LayoutOptions.CenterAndExpand };
+
+            var datestack = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.StartAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
+            datestack.Children.Add(dayLabel);
+            datestack.Children.Add(monthLabel);
+            
+            var boxView = new BoxView { WidthRequest = 1, BackgroundColor = Color.LightGray, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.End };
+            grid.Children.Add(datestack, 0, 0);
+            grid.Children.Add(boxView, 0, 0);
+            Grid.SetRowSpan(datestack, 2);
+            Grid.SetRowSpan(boxView, 2);
+           
+            grid.Children.Add(nameLabel, 1, 0);
+
+            categoryIconLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 10 };
+            accountIconLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 10 };
+            var accountCategoryStack = new StackLayout { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.Start };
+            accountCategoryStack.Children.Add(accountIconLabel);
+            accountCategoryStack.Children.Add(accountLabel);
+            accountCategoryStack.Children.Add(new Label {Text="/" });
+            accountCategoryStack.Children.Add(categoryIconLabel);
+            accountCategoryStack.Children.Add(categoryLabel);
+
+            var middleStack = new StackLayout { Orientation = StackOrientation.Vertical , VerticalOptions = LayoutOptions.Start };
+            middleStack.Children.Add(accountCategoryStack);
+            middleStack.Children.Add(tagsLabel);
+            grid.Children.Add(middleStack, 1, 1);
+
             grid.Children.Add(valueLabel, 2, 0);
+            Grid.SetRowSpan(valueLabel, 2);
             frame.Content = grid;
             View = frame;
         }
@@ -59,12 +85,22 @@ namespace BudgetUnderControl.Views
                     value = value.Remove(0, 1);
                 }
 
+                categoryIconLabel.Text = Transaction.CategoryIcon?.Glyph;
+                categoryIconLabel.FontFamily = Transaction.CategoryIcon?.FontFamily;
+                accountIconLabel.Text = Transaction.AccountIcon?.Glyph;
+                accountIconLabel.FontFamily = Transaction.AccountIcon?.FontFamily;
+                dayLabel.Text = Transaction.Date.Day.ToString("00"); 
+                monthLabel.Text = Transaction.Date.ToString("MMM");
                 nameLabel.Text = Transaction.Name;
                 accountLabel.Text = Transaction.Account;
                 valueLabel.Text = value;
                 valueLabel.TextColor = Transaction.Type == Common.Enums.TransactionType.Income ? Color.Green : Color.Red;
                 categoryLabel.Text = Transaction.Category;
-                tagsLabel.Text = string.Join(", ", Transaction.Tags.Select(x => x.Name));
+                tagsLabel.Text = string.Join(", ", Transaction.Tags.Select(x => "#"+x.Name));
+                if(string.IsNullOrWhiteSpace(tagsLabel.Text))
+                {
+                    tagsLabel.IsVisible = false;
+                }
             }
         }
     }

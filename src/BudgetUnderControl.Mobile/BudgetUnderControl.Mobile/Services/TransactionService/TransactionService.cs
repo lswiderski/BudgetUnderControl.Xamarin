@@ -22,15 +22,18 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly ITagRepository tagRepository;
         private readonly IFileRepository fileRepository;
         private readonly IUserRepository userRepository;
+        private readonly IIconService iconService;
         public TransactionService(ITransactionRepository transactionRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
-            IFileRepository fileRepository)
+            IFileRepository fileRepository,
+            IIconService iconService)
         {
             this.transactionRepository = transactionRepository;
             this.userRepository = userRepository;
             this.tagRepository = tagRepository;
             this.fileRepository = fileRepository;
+            this.iconService = iconService;
         }
 
         public async Task<ICollection<TransactionListItemDTO>> GetTransactionsAsync(TransactionsFilter filter = null)
@@ -53,6 +56,8 @@ namespace BudgetUnderControl.Mobile.Services
                 CreatedOn = t.CreatedOn,
                 CategoryId = t.CategoryId,
                 Category = t.Category?.Name,
+                CategoryIcon = iconService.GetIcon(t.Category?.Icon),
+                AccountIcon = iconService.GetIcon(t.Account?.Icon),
                 Tags = t.TagsToTransaction.Where(x => !x.Tag.IsDeleted).Select(x => new TagDTO { ExternalId = Guid.Parse(x.Tag.ExternalId), Id = x.Tag.Id, IsDeleted = x.Tag.IsDeleted, Name = x.Tag.Name }).ToList()
 
             }).OrderByDescending(t => t.Date)

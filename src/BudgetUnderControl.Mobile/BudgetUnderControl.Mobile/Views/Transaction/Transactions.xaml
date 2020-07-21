@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.Transactions"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              Title="Transactions">
 
@@ -12,13 +13,7 @@
                 <Expander>
                     <Expander.Header>
                         <StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Expense: "/>
-                            <Label Text="{Binding Expense, Mode=TwoWay}" TextColor="Red"/>
-                            <Label Text="Income: "/>
-                            <Label Text="{Binding Income, Mode=TwoWay}" TextColor="Green"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal">
                             <Label Text="No. Trans: "/>
                             <Label Text="{Binding NumberOfTransactions, Mode=TwoWay}" />
                         </StackLayout>
@@ -32,10 +27,11 @@
                                     <ColumnDefinition Width="50" />
                                 </Grid.ColumnDefinitions>
 
-                                <Button Text="&lt;" Clicked="OnPreviousMonthButtonClicked" Grid.Row="0" Grid.Column="0" />
+                                <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleLeft}" FontFamily="FAS" Clicked="OnPreviousMonthButtonClicked" Grid.Row="0" Grid.Column="0" />
                                 <Label x:Name="month" Text="{Binding ActualRange}" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Center"  HorizontalOptions="FillAndExpand" Margin="0,10"/>
-                                <Button Text=">" Clicked="OnNextMonthButtonClicked" Grid.Row="0" Grid.Column="2" />
+                                <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleRight}" FontFamily="FAS" Clicked="OnNextMonthButtonClicked" Grid.Row="0" Grid.Column="2" />
                             </Grid>
+                            
                         </StackLayout>
                     </Expander.Header>
                     <StackLayout>
@@ -61,10 +57,33 @@
                             <Entry Text="{Binding Search}" Placeholder="Search" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Margin="10,10,10,0"/>
                             <Button Grid.Column="2" Grid.Row="1" Text="Filter" Clicked="OnSearchButtonClicked"  Margin="10,10,10,0" />
                         </Grid>
+                        
                     </StackLayout>
                 </Expander>
-
-                <ListView x:Name="transactions" ItemsSource="{Binding Transactions}"  IsGroupingEnabled="True" GroupDisplayBinding="{Binding Key}" SelectedItem="{Binding SelectedTransaction}"   ItemSelected="OnItemSelected" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None" >
+                <Grid Padding="0">
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition  Width="*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Frame Grid.Column="0" Grid.Row="0" Margin="5"  HorizontalOptions="Fill" BackgroundColor="#439FF8" CornerRadius="5" Padding="10" >
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="Income" HorizontalTextAlignment="Center"  TextColor="White"/>
+                            <Label  Text="{Binding Income, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="20"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Column="1" Grid.Row="0" Margin="5" HorizontalOptions="Fill"  BackgroundColor="#C80909" CornerRadius="5" Padding="10">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="Expense" HorizontalTextAlignment="Center"  TextColor="White" />
+                            <Label Text="{Binding Expense, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="20"/>
+                        </StackLayout>
+                       
+                        
+                    </Frame>
+                </Grid>
+                <ListView x:Name="transactions" ItemsSource="{Binding Transactions}"  IsGroupingEnabled="True" GroupDisplayBinding="{Binding Key}" SelectedItem="{Binding SelectedTransaction}"   ItemSelected="OnItemSelected" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="#F7F7F7">
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
                             <ViewCell>

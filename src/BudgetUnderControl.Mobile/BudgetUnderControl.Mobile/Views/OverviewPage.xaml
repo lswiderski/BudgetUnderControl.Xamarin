@@ -6,8 +6,8 @@
              xmlns:fontawesome="clr-namespace:FontAwesome"
              Title="Overview Page">
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Frame AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,.9" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Margin="10">
+        <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#F7F7F7">
+            <Frame AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,.5" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Margin="10">
 
 
                 <StackLayout HorizontalOptions="FillAndExpand" >

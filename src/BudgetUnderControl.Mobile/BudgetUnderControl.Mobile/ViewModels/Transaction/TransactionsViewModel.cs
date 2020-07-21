@@ -146,6 +146,8 @@ namespace BudgetUnderControl.ViewModel
                 CreatedOn = t.CreatedOn,
                 Category = t.Category,
                 CategoryId = t.CategoryId,
+                CategoryIcon = t.CategoryIcon,
+                AccountIcon = t.AccountIcon,
                 Tags = t.Tags
             }).OrderByDescending(x => x.Date)
                                 .GroupBy(x => x.Date.ToString("d MMM yyyy"))

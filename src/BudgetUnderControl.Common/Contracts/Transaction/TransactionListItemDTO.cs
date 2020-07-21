@@ -25,6 +25,8 @@ namespace BudgetUnderControl.Common.Contracts
         public List<TagDTO> Tags {get;set;}
         public int? CategoryId { get; set; }
         public string Category { get; set; }
+        public IconDto CategoryIcon { get; set; }
+        public IconDto AccountIcon { get; set; }
         public DateTime JustDate {
             get
             {

@@ -20,7 +20,7 @@ namespace BudgetUnderControl
         public static IContainer Container;
         public IConfiguration Configuration { get; }
 
-        public static AppShell MasterPage
+        public static AppShell AppShell
         {
             get;
             private set;
@@ -35,7 +35,7 @@ namespace BudgetUnderControl
         {
             
             AutoFacInit();
-            MainPage = MasterPage = new AppShell();
+            MainPage = AppShell = new AppShell();
 
             if(Mobile.PlatformSpecific.Properties.REDIRECT_TO.HasValue )
             {
@@ -44,8 +44,7 @@ namespace BudgetUnderControl
                     case Common.Enums.ActivityPage.AddTransaction:
                         var value = Mobile.PlatformSpecific.Properties.ADD_TRANSACTION_VALUE;
                         var title = Mobile.PlatformSpecific.Properties.ADD_TRANSACTION_TITLE;
-                        //MasterPage.NavigateTo(typeof(AddTransaction), value.ToString(), title);
-                        await Shell.Current.GoToAsync("AddTransaction");
+                        await AppShell.OpenAddTransactionAsync(value.ToString(), title);
                         break;
                     default:
                         break;

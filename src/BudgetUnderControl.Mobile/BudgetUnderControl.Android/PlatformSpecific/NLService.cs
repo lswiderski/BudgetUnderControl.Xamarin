@@ -60,8 +60,7 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
                     notificationService.ShowNotification("New Google Pay Transaction", $"Add {value} from {title}", bundle);
                 }
             }
-
-            if (pack.Equals("com.revolut.revolut"))
+            else if (pack.Equals("com.revolut.revolut"))
             {
                 logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
                 logger.Info(sbn.Notification.ToString());
@@ -74,6 +73,9 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
                         new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_VALUE, Type = BundleItemType.String, Object = value },                   //text: 💳 Paid €20.70 at Transit
                 };
                 notificationService.ShowNotification("New Revolut Transaction", $"Add {value} from {revolutTitle}", bundle);
+            }
+            else {
+                logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
             }
         }
 

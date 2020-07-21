@@ -32,5 +32,11 @@ namespace BudgetUnderControl.Views
             Routing.RegisterRoute("editTag", typeof(EditTag));
             Routing.RegisterRoute("accountDetails", typeof(AccountDetails));
         }
+
+        public async Task OpenAddTransactionAsync(string value, string title)
+        {
+            var addAccount = new AddTransaction(value.ToString(), title);
+            await Navigation.PushModalAsync(addAccount);
+        }
     }
 }

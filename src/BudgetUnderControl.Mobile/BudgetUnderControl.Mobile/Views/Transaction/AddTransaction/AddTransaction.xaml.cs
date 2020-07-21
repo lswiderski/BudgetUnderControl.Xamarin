@@ -40,7 +40,7 @@ namespace BudgetUnderControl.Views
             base.OnAppearing();
             
             addTransactionOverview.SetContext(vm);
-            addTransactionExtra.SetContext(vm);
+            addTransactionExtra.SetContextAsync(vm);
             addTransactionFile.SetContext(vm);
         }
     }

@@ -24,9 +24,10 @@ namespace BudgetUnderControl.Views
             InitializeComponent();
         }
 
-        public void SetContext(IAddTransactionViewModel model)
+        public async void SetContextAsync(IAddTransactionViewModel model)
         {
             this.BindingContext = vm = model;
+            await GetLocationAsync();
         }
 
         protected override async void OnAppearing()

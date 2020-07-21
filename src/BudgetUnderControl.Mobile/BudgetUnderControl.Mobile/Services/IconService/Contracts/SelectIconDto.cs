@@ -7,6 +7,8 @@ namespace BudgetUnderControl.Mobile.Services
 {
     public class SelectIconDto
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Glyph { get; set; }

@@ -258,11 +258,7 @@ namespace BudgetUnderControl.ViewModel
                 IsIncludedInTotal = IsInTotal,
                 Type = (AccountType)AccountTypes[SelectedAccountTypeIndex].Id,
                 ParentAccountId = selectedAccountIndex > -1 ? Accounts[SelectedAccountIndex].Id : (int?)null,
-                Icon = selectedIcon != null ? new IconDto
-                 {
-                      FontFamily = selectedIcon.FontFamily,
-                      Glyph = selectedIcon.Glyph,
-                 } : null,
+                Icon = selectedIcon?.Id,
             };
 
             using (var scope = App.Container.BeginLifetimeScope())

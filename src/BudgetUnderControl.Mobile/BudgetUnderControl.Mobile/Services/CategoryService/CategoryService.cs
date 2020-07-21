@@ -14,10 +14,12 @@ namespace BudgetUnderControl.Mobile.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IIconService iconService;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IIconService iconService)
         {
             this.categoryRepository = categoryRepository;
+            this.iconService = iconService;
         }
 
         public async Task<ICollection<CategoryListItemDTO>> GetCategoriesAsync()
@@ -28,11 +30,7 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = x.Id,
                 Name = x.Name,
-                Icon = new IconDto
-                {
-                    FontFamily = x.IconFont,
-                    Glyph = x.IconGlyph,
-                },
+                Icon = this.iconService.GetIcon(x.Icon),
                 ExternalId = Guid.Parse(x.ExternalId)
             })
                .ToList();
@@ -48,11 +46,7 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = category.Id,
                 Name = category.Name,
-                Icon = new IconDto
-                {
-                    FontFamily = category.IconFont,
-                    Glyph = category.IconGlyph,
-                },
+                Icon = this.iconService.GetIcon(category.Icon),
                 ExternalId = Guid.Parse(category.ExternalId)
             };
 

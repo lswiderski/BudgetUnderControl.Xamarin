@@ -255,10 +255,9 @@ namespace BudgetUnderControl.ViewModel
             SelectedAccountIndex = account.ParentAccountId.HasValue ? Accounts.IndexOf(Accounts.FirstOrDefault(y => y.Id == account.ParentAccountId)) : -1;
             SelectedAccountTypeIndex = AccountTypes.IndexOf(AccountTypes.FirstOrDefault(y => y.Id == (int)account.Type));
             Order = account.Order.ToString();
-            currentIcon = account.Icon;
-            if(currentIcon != null)
+            if (!string.IsNullOrWhiteSpace(account.Icon))
             {
-                SelectedIcon = this.iconService.GetIcon(this.icons, currentIcon.Glyph, currentIcon.FontFamily);
+                SelectedIcon = this.iconService.GetSelectIcon(account.Icon);
             }
             
             this.ExternalId = accountId;
@@ -290,11 +289,7 @@ namespace BudgetUnderControl.ViewModel
                 ParentAccountId = selectedAccountIndex > -1 ? Accounts[SelectedAccountIndex].Id : (int?)null,
                 ExternalId = ExternalId,
                 Number = number,
-                Icon = selectedIcon != null ? new IconDto
-                {
-                     FontFamily = selectedIcon?.FontFamily,
-                     Glyph = selectedIcon?.Glyph,
-                } : currentIcon
+                Icon = selectedIcon?.Id
             };
            
             using (var scope = App.Container.BeginLifetimeScope())

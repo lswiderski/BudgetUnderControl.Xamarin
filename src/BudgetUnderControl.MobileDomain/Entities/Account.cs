@@ -26,10 +26,7 @@ namespace BudgetUnderControl.MobileDomain
         public int? ParentAccountId { get; protected set; }
         public bool IsActive { get; protected set; }
         public string Number { get; protected set; }
-        public string IconGlyph { get; protected set; }
-        public string IconFont { get; protected set; }
-        public string IconColor { get; protected set; }
-        public string IconBackgroundColor { get; protected set; }
+        public string Icon { get; protected set; }
 
         public int OwnerId { get; protected set; }
         public DateTime? ModifiedOn { get; protected set; }
@@ -50,7 +47,7 @@ namespace BudgetUnderControl.MobileDomain
 
         public static Account Create(string name, string number, int currencyId, int accountGroupId,
             bool isIncludedToTotal, string comment, int order, AccountType type,
-            int? parentAccountId, bool isActive, int ownerId, string externalId = null, IconDto icon = null)
+            int? parentAccountId, bool isActive, int ownerId, string externalId = null, string icon = null)
         {
             return new Account()
             {
@@ -68,16 +65,13 @@ namespace BudgetUnderControl.MobileDomain
                 OwnerId = ownerId,
                 ModifiedOn = DateTime.UtcNow,
                 IsDeleted = !isActive,
-                IconBackgroundColor = icon?.BackGround,
-                IconColor = icon?.Color,
-                IconFont = icon?.FontFamily,
-                IconGlyph = icon?.Glyph,
+                Icon = icon,
             };
         }
 
         public void Edit(string name,string number, int currencyId, int accountGroupId,
             bool isIncludedToTotal, string comment, int order, AccountType type,
-            int? parentAccountId, bool isActive, int? ownerId = null, IconDto icon = null)
+            int? parentAccountId, bool isActive, int? ownerId = null, string icon = null)
         {
             this.Name = name;
             this.Number = number;
@@ -94,11 +88,7 @@ namespace BudgetUnderControl.MobileDomain
             {
                 this.OwnerId = ownerId.Value;
             }
-
-            this.IconBackgroundColor = icon?.BackGround;
-            this.IconColor = icon?.Color;
-            this.IconFont = icon?.FontFamily;
-            this.IconGlyph = icon?.Glyph;
+            this.Icon = icon;
 
             this.UpdateModify();
         }

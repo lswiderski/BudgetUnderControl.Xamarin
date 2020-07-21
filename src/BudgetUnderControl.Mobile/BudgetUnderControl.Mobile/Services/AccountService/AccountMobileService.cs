@@ -20,12 +20,14 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly IAccountMobileRepository accountRepository;
         private readonly IUserRepository userRepository;
         private readonly ILogger logger;
+        private readonly IIconService iconService;
 
-        public AccountMobileService(IAccountMobileRepository accountRepository, IUserRepository userRepository, ILogger logger)
+        public AccountMobileService(IAccountMobileRepository accountRepository, IUserRepository userRepository, ILogger logger, IIconService iconService)
         {
             this.accountRepository = accountRepository;
             this.userRepository = userRepository;
             this.logger = logger;
+            this.iconService = iconService;
         }
 
         public async Task<EditAccountDTO> GetAccountAsync(Guid id)
@@ -49,13 +51,7 @@ namespace BudgetUnderControl.Mobile.Services
                 IsIncludedInTotal = account.IsIncludedToTotal,
                 AccountGroupId = account.AccountGroupId,
                 ParentAccountId = account.ParentAccountId,
-                Icon = new IconDto
-                {
-                    Glyph = account.IconGlyph,
-                    FontFamily = account.IconFont,
-                    Color = account.IconColor,
-                    BackGround = account.IconBackgroundColor
-                },
+                Icon = account.Icon
             };
             return dto;
         }
@@ -74,11 +70,7 @@ namespace BudgetUnderControl.Mobile.Services
                 IsIncludedInTotal = y.IsIncludedToTotal,
                 Name = y.Name,
                 ParentAccountId = y.ParentAccountId,
-                Icon = new IconDto
-                {
-                    FontFamily = y.IconFont,
-                    Glyph = y.IconGlyph,
-                },
+                Icon = this.iconService.GetIcon(y.Icon),
 
             }).ToList();
             accountsWithBalance.ForEach(async x => { x.Balance = await accountRepository.GetActualBalanceAsync(x.Id); });
@@ -106,11 +98,7 @@ namespace BudgetUnderControl.Mobile.Services
                     IsIncludedInTotal = y.IsIncludedToTotal,
                     Name = y.Name,
                     ParentAccountId = y.ParentAccountId,
-                    Icon = new IconDto
-                    {
-                        FontFamily = y.IconFont,
-                        Glyph = y.IconGlyph,
-                    },
+                    Icon = this.iconService.GetIcon(y.Icon),
 
                 }).ToList();
             accountsWithBalance.ForEach(async x => { x.Balance = await accountRepository.GetActualBalanceAsync(x.Id); });

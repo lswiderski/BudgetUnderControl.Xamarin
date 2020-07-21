@@ -6,6 +6,8 @@ namespace BudgetUnderControl.Common.Contracts
 {
     public class IconDto
     {
+        public string Id { get; set; }
+
         public string Glyph { get; set; }
 
         public string FontFamily { get; set; }

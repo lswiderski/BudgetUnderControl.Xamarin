@@ -19,7 +19,7 @@ namespace BudgetUnderControl.CommonInfrastructure.Commands
         public int? ParentAccountId { get; set; }
         public int Order { get; set; }
         public Guid ExternalId { get; set; }
-        public IconDto Icon { get; set; }
+        public string Icon { get; set; }
         public string Number { get; set; }
 
         public AddAccount()

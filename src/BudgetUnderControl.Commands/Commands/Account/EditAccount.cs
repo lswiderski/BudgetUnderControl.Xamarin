@@ -20,7 +20,7 @@ namespace BudgetUnderControl.CommonInfrastructure.Commands
         public bool IsActive { get; set; }
         public string Comment { get; set; }
         public Guid ExternalId { get; set; }
-        public IconDto Icon { get; set; }
+        public string Icon { get; set; }
         public string Number { get; set; }
 
         public AccountType Type { get; set; }

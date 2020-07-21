@@ -21,7 +21,7 @@ namespace BudgetUnderControl.Common.Contracts
         public bool IsIncludedInTotal { get; set; }
         public bool IsActive { get; set; }
         public string Comment { get; set; }
-        public IconDto Icon { get; set; }
+        public string Icon { get; set; }
 
         public AccountType Type { get; set; }
         public int? ParentAccountId { get; set; }

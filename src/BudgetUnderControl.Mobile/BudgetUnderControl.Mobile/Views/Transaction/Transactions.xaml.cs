@@ -17,6 +17,7 @@ namespace BudgetUnderControl.Views
         private FloatingActionButtonView fab;
 
         ITransactionsViewModel vm;
+        Filters filtersModal;
         public Transactions()
         {
             InitializeComponent();
@@ -75,9 +76,26 @@ namespace BudgetUnderControl.Views
             await vm.SetPreviousMonth();
         }
 
-        protected async void OnSearchButtonClicked(object sender, EventArgs args)
+        protected async void OnFilter_Clicked(object sender, EventArgs e)
         {
-            await vm.LoadTransactionsAsync();
+            App.Current.ModalPopping += HandleModalPopping;
+            filtersModal = new Filters(vm.Filter);
+            await Navigation.PushModalAsync(filtersModal);
+        }
+
+        private async void HandleModalPopping(object sender, ModalPoppingEventArgs e)
+        {
+            if (e.Modal == filtersModal)
+            {
+
+                // now we can retrieve that phone number:
+                vm.Filter = filtersModal.vm.Filter;
+                filtersModal = null;
+                await vm.LoadTransactionsAsync();
+
+                // remember to remove the event handler:
+                App.Current.ModalPopping -= HandleModalPopping;
+            }
         }
     }
 }

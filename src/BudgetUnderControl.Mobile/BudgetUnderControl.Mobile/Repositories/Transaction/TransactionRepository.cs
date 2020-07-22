@@ -134,7 +134,7 @@ namespace BudgetUnderControl.Mobile.Repositories
 
             if (filter != null && filter.CategoryIds != null && filter.CategoryIds.Any())
             {
-                query = query.Where(q => filter.CategoryIds.Contains(q.CategoryId)).AsQueryable();
+                query = query.Where(q => q.CategoryId.HasValue && filter.CategoryIds.Contains(q.CategoryId.Value)).AsQueryable();
             }
 
             if (filter != null && filter.TagIds != null && filter.TagIds.Any())

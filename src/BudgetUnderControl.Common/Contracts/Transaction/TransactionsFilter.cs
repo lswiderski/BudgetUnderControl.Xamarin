@@ -8,7 +8,7 @@ namespace BudgetUnderControl.Common.Contracts
     {
         public IEnumerable<int> AccountsIds { get; set; }
         public IEnumerable<Guid> AccountsExternalIds { get; set; }
-        public IEnumerable<int?> CategoryIds { get; set; }
+        public IEnumerable<int> CategoryIds { get; set; }
         public IEnumerable<int> TagIds { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }

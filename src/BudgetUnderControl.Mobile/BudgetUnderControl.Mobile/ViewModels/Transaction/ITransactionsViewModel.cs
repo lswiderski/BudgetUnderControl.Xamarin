@@ -20,5 +20,7 @@ namespace BudgetUnderControl.ViewModel
         Task LoadTransactionsAsync();
         Task SetNextMonth();
         Task SetPreviousMonth();
+
+        TransactionsFilter Filter { get; set; }
     }
 }

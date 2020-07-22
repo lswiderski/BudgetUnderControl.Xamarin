@@ -37,6 +37,8 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+        public TransactionsFilter Filter { get; set; }
+
         private DateTime fromDate;
         public DateTime FromDate
     {
@@ -71,7 +73,7 @@ namespace BudgetUnderControl.ViewModel
         {
             get
             {
-                return string.Format("{0}-{1}", FromDate.ToString("dd.MM.yyyy"), ToDate.ToString("dd.MM.yyyy"));
+                return string.Format("{0}-{1}", Filter.FromDate?.ToString("dd.MM.yyyy"), Filter.ToDate?.ToString("dd.MM.yyyy"));
             }
         }
 
@@ -123,11 +125,12 @@ namespace BudgetUnderControl.ViewModel
             var now = DateTime.UtcNow;
             FromDate = new DateTime(now.Year, now.Month, 1,0,0,0);
             ToDate = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
+            this.Filter = new TransactionsFilter { FromDate = FromDate, ToDate = ToDate, SearchQuery = Search };
         }
 
         public async Task LoadTransactionsAsync()
         {
-            var transactions = await transactionService.GetTransactionsAsync(new TransactionsFilter { FromDate = FromDate, ToDate= ToDate, SearchQuery = Search} );
+            var transactions = await transactionService.GetTransactionsAsync(Filter);
 
             var dtos = transactions.Select(t => new TransactionListItemDTO
             {
@@ -157,13 +160,15 @@ namespace BudgetUnderControl.ViewModel
             Transactions = new ObservableCollection<ObservableGroupCollection<string, TransactionListItemDTO>>(dtos);
 
             SetIncomeExpense();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActualRange)));
         }
 
         public async Task SetNextMonth()
         {
             FromDate = new DateTime(FromDate.Year, FromDate.Month, 1, FromDate.Hour, FromDate.Minute, FromDate.Second).AddMonths(1);
             ToDate = new DateTime(FromDate.Year, FromDate.Month, DateTime.DaysInMonth(FromDate.Year, FromDate.Month), ToDate.Hour, ToDate.Minute, ToDate.Second);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActualRange)));
+            this.Filter.FromDate = FromDate;
+            this.Filter.ToDate = ToDate;
             await LoadTransactionsAsync();
         }
 
@@ -171,7 +176,8 @@ namespace BudgetUnderControl.ViewModel
         {
             FromDate = new DateTime(FromDate.Year, FromDate.Month, 1, FromDate.Hour, FromDate.Minute, FromDate.Second).AddMonths(-1);
             ToDate = new DateTime(FromDate.Year, FromDate.Month, DateTime.DaysInMonth(FromDate.Year, FromDate.Month), ToDate.Hour, ToDate.Minute, ToDate.Second);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActualRange)));
+            this.Filter.FromDate = FromDate;
+            this.Filter.ToDate = ToDate;
             await LoadTransactionsAsync();
         }
 

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             x:Class="BudgetUnderControl.Views.Filters">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="*"  />
+                        <ColumnDefinition  Width="*"  />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Row="0" Grid.Column="0">
+                        <Label Text="From: "/>
+                        <DatePicker Date="{Binding FromDate, Mode=TwoWay}" Format="d" ></DatePicker>
+                    </StackLayout>
+                    <StackLayout  Grid.Row="0" Grid.Column="1">
+                        <Label Text="To: " />
+                        <DatePicker Date="{Binding ToDate, Mode=TwoWay}" Format="d" ></DatePicker>
+                    </StackLayout >
+                </Grid>
+                <Entry Text="{Binding Text}" Placeholder="Search" HeightRequest="60" Margin="0,10" />
+                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Tags">
+                <syncfusion:SfComboBox  x:Name="tagComboBox" 
+                                        DataSource="{ Binding Tags}" 
+                                        DisplayMemberPath="Name" 
+                                        MultiSelectMode="Token" 
+                                        TokensWrapMode="Wrap" 
+                                        IsSelectedItemsVisibleInDropDown="false" 
+                                        IsEditableMode="true" 
+                                        AllowFiltering="true" 
+                                        SuggestionMode="Contains" 
+                                        SelectionChanged="Tags_SelectionChanged" 
+                                        SelectedIndices="{Binding SelectedTagIndices}">
+                    </syncfusion:SfComboBox>
+                </inputLayout:SfTextInputLayout>
+                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Categories">
+                <syncfusion:SfComboBox x:Name="categoryComboBox" 
+                                       DataSource="{ Binding Categories}" 
+                                       DisplayMemberPath="Name" 
+                                       MultiSelectMode="Token" 
+                                       TokensWrapMode="Wrap" 
+                                       IsSelectedItemsVisibleInDropDown="false" 
+                                       IsEditableMode="true" 
+                                       AllowFiltering="true" 
+                                       SuggestionMode="Contains" 
+                                       SelectionChanged="Category_SelectionChanged" 
+                                       SelectedIndices="{Binding SelectedCategoryIndices}">
+                    </syncfusion:SfComboBox>
+                </inputLayout:SfTextInputLayout>
+                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Accounts">
+                <syncfusion:SfComboBox x:Name="accountComboBox" 
+                                       DataSource="{ Binding Accounts}"
+                                       DisplayMemberPath="Name" 
+                                       MultiSelectMode="Token" 
+                                       TokensWrapMode="Wrap" 
+                                       IsSelectedItemsVisibleInDropDown="false" 
+                                       IsEditableMode="true" 
+                                       AllowFiltering="true" 
+                                       SuggestionMode="Contains"  
+                                       SelectionChanged="Account_SelectionChanged"  
+                                       SelectedIndices="{Binding SelectedAccountIndices}">
+                    </syncfusion:SfComboBox>
+                </inputLayout:SfTextInputLayout>
+                <StackLayout Orientation="Horizontal">
+                <Button Text="Filter" Clicked="OnSearchButtonClicked"  Margin="10,10,10,0"  BackgroundColor="Blue" TextColor="White"/>
+                <Button Text="Reset" Clicked="OnResetButtonClicked"  Margin="10,10,10,0" BackgroundColor="Red" TextColor="White"/>
+            </StackLayout>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

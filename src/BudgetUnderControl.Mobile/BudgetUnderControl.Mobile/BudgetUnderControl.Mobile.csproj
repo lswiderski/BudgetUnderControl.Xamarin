@@ -92,6 +92,9 @@
     <EmbeddedResource Update="Views\Currency\ExchangeRates.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Filters\Filters.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\Login.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -144,6 +147,9 @@
     </Compile>
     <Compile Update="Views\DebugMenu.xaml.cs">
       <DependentUpon>DebugMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Filters\Filters.xaml.cs">
+      <DependentUpon>Filters.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

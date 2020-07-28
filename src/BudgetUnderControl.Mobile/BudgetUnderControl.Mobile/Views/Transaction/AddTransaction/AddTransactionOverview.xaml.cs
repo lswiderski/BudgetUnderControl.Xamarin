@@ -24,8 +24,22 @@ namespace BudgetUnderControl.Views
 
             amount.Completed += (object sender, EventArgs e) => { name.Focus(); };
             name.Completed += (object sender, EventArgs e) => { type.Focus(); };
-            type.Unfocused += (object sender, FocusEventArgs e) => { account.Focus(); };
-            account.Unfocused += (object sender, FocusEventArgs e) => { categories.Focus(); };
+            type.Unfocused += (object sender, FocusEventArgs e) =>
+            {
+                if (account.SelectedItem == null)
+                {
+                    account.Focus();
+                }
+
+            };
+            account.Unfocused += (object sender, FocusEventArgs e) => 
+            {
+                if(categories.SelectedItem == null)
+                {
+                    categories.Focus();
+                }
+              
+            };
         }
 
         public void SetContext(IAddTransactionViewModel model)

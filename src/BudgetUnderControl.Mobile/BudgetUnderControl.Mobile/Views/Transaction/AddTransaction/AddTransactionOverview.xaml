@@ -19,7 +19,7 @@
                 <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name"></Entry>
                
                 <Picker x:Name="type" ItemsSource="{Binding Types}" SelectedIndex="{Binding  SelectedTypeIndex, Mode=TwoWay}" Title="Type" />
-                <syncfusion:SfComboBox HeightRequest="40" x:Name="account" DataSource="{ Binding Accounts}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedAccountIndex, Mode=TwoWay}" Watermark="Account" >
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="account" DataSource="{ Binding Accounts}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedAccountIndex, Mode=TwoWay}" Watermark="Account" ShowSuggestionsOnFocus="True" IsEditableMode="True">
                     <syncfusion:SfComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
@@ -29,7 +29,7 @@
                         </DataTemplate>
                     </syncfusion:SfComboBox.ItemTemplate>
                 </syncfusion:SfComboBox>
-                <syncfusion:SfComboBox HeightRequest="40" x:Name="categories" DataSource="{ Binding Categories}" DisplayMemberPath="Name" SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Watermark="Category" >
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="categories" DataSource="{ Binding Categories}" DisplayMemberPath="Name" SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Watermark="Category" ShowSuggestionsOnFocus="True" IsEditableMode="True">
                     <syncfusion:SfComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">

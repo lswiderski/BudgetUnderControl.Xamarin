@@ -52,6 +52,7 @@ namespace BudgetUnderControl.Mobile.Repositories
 
         public async Task UpdateExchangeRateAsync(ExchangeRate rate)
         {
+            rate.UpdateModify();
             this.Context.ExchangeRates.Update(rate);
             await this.Context.SaveChangesAsync();
         }

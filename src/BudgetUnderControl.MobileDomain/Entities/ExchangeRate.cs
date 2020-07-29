@@ -39,7 +39,8 @@ namespace BudgetUnderControl.MobileDomain
                 Rate = rate,
                 Date = date ?? DateTime.UtcNow,
                 ExternalId = !string.IsNullOrEmpty(externalId) ? externalId : Guid.NewGuid().ToString(),
-                IsDeleted = isDeleted,
+                IsDeleted = isDeleted, 
+                ModifiedOn = DateTime.UtcNow
             };
         }
 

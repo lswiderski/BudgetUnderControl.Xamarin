@@ -31,9 +31,9 @@ namespace BudgetUnderControl.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-
+            mainFrame.Children.Clear();
             var balance = await vm.GetCurrentBalanceAsync();
-
+            
             var totalBalance = balance.Where(x => x.IsExchanged).FirstOrDefault();
             mainFrame.Children.Add(new Label { Text = $"Total: {totalBalance.Value}" });
             mainFrame.Children.Add(new Label { Text = string.Empty });

@@ -15,44 +15,24 @@ namespace BudgetUnderControl.ViewModel
         IAccountService accountService;
         ICurrencyService currencyService;
         private readonly GeneralSettings settings;
-        public OverviewViewModel(IAccountService accountModel, ICurrencyService currencyService, GeneralSettings settings)
+        private readonly IBalanceService balanceService;
+        public OverviewViewModel(IAccountService accountModel, ICurrencyService currencyService, IBalanceService balanceService, GeneralSettings settings)
         {
             this.accountService = accountModel;
             this.currencyService = currencyService;
+            this.balanceService = balanceService;
             this.settings = settings;
             this.AdUnitId = settings.AdMobAdId;
         }
 
         public string AdUnitId { get; set; }
 
-        public async Task<Dictionary<string, decimal>> GetTotalsAsync()
+        public async Task<IEnumerable<BalanceDto>> GetCurrentBalanceAsync()
         {
-            Dictionary<string, decimal> result = new Dictionary<string, decimal>();
-            var accounts = await accountService.GetAccountsWithBalanceAsync();
+            var balance = await this.balanceService.GetTotalCurrentBalanceAsync();
 
-            foreach (var account in accounts)
-            {
-                if(!account.ParentAccountId.HasValue)
-                {
-                    if (!result.ContainsKey(account.Currency))
-                    {
-                        result.Add(account.Currency, account.Balance);
-                    }
-                    else
-                    {
-                        result[account.Currency] += account.Balance;
-                    }
-                }
-
-            }
-
-            return result;
+            return balance.Total;
         }
-
-        public async Task<decimal> CalculateValueAsync(decimal amount, string fromCurrencyCode, string toCurrencyCode)
-        {
-            var value = await this.currencyService.TransformAmountAsync(amount, fromCurrencyCode, toCurrencyCode);
-            return value;
-        }
+     
     }
 }

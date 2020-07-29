@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetUnderControl.Mobile.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,7 @@ namespace BudgetUnderControl.ViewModel
 {
     public interface IOverviewViewModel
     {
-        Task<Dictionary<string, decimal>> GetTotalsAsync();
-        Task<decimal> CalculateValueAsync(decimal amount, string fromCurrencyCode, string toCurrencyCode);
+        Task<IEnumerable<BalanceDto>> GetCurrentBalanceAsync();
 
         string AdUnitId { get; set; }
     }

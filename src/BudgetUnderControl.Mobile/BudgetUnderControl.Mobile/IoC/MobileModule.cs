@@ -115,6 +115,7 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<CurrencyViewModel>().As<ICurrencyViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<IconService>().As<IIconService>().InstancePerLifetimeScope();
             builder.RegisterType<FiltersViewModel>().As<IFiltersViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<BalanceService>().As<IBalanceService>().InstancePerLifetimeScope();
 
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             var apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;

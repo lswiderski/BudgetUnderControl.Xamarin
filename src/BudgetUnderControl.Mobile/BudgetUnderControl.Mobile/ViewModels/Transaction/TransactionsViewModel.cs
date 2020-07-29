@@ -105,6 +105,34 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+        private string otherIncome;
+        public string OtherIncome
+        {
+            get => otherIncome;
+            set
+            {
+                if (otherIncome != value)
+                {
+                    otherIncome = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OtherIncome)));
+                }
+            }
+        }
+
+        private string otherExpense;
+        public string OtherExpense
+        {
+            get => otherExpense;
+            set
+            {
+                if (otherExpense != value)
+                {
+                    otherExpense = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OtherExpense)));
+                }
+            }
+        }
+
         private string numberOfTransactions;
         public string NumberOfTransactions
         {
@@ -118,10 +146,13 @@ namespace BudgetUnderControl.ViewModel
                 }
             }
         }
-        
-        public TransactionsViewModel(ITransactionService transactionService)
+
+        private readonly IBalanceService balanceService;
+
+        public TransactionsViewModel(ITransactionService transactionService, IBalanceService balanceService)
         {
             this.transactionService = transactionService;
+            this.balanceService = balanceService;
             var now = DateTime.UtcNow;
             FromDate = new DateTime(now.Year, now.Month, 1,0,0,0);
             ToDate = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
@@ -159,7 +190,7 @@ namespace BudgetUnderControl.ViewModel
 
             Transactions = new ObservableCollection<ObservableGroupCollection<string, TransactionListItemDTO>>(dtos);
 
-            SetIncomeExpense();
+            await SetIncomeExpense();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActualRange)));
         }
 
@@ -181,52 +212,35 @@ namespace BudgetUnderControl.ViewModel
             await LoadTransactionsAsync();
         }
 
-        private void SetIncomeExpense()
+        private async Task SetIncomeExpense()
         {
-            decimal _income = 0m;
-            decimal _expense = 0m;
-            int noTransactions = 0;
-
             var trans = Transactions.SelectMany(x => x.Select(y => y)).ToList();
-            foreach (var item in trans)
+
+            NumberOfTransactions = trans.Where(x => x.IsTransfer == false).Count().ToString();
+
+            var balance = await this.balanceService.GetBalanceAsync(trans);
+
+            Expense = balance.Expenses.Where(x => x.IsExchanged).FirstOrDefault().Value.ToString();
+            Income = balance.Incomes.Where(x => x.IsExchanged).FirstOrDefault().Value.ToString();
+
+            if (balance.Expenses.Count > 2)
             {
-                if(item.IsTransfer == false)
-                {
-                    decimal _value = 0;
-
-                    switch (item.CurrencyCode)
-                    {
-                        case "PLN":
-                            _value = item.Value * 1m;
-                            break;
-                        case "USD":
-                            _value = item.Value * 3.66m;
-                            break;
-                        case "EUR":
-                            _value = item.Value * 4.26m;
-                            break;
-                        case "THB":
-                            _value = item.Value * 0.11m;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    if (item.Value > 0)
-                    {
-                        _income += _value;
-                    }
-                    else
-                    {
-                        _expense += _value;
-                    }
-                }
-               
-                noTransactions++;
+                OtherExpense = string.Join(" ",balance.Expenses.Where(x => !x.IsExchanged).Select(x => $"{x.Value} {x.Currency}").ToList());
             }
-            NumberOfTransactions = noTransactions.ToString();
-            Expense = _expense.ToString();
-            Income = _income.ToString();
+            else
+            {
+                OtherExpense = string.Empty;
+            }
+
+            if (balance.Incomes.Count > 2)
+            {
+                OtherIncome = string.Join(" ", balance.Incomes.Where(x => !x.IsExchanged).Select(x => $"{x.Value} {x.Currency}").ToList());
+            }
+            else
+            {
+                OtherIncome = string.Empty;
+
+            }
         }
 
     }

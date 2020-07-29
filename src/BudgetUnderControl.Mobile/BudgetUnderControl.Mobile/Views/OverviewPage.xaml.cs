@@ -31,19 +31,18 @@ namespace BudgetUnderControl.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var dict = await vm.GetTotalsAsync();
-            string plnCode = "PLN";
-            string eurCode = "EUR";
-            string usdCode = "USD";
-            string format = "0.##";
-            string defaultValue = "0";
-            pln.Text = dict.ContainsKey(plnCode) ? dict[plnCode].ToString(format) : defaultValue;
-            usd.Text = dict.ContainsKey(usdCode) ? dict[usdCode].ToString(format) : defaultValue;
-            eur.Text = dict.ContainsKey(eurCode) ? dict[eurCode].ToString(format) : defaultValue;
 
-            total.Text = ((dict.ContainsKey(plnCode) ? dict[plnCode] : 0)
-                + (await vm.CalculateValueAsync(dict.ContainsKey(usdCode) ? dict[usdCode] : 0, usdCode, plnCode))
-                + (await vm.CalculateValueAsync(dict.ContainsKey(eurCode) ? dict[eurCode] : 0, eurCode, plnCode))).ToString("0.##");
+            var balance = await vm.GetCurrentBalanceAsync();
+
+            var totalBalance = balance.Where(x => x.IsExchanged).FirstOrDefault();
+            mainFrame.Children.Add(new Label { Text = $"Total: {totalBalance.Value}" });
+            mainFrame.Children.Add(new Label { Text = string.Empty });
+            List<string> curenciesToShow = new List<string> { "PLN", "EUR", "USD" };
+            foreach (var item in balance.Where(x => !x.IsExchanged && x.Value != 0 && curenciesToShow.Contains(x.Currency)).OrderBy(x => x.Currency))
+            {
+                mainFrame.Children.Add(new Label { Text = $"{item.Currency}: {item.Value}" });
+            }
+           
         }
 
 

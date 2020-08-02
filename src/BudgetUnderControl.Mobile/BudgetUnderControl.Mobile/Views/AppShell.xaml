@@ -30,7 +30,23 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="&#xf3d1;" FontFamily="FAR" Size="24" Color="Black" />
         </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate local:Transactions}" />
+        <Tab Title="List">
+            <Tab.Icon>
+                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.List}" FontFamily="FAS" Size="24" Color="Black" />
+            </Tab.Icon>
+            <ShellContent>
+                <local:Transactions />
+            </ShellContent>
+        </Tab>
+        <Tab Title="Charts">
+            <Tab.Icon>
+                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.ChartPie}" FontFamily="FAS" Size="24" Color="Black" />
+            </Tab.Icon>
+            <ShellContent>
+                <local:Charts />
+            </ShellContent>
+        </Tab>
+       
     </FlyoutItem>
     <FlyoutItem  Route="Currencies" Title="Currencies">
         <FlyoutItem.Icon>

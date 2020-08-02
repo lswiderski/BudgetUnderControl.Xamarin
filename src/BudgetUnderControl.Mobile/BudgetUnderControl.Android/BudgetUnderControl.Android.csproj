@@ -291,6 +291,12 @@
     <Reference Include="Syncfusion.Licensing, Version=18.2.0.47, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Licensing.18.2.0.47\lib\MonoAndroid10\Syncfusion.Licensing.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms, Version=18.2451.0.47, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.18.2.0.47\lib\MonoAndroid10\Syncfusion.SfChart.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms.Android, Version=18.2451.0.47, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.SfChart.18.2.0.47\lib\MonoAndroid10\Syncfusion.SfChart.XForms.Android.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.SfComboBox.XForms, Version=18.2451.0.47, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.Xamarin.SfComboBox.18.2.0.47\lib\MonoAndroid10\Syncfusion.SfComboBox.XForms.dll</HintPath>
     </Reference>

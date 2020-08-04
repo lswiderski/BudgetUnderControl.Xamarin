@@ -1,6 +1,7 @@
 ﻿using BudgetUnderControl.Common.Contracts;
 using BudgetUnderControl.Mobile.Services;
 using BudgetUnderControl.Mobile.ViewModels;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,16 +22,20 @@ namespace BudgetUnderControl.ViewModel
 
         private readonly ICategoryReportService categoryReportService;
         private readonly IExpensesReportService expensesReportService;
+
         public ChartsViewModel(ICategoryReportService categoryReportService, IExpensesReportService expensesReportService)
         {
             this.categoryReportService = categoryReportService;
             this.expensesReportService = expensesReportService;
-
             var now = DateTime.UtcNow;
             var fromDate = new DateTime(now.Year, now.Month, 1, 0, 0, 0);
             var toDate = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
+
             this.Filter = new TransactionsFilter { FromDate = fromDate, ToDate = toDate };
+            
         }
+
+        
 
         public async Task LoadCategoryPieChartAsync()
         {

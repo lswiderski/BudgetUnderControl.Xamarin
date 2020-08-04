@@ -1,5 +1,8 @@
 ﻿using Autofac;
+using BudgetUnderControl.Common.Contracts;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.ViewModel;
+using Microsoft.Extensions.Caching.Memory;
 using MoreLinq;
 using Syncfusion.SfChart.XForms;
 using System;
@@ -17,12 +20,14 @@ namespace BudgetUnderControl.Views
     public partial class Charts : TabbedPage
     {
         IChartsViewModel vm;
+        private readonly IMemoryCache memoryCache;
         Filters filtersModal;
         public Charts()
         {
             using (var scope = App.Container.BeginLifetimeScope())
             {
                 this.BindingContext = vm = scope.Resolve<IChartsViewModel>();
+                memoryCache = scope.Resolve<IMemoryCache>();
             }
             InitializeComponent();
         }
@@ -43,8 +48,15 @@ namespace BudgetUnderControl.Views
                 // now we can retrieve that phone number:
                 vm.Filter = filtersModal.vm.Filter;
                 filtersModal = null;
-                await vm.LoadCategoryPieChartAsync();
-                await vm.LoadExpensesColumnChartAsync();
+                if(this.CurrentPage.Title == "Expenses")
+                {
+                    await vm.LoadExpensesColumnChartAsync();
+                }
+                else if(this.CurrentPage.Title == "Categories")
+                {
+                    await vm.LoadCategoryPieChartAsync();
+                }
+                
                 expensesChart.RebuildStackedChart();
                 // remember to remove the event handler:
                 App.Current.ModalPopping -= HandleModalPopping;
@@ -59,6 +71,16 @@ namespace BudgetUnderControl.Views
 
             pieChart.SetContext(vm);
             expensesChart.SetContext(vm);
+            TryGetFilter();
+        }
+
+        public void TryGetFilter()
+        {
+            TransactionsFilter _filter;
+            if (memoryCache.TryGetValue(CacheKeys.Filters, out _filter))
+            {
+                vm.Filter = _filter;
+            }
         }
     }
 }

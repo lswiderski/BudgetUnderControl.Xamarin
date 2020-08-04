@@ -71,7 +71,7 @@ namespace BudgetUnderControl.Mobile.IoC
             });
 
             builder.RegisterInstance(new ContextConfig() { DbName = settings.BUC_DB_Name, DbPath = dbPath, Application = ApplicationType.Mobile , ConnectionString = "Filename=" }).As<IContextConfig>();
-            
+            builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions() {  })).As<IMemoryCache>();
             builder.RegisterType<BaseModel>().As<IBaseModel>().InstancePerLifetimeScope();
             builder.RegisterType<AccountMobileService>().As<IAccountMobileService>().InstancePerLifetimeScope();
             builder.RegisterType<AccountMobileService>().As<IAccountService>().InstancePerLifetimeScope();

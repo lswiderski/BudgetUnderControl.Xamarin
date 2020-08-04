@@ -1,7 +1,9 @@
 ﻿using BudgetUnderControl.Common.Contracts;
 using BudgetUnderControl.CommonInfrastructure;
 using BudgetUnderControl.Mobile;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.Mobile.ViewModels;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -103,14 +105,15 @@ namespace BudgetUnderControl.ViewModel
         IAccountMobileService accountService;
         ICategoryService categoryService;
         ITagService tagService;
+        private readonly IMemoryCache memoryCache;
 
 
-
-        public FiltersViewModel(IAccountMobileService accountService, ICategoryService categoryService, ITagService tagService)
+        public FiltersViewModel(IAccountMobileService accountService, ICategoryService categoryService, ITagService tagService, IMemoryCache memoryCache)
         {
             this.accountService = accountService;
             this.categoryService = categoryService;
             this.tagService = tagService;
+            this.memoryCache = memoryCache;
 
             this.GetDropdowns();
         }
@@ -129,8 +132,8 @@ namespace BudgetUnderControl.ViewModel
             ToDate = filter.ToDate ?? DateTime.Now.Date;
             FromDate = filter.FromDate ?? DateTime.Now.Date;
             Text = filter.SearchQuery;
-
-            if(this.Filter.AccountsIds != null)
+            
+            if (this.Filter.AccountsIds != null)
             {
                 var accountIndexes = new List<int>();
                 foreach (var id in this.Filter.AccountsIds)
@@ -162,7 +165,7 @@ namespace BudgetUnderControl.ViewModel
                 }
                 this.SelectedTagIndices = tagIndexes;
             }
-           
+            memoryCache.Set(CacheKeys.Filters, this.Filter, DateTimeOffset.Now.AddMinutes(5));
         }
 
         public TransactionsFilter BuildFilter()
@@ -183,7 +186,7 @@ namespace BudgetUnderControl.ViewModel
             ToDate = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
             Text = string.Empty;
             this.Filter = new TransactionsFilter { FromDate = FromDate, ToDate = ToDate, SearchQuery = Text };
-
+            memoryCache.Set(CacheKeys.Filters, this.Filter, DateTimeOffset.Now.AddMinutes(5));
             return this.Filter;
         }
     }

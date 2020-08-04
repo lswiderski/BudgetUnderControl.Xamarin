@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BudgetUnderControl.CommonInfrastructure;
+using Microsoft.Extensions.Caching.Memory;
+using BudgetUnderControl.Mobile.Keys;
 
 namespace BudgetUnderControl.ViewModel
 {
@@ -148,19 +150,30 @@ namespace BudgetUnderControl.ViewModel
         }
 
         private readonly IBalanceService balanceService;
-
-        public TransactionsViewModel(ITransactionService transactionService, IBalanceService balanceService)
+        private readonly IMemoryCache memoryCache;
+        public TransactionsViewModel(ITransactionService transactionService, IBalanceService balanceService, IMemoryCache memoryCache)
         {
             this.transactionService = transactionService;
             this.balanceService = balanceService;
+            this.memoryCache = memoryCache;
+
             var now = DateTime.UtcNow;
             FromDate = new DateTime(now.Year, now.Month, 1,0,0,0);
             ToDate = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
-            this.Filter = new TransactionsFilter { FromDate = FromDate, ToDate = ToDate, SearchQuery = Search };
+            TransactionsFilter _filter;
+            if (memoryCache.TryGetValue(CacheKeys.Filters, out _filter))
+            {
+                this.Filter = _filter;
+            }
+            else
+            {
+                this.Filter = new TransactionsFilter { FromDate = fromDate, ToDate = toDate, SearchQuery = Search };
+            }
         }
 
         public async Task LoadTransactionsAsync()
         {
+            memoryCache.Set(CacheKeys.Filters, this.Filter, DateTimeOffset.Now.AddMinutes(5));
             var transactions = await transactionService.GetTransactionsAsync(Filter);
 
             var dtos = transactions.Select(t => new TransactionListItemDTO

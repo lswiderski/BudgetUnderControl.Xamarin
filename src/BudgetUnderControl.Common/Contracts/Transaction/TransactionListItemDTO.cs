@@ -15,6 +15,7 @@ namespace BudgetUnderControl.Common.Contracts
         public TransactionType Type { get; set; }
         public decimal Value { get; set; }
         public string ValueWithCurrency { get; set; }
+        public decimal ValueInMainCurrency { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
         public string CurrencyCode { get; set; }

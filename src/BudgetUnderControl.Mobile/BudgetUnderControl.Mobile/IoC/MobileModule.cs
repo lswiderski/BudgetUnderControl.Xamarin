@@ -23,6 +23,7 @@ using BudgetUnderControl.CommonInfrastructure;
 using BudgetUnderControl.MobileDomain.Repositiories;
 using BudgetUnderControl.Mobile.Repositories;
 using FluentValidation;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BudgetUnderControl.Mobile.IoC
 {
@@ -70,7 +71,7 @@ namespace BudgetUnderControl.Mobile.IoC
             });
 
             builder.RegisterInstance(new ContextConfig() { DbName = settings.BUC_DB_Name, DbPath = dbPath, Application = ApplicationType.Mobile , ConnectionString = "Filename=" }).As<IContextConfig>();
-
+            
             builder.RegisterType<BaseModel>().As<IBaseModel>().InstancePerLifetimeScope();
             builder.RegisterType<AccountMobileService>().As<IAccountMobileService>().InstancePerLifetimeScope();
             builder.RegisterType<AccountMobileService>().As<IAccountService>().InstancePerLifetimeScope();
@@ -118,6 +119,7 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<BalanceService>().As<IBalanceService>().InstancePerLifetimeScope();
             builder.RegisterType<ChartsViewModel>().As<IChartsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<CategoryReportService>().As<ICategoryReportService>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpensesReportService>().As<IExpensesReportService>().InstancePerLifetimeScope();
 
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             var apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;

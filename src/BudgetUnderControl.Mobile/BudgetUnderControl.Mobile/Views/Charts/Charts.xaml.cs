@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using BudgetUnderControl.ViewModel;
+using MoreLinq;
+using Syncfusion.SfChart.XForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,17 +44,21 @@ namespace BudgetUnderControl.Views
                 vm.Filter = filtersModal.vm.Filter;
                 filtersModal = null;
                 await vm.LoadCategoryPieChartAsync();
-
+                await vm.LoadExpensesColumnChartAsync();
+                expensesChart.RebuildStackedChart();
                 // remember to remove the event handler:
                 App.Current.ModalPopping -= HandleModalPopping;
             }
         }
+
+       
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             pieChart.SetContext(vm);
+            expensesChart.SetContext(vm);
         }
     }
 }

@@ -19,5 +19,7 @@ namespace BudgetUnderControl.CommonInfrastructure
         Task AddExchangeRateAsync(AddExchangeRate command);
         Task<decimal> TransformAmountAsync(decimal amount, int fromCurrencyId, int toCurrencyId);
         Task<decimal> TransformAmountAsync(decimal amount, string fromCurrencyCode, string toCurrencyCode);
+
+        Task<decimal> GetValueInCurrencyAsync(IList<ExchangeRateDTO> rates, string currentCurrency, string targetCurrency, decimal value, DateTime date);
     }
 }

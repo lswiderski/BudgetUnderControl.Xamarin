@@ -23,23 +23,40 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly IFileRepository fileRepository;
         private readonly IUserRepository userRepository;
         private readonly IIconService iconService;
+        private readonly ICurrencyService currencyService;
+        private readonly ICurrencyRepository currencyRepository;
         public TransactionService(ITransactionRepository transactionRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
             IFileRepository fileRepository,
-            IIconService iconService)
+            IIconService iconService,
+            ICurrencyService currencyService,
+            ICurrencyRepository currencyRepository)
         {
             this.transactionRepository = transactionRepository;
             this.userRepository = userRepository;
             this.tagRepository = tagRepository;
             this.fileRepository = fileRepository;
             this.iconService = iconService;
+            this.currencyService = currencyService;
+            this.currencyRepository = currencyRepository;
         }
 
         public async Task<ICollection<TransactionListItemDTO>> GetTransactionsAsync(TransactionsFilter filter = null)
         {
+            var exchangeRates = (await this.currencyRepository.GetExchangeRatesAsync())
+               .Select(x => new ExchangeRateDTO
+               {
+                   ToCurrencyCode = x.ToCurrency.Code,
+                   FromCurrencyCode = x.FromCurrency.Code,
+                   Date = x.Date,
+                   Rate = x.Rate
+               }).ToList();
+
+            var mainCurrency = "PLN";
+
             var transactions = await this.transactionRepository.GetTransactionsAsync(filter);
-            var dtos = transactions.Select(t => new TransactionListItemDTO
+            var dtos = transactions.Select(async t => new TransactionListItemDTO
             {
                 AccountId = t.AccountId,
                 Date = t.Date,
@@ -47,6 +64,7 @@ namespace BudgetUnderControl.Mobile.Services
                 Value = t.Amount,
                 Account = t.Account.Name,
                 ValueWithCurrency = t.Amount + t.Account.Currency.Symbol,
+                ValueInMainCurrency = await this.currencyService.GetValueInCurrencyAsync(exchangeRates, t.Account.Currency.Code, mainCurrency, t.Amount, t.Date),
                 Type = t.Type,
                 Name = t.Name,
                 CurrencyCode = t.Account.Currency.Code,
@@ -59,8 +77,9 @@ namespace BudgetUnderControl.Mobile.Services
                 CategoryIcon = iconService.GetIcon(t.Category?.Icon),
                 AccountIcon = iconService.GetIcon(t.Account?.Icon),
                 Tags = t.TagsToTransaction.Where(x => !x.Tag.IsDeleted).Select(x => new TagDTO { ExternalId = Guid.Parse(x.Tag.ExternalId), Id = x.Tag.Id, IsDeleted = x.Tag.IsDeleted, Name = x.Tag.Name }).ToList()
-
-            }).OrderByDescending(t => t.Date)
+            })
+                .Select(t => t.Result)
+                .OrderByDescending(t => t.Date)
             .ToList();
 
             return dtos;

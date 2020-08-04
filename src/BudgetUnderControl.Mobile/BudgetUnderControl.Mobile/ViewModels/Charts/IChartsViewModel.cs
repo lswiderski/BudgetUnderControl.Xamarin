@@ -14,5 +14,8 @@ namespace BudgetUnderControl.ViewModel
 
         public ObservableCollection<CategoryPieChartItemDto> CategoryPieChartData { get; set; }
         Task LoadCategoryPieChartAsync();
+
+        ObservableCollection<ExpensesColumnChartSeriesDto> ExpensesColumnChartData { get; set; }
+        Task LoadExpensesColumnChartAsync();
     }
 }

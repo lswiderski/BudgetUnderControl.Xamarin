@@ -20,9 +20,11 @@ namespace BudgetUnderControl.ViewModel
         }
 
         private readonly ICategoryReportService categoryReportService;
-        public ChartsViewModel(ICategoryReportService categoryReportService)
+        private readonly IExpensesReportService expensesReportService;
+        public ChartsViewModel(ICategoryReportService categoryReportService, IExpensesReportService expensesReportService)
         {
             this.categoryReportService = categoryReportService;
+            this.expensesReportService = expensesReportService;
 
             var now = DateTime.UtcNow;
             var fromDate = new DateTime(now.Year, now.Month, 1, 0, 0, 0);
@@ -36,11 +38,25 @@ namespace BudgetUnderControl.ViewModel
             this.CategoryPieChartData = new ObservableCollection<CategoryPieChartItemDto>(data);
         }
 
+
         ObservableCollection<CategoryPieChartItemDto> categoryPieChartData;
         public ObservableCollection<CategoryPieChartItemDto> CategoryPieChartData
         {
             get { return categoryPieChartData; }
             set { SetProperty(ref categoryPieChartData, value); }
+        }
+
+        public async Task LoadExpensesColumnChartAsync()
+        {
+            var data = await this.expensesReportService.GetExpensesChartDataAsync(this.Filter);
+            this.ExpensesColumnChartData = new ObservableCollection<ExpensesColumnChartSeriesDto> (data);
+        }
+
+        ObservableCollection<ExpensesColumnChartSeriesDto> expensesColumnChartData;
+        public ObservableCollection<ExpensesColumnChartSeriesDto> ExpensesColumnChartData
+        {
+            get { return expensesColumnChartData; }
+            set { SetProperty(ref expensesColumnChartData, value); }
         }
     }
 }

@@ -10,6 +10,7 @@
              Title="Charts">
     <TabbedPage.Children>
         <local:PieChart  Title="Categories" x:Name="pieChart"  BindingContext="{Binding vm}"/>
+        <local:ExpensesChart Title="Expenses" x:Name="expensesChart" BindingContext="{Binding vm}"/>
     </TabbedPage.Children>
     <TabbedPage.ToolbarItems>
         <ToolbarItem Order="Primary" Clicked="OnFilter_Clicked">

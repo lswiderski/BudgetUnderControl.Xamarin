@@ -25,7 +25,7 @@ namespace BudgetUnderControl.Mobile.Services
 
             var grouped = transactions
                 .GroupBy(x => x.Category)
-                .ToDictionary(x => x.Key, x => x.Select(x => x.Value).Sum())
+                .ToDictionary(x => x.Key, x => x.Select(x => x.ValueInMainCurrency).Sum())
                 .Select(x => new CategoryPieChartItemDto { Value = x.Value, CategoryName = x.Key })
                 .ToList();
 

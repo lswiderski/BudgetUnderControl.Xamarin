@@ -19,6 +19,7 @@ namespace BudgetUnderControl.Common.Contracts
         public int Order { get; set; }
         public AccountType Type { get; set; }
         public int? ParentAccountId { get; set; }
+        public string Icon { get; set; }
 
         public Guid AccountGroupExternalId { get; set; }
         public Guid? ParentAccountExternalId { get; set; }

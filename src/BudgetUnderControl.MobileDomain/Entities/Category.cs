@@ -36,7 +36,7 @@ namespace BudgetUnderControl.MobileDomain
             }
         }
 
-        public static Category Create(string name, int ownerId, string externalId)
+        public static Category Create(string name, int ownerId, string externalId, string icon = null)
         {
             return new Category
             {
@@ -45,14 +45,16 @@ namespace BudgetUnderControl.MobileDomain
                 ExternalId = !string.IsNullOrEmpty(externalId) ? externalId : Guid.NewGuid().ToString(),
                 ModifiedOn = DateTime.UtcNow,
                 IsDeleted = false,
-                IsDefault = false
+                IsDefault = false,
+                Icon = icon,
             };
         }
 
-        public void Edit(string name, int ownerId)
+        public void Edit(string name, int ownerId, string icon = null)
         {
             this.Name = name;
             this.OwnerId = ownerId;
+            this.Icon = icon;
             this.UpdateModify();
         }
 

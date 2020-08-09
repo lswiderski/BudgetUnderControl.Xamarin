@@ -184,6 +184,7 @@ namespace BudgetUnderControl.Mobile.Services
                 ParentAccountId = x.ParentAccountId,
                 Type = x.Type,
                 ModifiedOn = x.ModifiedOn,
+                Icon = x.Icon,
                 IsDeleted = x.IsDeleted
             }).ToList();
 
@@ -259,6 +260,7 @@ namespace BudgetUnderControl.Mobile.Services
                     ModifiedOn = x.ModifiedOn,
                     IsDeleted = x.IsDeleted,
                     OwnerId = x.OwnerId,
+                    Icon = x.Icon,
                 }).ToList();
 
             var userExternalId = (await this.userRepository.GetFirstUserAsync()).ExternalId;

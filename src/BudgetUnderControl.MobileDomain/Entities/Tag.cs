@@ -23,6 +23,7 @@ namespace BudgetUnderControl.MobileDomain
 
         public virtual User Owner { get; set; }
         public ICollection<TagToTransaction> TagToTransactions { get; set; }
+        public List<GoalCondition> GoalConditions { get; set; }
 
         public void Delete(bool delete = true)
         {

@@ -34,5 +34,7 @@ namespace BudgetUnderControl.MobileDomain
         DbSet<Transfer> Transfers { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Synchronization> Synchronizations { get; set; }
+        DbSet<Goal> Goals { get; set; }
+        DbSet<GoalCondition> GoalConditions { get; set; }
     }
 }

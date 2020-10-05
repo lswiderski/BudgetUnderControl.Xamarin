@@ -38,7 +38,7 @@ namespace BudgetUnderControl.MobileDomain
         public List<AccountSnapshot> AccountSnapshots { get; protected set; }
         public List<Transaction> Transactions { get; protected set; }
         public virtual User Owner { get; set; }
-
+        public List<GoalCondition> GoalConditions { get; set; }
 
         protected Account()
         {

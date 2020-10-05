@@ -31,6 +31,8 @@ namespace BudgetUnderControl.MobileDomain
         public virtual DbSet<Transfer> Transfers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Synchronization> Synchronizations { get; set; }
+        public virtual DbSet<Goal> Goals { get; set; }
+        public virtual DbSet<GoalCondition> GoalConditions { get; set; }
         
 
         public static Context Create(IContextConfig contextConfig)
@@ -105,6 +107,8 @@ namespace BudgetUnderControl.MobileDomain
             modelBuilder.Entity<Transfer>().ToTable("Transfer");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Synchronization>().ToTable("Synchronization");
+            modelBuilder.Entity<Goal>().ToTable("Goal");
+            modelBuilder.Entity<GoalCondition>().ToTable("GoalCondition");
 
             modelBuilder.Entity<Account>()
                 .HasOne(x => x.AccountGroup)
@@ -221,6 +225,34 @@ namespace BudgetUnderControl.MobileDomain
                .WithMany(y => y.FilesToTransaction)
                .HasForeignKey(x => x.TransactionId)
                .HasConstraintName("ForeignKey_FileToTransaction_Transaction");
+
+            modelBuilder.Entity<Goal>()
+               .HasOne(x => x.Owner)
+              .WithMany(y => y.Goals)
+              .HasForeignKey(x => x.UserId)
+              .HasConstraintName("ForeignKey_Goal_User")
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GoalCondition>()
+              .HasOne(x => x.Goal)
+             .WithMany(y => y.GoalConditions)
+             .HasForeignKey(x => x.GoalId)
+             .HasConstraintName("ForeignKey_GoalCondition_Goal")
+             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GoalCondition>()
+              .HasOne(x => x.Account)
+             .WithMany(y => y.GoalConditions)
+             .HasForeignKey(x => x.AccountId)
+             .HasConstraintName("ForeignKey_GoalCondition_Account")
+             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GoalCondition>()
+              .HasOne(x => x.Tag)
+             .WithMany(y => y.GoalConditions)
+             .HasForeignKey(x => x.TagId)
+             .HasConstraintName("ForeignKey_GoalCondition_Tag")
+             .OnDelete(DeleteBehavior.Restrict);
         }
 
         }

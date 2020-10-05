@@ -26,6 +26,7 @@ namespace BudgetUnderControl.MobileDomain
         public List<Account> Accounts { get; protected set; }
         public List<AccountGroup> AccountGroups { get; protected set; }
         public List<Transaction> Transactions { get; protected set; }
+        public List<Goal> Goals { get; protected set; }
 
         public void Delete(bool delete = true)
         {

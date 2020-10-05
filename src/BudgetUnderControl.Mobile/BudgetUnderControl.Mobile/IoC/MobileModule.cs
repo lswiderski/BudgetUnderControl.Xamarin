@@ -121,6 +121,15 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<CategoryReportService>().As<ICategoryReportService>().InstancePerLifetimeScope();
             builder.RegisterType<ExpensesReportService>().As<IExpensesReportService>().InstancePerLifetimeScope();
 
+            builder.RegisterType<GoalRepository>().As<IGoalRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<GoalService>().As<IGoalService>().InstancePerLifetimeScope();
+            builder.RegisterType<AddGoalConditionViewModel>().As<IAddGoalConditionViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<EditGoalConditionViewModel>().As<IEditGoalConditionViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<AddGoalViewModel>().As<IAddGoalViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<EditGoalViewModel>().As<IEditGoalViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<GoalViewModel>().As<IGoalViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<GoalsViewModel>().As<IGoalsViewModel>().InstancePerLifetimeScope();
+
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             var apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;
             builder.Register(ctx => new HttpClient() { BaseAddress = new Uri(apiUrl), Timeout = TimeSpan.FromMinutes(5)

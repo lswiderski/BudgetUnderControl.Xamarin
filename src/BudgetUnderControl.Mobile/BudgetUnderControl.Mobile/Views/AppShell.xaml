@@ -48,6 +48,12 @@
         </Tab>
        
     </FlyoutItem>
+    <FlyoutItem  Route="Goals" Title="Goals">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.Crosshairs}" FontFamily="FAS" Size="24" Color="Black" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate local:Goals}" />
+    </FlyoutItem>
     <FlyoutItem  Route="Currencies" Title="Currencies">
         <FlyoutItem.Icon>
             <FontImageSource Glyph="&#xf155;" FontFamily="FAS" Size="24" Color="Black" />

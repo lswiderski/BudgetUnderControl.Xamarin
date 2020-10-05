@@ -139,5 +139,16 @@ namespace BudgetUnderControl.MobileDomain
             get => _context.Synchronizations;
             set => _context.Synchronizations = value;
         }
+
+        public DbSet<Goal> Goals
+        {
+            get => _context.Goals;
+            set => _context.Goals = value;
+        }
+        public DbSet<GoalCondition> GoalConditions
+        {
+            get => _context.GoalConditions;
+            set => _context.GoalConditions = value;
+        }
     }
 }

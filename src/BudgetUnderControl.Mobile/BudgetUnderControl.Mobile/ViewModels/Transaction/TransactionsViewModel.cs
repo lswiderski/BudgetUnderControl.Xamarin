@@ -229,7 +229,15 @@ namespace BudgetUnderControl.ViewModel
         {
             var trans = Transactions.SelectMany(x => x.Select(y => y)).ToList();
 
-            NumberOfTransactions = trans.Where(x => x.IsTransfer == false).Count().ToString();
+            if(Filter.AccountsIds != null && Filter.AccountsIds.Any())
+            {
+                NumberOfTransactions = trans.Count().ToString();
+            }
+            else
+            {
+                NumberOfTransactions = trans.Where(x => x.IsTransfer == false).Count().ToString();
+            }
+           
 
             var balance = await this.balanceService.GetBalanceAsync(trans);
 

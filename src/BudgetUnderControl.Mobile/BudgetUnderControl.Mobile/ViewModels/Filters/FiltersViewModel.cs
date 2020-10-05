@@ -130,6 +130,7 @@ namespace BudgetUnderControl.ViewModel
             Filter = filter ?? new TransactionsFilter();
             GetDropdowns();
             ToDate = filter.ToDate ?? DateTime.Now.Date;
+            ToDate = new DateTime(ToDate.Year, ToDate.Month, ToDate.Day, 23, 59, 59);
             FromDate = filter.FromDate ?? DateTime.Now.Date;
             Text = filter.SearchQuery;
             

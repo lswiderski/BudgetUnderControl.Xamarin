@@ -1,11 +1,12 @@
 ﻿using Autofac;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,6 +26,13 @@ namespace BudgetUnderControl.Views
             InitializeComponent();
             apiUrl.Unfocused += (object sender, FocusEventArgs e) => { vm.OnApiUrlChange(); };
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            vm.IsLogged = Preferences.Get(PreferencesKeys.IsUserLogged, false);
+        }
+
 
         private async void ExportButton_Clicked(object sender, EventArgs e)
         {

@@ -24,6 +24,7 @@ namespace BudgetUnderControl.Mobile.Services
             var transactions = await this.transactionService.GetTransactionsAsync(filter);
 
             var grouped = transactions
+                .Where(x => !x.IsTransfer.Value && x.Type == Common.Enums.TransactionType.Expense)
                 .GroupBy(x => x.Category)
                 .ToDictionary(x => x.Key, x => x.Select(x => x.ValueInMainCurrency).Sum())
                 .Select(x => new CategoryPieChartItemDto { Value = x.Value, CategoryName = x.Key })

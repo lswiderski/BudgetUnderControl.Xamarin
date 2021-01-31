@@ -74,6 +74,18 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
                 };
                 notificationService.ShowNotification("New Revolut Transaction", $"Add {value} from {revolutTitle}", bundle);
             }
+            else if(pack.Equals("pl.mbank") && title.Equals("Nowa operacja kartą"))
+            {
+                var value = this.GetMbankValue(text);
+                var mbankTitle = this.GetMbankTitle(text);
+
+                var bundle = new List<BundleItem> {
+                            new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_TITLE, Type = BundleItemType.String, Object = mbankTitle },            // title: Nowa operacja kartą  | text: 127,01 PLN w CARREFOUR WARSZAWA
+                            new BundleItem { Key = PropertyKeys.REDIRECT_TO, Type = BundleItemType.Int, Object = ActivityPage.AddTransaction },   //title: Nowa operacja kartą | text: 40,90 PLN w KFCDOSTAWA.PL WROCLAW
+                            new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_VALUE, Type = BundleItemType.String, Object = value  },
+                    };
+                notificationService.ShowNotification("New Google Pay Transaction", $"Add {value} from {mbankTitle}", bundle);
+            }
             else {
                 logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
             }
@@ -102,6 +114,20 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
         {
             var initialSplit = text.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             var value = initialSplit.FirstOrDefault().Remove(0, 3);
+            return value;
+        }
+
+        string GetMbankTitle(string text)
+        {
+            var initialSplit = text.Split(new string[] { "PLN w " }, StringSplitOptions.RemoveEmptyEntries);
+            var title = initialSplit.LastOrDefault();
+            return title;
+        }
+
+        string GetMbankValue(string text)
+        {
+            var initialSplit = text.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            var value = initialSplit.FirstOrDefault();
             return value;
         }
     }

@@ -43,7 +43,8 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
             Bundle extras = sbn.Notification.Extras;
             string title = extras.GetString("android.title");
             string text = extras.GetCharSequence("android.text")?.ToString();
-            
+            logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
+
             if (pack.Equals("com.google.android.gms"))
             {
                 logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
@@ -57,6 +58,7 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
                             new BundleItem { Key = PropertyKeys.REDIRECT_TO, Type = BundleItemType.Int, Object = ActivityPage.AddTransaction },   // ticker: View your purchase | title: jakdojade.pl | text: PLN3.40 with Mastercard •••• 9901
                             new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_VALUE, Type = BundleItemType.String, Object = value },
                     };
+                    logger.Info($"catched notification:Value: '{value}' Title: '{title}'");
                     notificationService.ShowNotification("New Google Pay Transaction", $"Add {value} from {title}", bundle);
                 }
             }
@@ -72,23 +74,35 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
                         new BundleItem { Key = PropertyKeys.REDIRECT_TO, Type = BundleItemType.Int, Object = ActivityPage.AddTransaction },          //text: 💳 Paid €3.88 at McDonald's
                         new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_VALUE, Type = BundleItemType.String, Object = value },                   //text: 💳 Paid €20.70 at Transit
                 };
+                logger.Info($"catched notification:Value: '{value}' Title: '{revolutTitle}'");
                 notificationService.ShowNotification("New Revolut Transaction", $"Add {value} from {revolutTitle}", bundle);
             }
-            else if(pack.Equals("pl.mbank") && title.Equals("Nowa operacja kartą"))
+            else if(pack.Equals("pl.mbank"))
             {
-                var value = this.GetMbankValue(text);
-                var mbankTitle = this.GetMbankTitle(text);
-
-                var bundle = new List<BundleItem> {
+                string value = string.Empty;
+                string mbankTitle = string.Empty;
+                if (!string.IsNullOrEmpty(title) && title.Contains(@"Nowa operacja kartą"))
+                {
+                    value = this.GetMbankValue(text);
+                    mbankTitle = this.GetMbankTitle(text);
+                } 
+                else if(!string.IsNullOrEmpty(title) && title.Contains(@"Płatność BLIK"))
+                {
+                    value = this.GetMbankValue(text);
+                    mbankTitle = text;
+                }
+                
+                if(!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(mbankTitle))
+                {
+                    var bundle = new List<BundleItem> {
                             new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_TITLE, Type = BundleItemType.String, Object = mbankTitle },            // title: Nowa operacja kartą  | text: 127,01 PLN w CARREFOUR WARSZAWA
                             new BundleItem { Key = PropertyKeys.REDIRECT_TO, Type = BundleItemType.Int, Object = ActivityPage.AddTransaction },   //title: Nowa operacja kartą | text: 40,90 PLN w KFCDOSTAWA.PL WROCLAW
                             new BundleItem { Key = PropertyKeys.ADD_TRANSACTION_VALUE, Type = BundleItemType.String, Object = value  },
                     };
-                notificationService.ShowNotification("New Google Pay Transaction", $"Add {value} from {mbankTitle}", bundle);
-            }
-            else {
-                logger.Info($"pack: {pack} | ticker: {ticker} | title: {title} | text: {text}");
-            }
+                    logger.Info($"catched notification:Value: '{value}' Title: '{mbankTitle}'");
+                    notificationService.ShowNotification("New mBank Transaction", $"Add {value} from {mbankTitle}", bundle);
+                }
+            }         
         }
 
         public override void OnNotificationRemoved(StatusBarNotification sbn)
@@ -120,14 +134,14 @@ namespace BudgetUnderControl.Droid.PlatformSpecific
         string GetMbankTitle(string text)
         {
             var initialSplit = text.Split(new string[] { "PLN w " }, StringSplitOptions.RemoveEmptyEntries);
-            var title = initialSplit.LastOrDefault();
+            var title = initialSplit?.LastOrDefault();
             return title;
         }
 
         string GetMbankValue(string text)
         {
             var initialSplit = text.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            var value = initialSplit.FirstOrDefault();
+            var value = initialSplit?.FirstOrDefault();
             return value;
         }
     }

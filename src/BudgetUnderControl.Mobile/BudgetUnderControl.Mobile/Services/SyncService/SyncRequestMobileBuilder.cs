@@ -213,7 +213,6 @@ namespace BudgetUnderControl.Mobile.Services
                     Name = x.Name,
                     ModifiedOn = x.ModifiedOn,
                     IsDeleted = x.IsDeleted,
-                    OwnerId = x.OwnerId,
                 }).ToList();
 
             var userExternalId = (await this.userRepository.GetFirstUserAsync()).ExternalId;
@@ -238,7 +237,6 @@ namespace BudgetUnderControl.Mobile.Services
                 Email = user.Email,
                 ModifiedOn = user.ModifiedOn,
                 CreatedAt = user.CreatedAt,
-                Id = user.Id,
                 IsDeleted = user.IsDeleted,
                 Role = user.Role,
                 Username = user.Username
@@ -259,7 +257,6 @@ namespace BudgetUnderControl.Mobile.Services
                     Name = x.Name,
                     ModifiedOn = x.ModifiedOn,
                     IsDeleted = x.IsDeleted,
-                    OwnerId = x.OwnerId,
                     Icon = x.Icon,
                 }).ToList();
 

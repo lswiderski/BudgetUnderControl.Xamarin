@@ -50,10 +50,9 @@ namespace BudgetUnderControl.MobileDomain
             };
         }
 
-        public void Edit(string name, int ownerId, string icon = null)
+        public void Edit(string name, string icon = null)
         {
             this.Name = name;
-            this.OwnerId = ownerId;
             this.Icon = icon;
             this.UpdateModify();
         }

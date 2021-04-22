@@ -301,7 +301,7 @@ namespace BudgetUnderControl.Mobile.Services
                 {
                     if(categoryToUpdate.ModifiedOn < category.ModifiedOn)
                     {
-                        categoryToUpdate.Edit(category.Name, userId, category.Icon);
+                        categoryToUpdate.Edit(category.Name, category.Icon);
                         categoryToUpdate.Delete(category.IsDeleted);
                         categoryToUpdate.SetModifiedOn(category.ModifiedOn);
                         await this.categoryRepository.UpdateAsync(categoryToUpdate);
@@ -370,7 +370,7 @@ namespace BudgetUnderControl.Mobile.Services
                 {
                     if(accountGroupToUpdate.ModifiedOn < accountGroup.ModifiedOn)
                     {
-                        accountGroupToUpdate.Edit(accountGroup.Name, userId);
+                        accountGroupToUpdate.Edit(accountGroup.Name);
                         accountGroupToUpdate.Delete(accountGroup.IsDeleted);
                         accountGroupToUpdate.SetModifiedOn(accountGroup.ModifiedOn);
                         await this.accountGroupRepository.UpdateAsync(accountGroupToUpdate);

@@ -36,10 +36,9 @@ namespace BudgetUnderControl.MobileDomain
             };
         }
 
-        public void Edit(string name, int ownerId)
+        public void Edit(string name)
         {
             this.Name = name;
-            this.OwnerId = ownerId;
             this.UpdateModify();
         }
 

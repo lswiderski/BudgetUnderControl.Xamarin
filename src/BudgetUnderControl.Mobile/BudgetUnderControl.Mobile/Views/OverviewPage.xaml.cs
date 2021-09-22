@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace BudgetUnderControl.Views
 {
@@ -32,17 +33,46 @@ namespace BudgetUnderControl.Views
         {
             base.OnAppearing();
             mainFrame.Children.Clear();
-            var balance = await vm.GetCurrentBalanceAsync();
-            
-            var totalBalance = balance.Where(x => x.IsExchanged).FirstOrDefault();
-            mainFrame.Children.Add(new Label { Text = $"Total: {totalBalance.Value}" });
-            mainFrame.Children.Add(new Label { Text = string.Empty });
-            List<string> curenciesToShow = new List<string> { "PLN", "EUR", "USD" };
-            foreach (var item in balance.Where(x => !x.IsExchanged && x.Value != 0 && curenciesToShow.Contains(x.Currency)).OrderBy(x => x.Currency))
+
+
+
+            var lines = new Dictionary<string, string>();
+
+            var total = await SecureStorage.GetAsync("Balance_Total");
+            if (total == null)
             {
-                mainFrame.Children.Add(new Label { Text = $"{item.Currency}: {item.Value}" });
+                var balance = await vm.GetCurrentBalanceAsync();
+                var totalBalance = balance.Where(x => x.IsExchanged).FirstOrDefault();
+                lines.Add("Total", $"Total: {totalBalance.Value}");
+
+                lines.Add("PLN", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "PLN").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
+                lines.Add("EUR", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "EUR").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
+                lines.Add("USD", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "USD").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
+
+                await SecureStorage.SetAsync("Balance_Total", lines["Total"]);
+                await SecureStorage.SetAsync("Balance_PLN", lines["PLN"]);
+                await SecureStorage.SetAsync("Balance_EUR", lines["EUR"]);
+                await SecureStorage.SetAsync("Balance_USD", lines["USD"]);
             }
-           
+            else
+            {
+                lines.Add("Total", total);
+                lines.Add("PLN", await SecureStorage.GetAsync("Balance_PLN"));
+                lines.Add("EUR", await SecureStorage.GetAsync("Balance_EUR"));
+                lines.Add("USD", await SecureStorage.GetAsync("Balance_USD"));
+            }
+
+            DisplayBalance(lines);
+
+        }
+
+        private void DisplayBalance(Dictionary<string, string> lines)
+        {
+            mainFrame.Children.Add(new Label { Text = lines["Total"] });
+            mainFrame.Children.Add(new Label { Text = string.Empty });
+            mainFrame.Children.Add(new Label { Text = lines["PLN"] });
+            mainFrame.Children.Add(new Label { Text = lines["EUR"] });
+            mainFrame.Children.Add(new Label { Text = lines["USD"] });
         }
 
 

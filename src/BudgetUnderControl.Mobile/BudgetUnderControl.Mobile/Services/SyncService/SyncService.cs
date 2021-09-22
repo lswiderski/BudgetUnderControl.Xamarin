@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Xamarin.Essentials;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -72,6 +73,7 @@ namespace BudgetUnderControl.Mobile.Services
             await ImportTagsAsync(backupDto.Tags);
             await ImportTagsToTransactionsAsync(backupDto.TagsToTransactions);
             await ImportExchangeRatesAsync(backupDto.ExchangeRates);
+            SecureStorage.Remove("Balance_Total");
         }
 
         public async Task<BackUpDTO> GetBackUpAsync()

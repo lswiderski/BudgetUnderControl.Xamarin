@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Xamarin.Essentials;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -78,6 +79,7 @@ namespace BudgetUnderControl.Mobile.Services
             await this.UpdateTransfersAsync(syncRequest.Transfers);
             await this.UpdateExchangeRatesAsync(syncRequest.ExchangeRates);
             await this.UpdateLastSyncDateAsync(syncRequest);
+            SecureStorage.Remove("Balance_Total");
         }
 
         private async Task UpdateLastSyncDateAsync(SyncRequest syncRequest)
@@ -173,8 +175,7 @@ namespace BudgetUnderControl.Mobile.Services
                     }
                     transactionsToAdd.Clear();
                 }
-            } 
-           
+            }
         }
 
         private async Task DealWithTransactionToTagsAsync(int transactionId, List<TagSyncDTO> tagsToSync)

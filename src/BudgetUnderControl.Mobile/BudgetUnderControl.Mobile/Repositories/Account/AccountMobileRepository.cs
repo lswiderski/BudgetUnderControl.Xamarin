@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BudgetUnderControl.CommonInfrastructure;
+using Xamarin.Essentials;
 
 namespace BudgetUnderControl.Mobile.Repositories
 {
@@ -168,6 +169,7 @@ namespace BudgetUnderControl.Mobile.Repositories
 
                 this.Context.Transactions.Add(transaction);
                 await this.Context.SaveChangesAsync();
+                SecureStorage.Remove("Balance_Total");
             }
         }
 

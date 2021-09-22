@@ -13,6 +13,7 @@ using BudgetUnderControl.CommonInfrastructure.Commands;
 using BudgetUnderControl.Common.Extensions;
 using BudgetUnderControl.CommonInfrastructure;
 using FluentValidation;
+using Xamarin.Essentials;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -126,6 +127,7 @@ namespace BudgetUnderControl.Mobile.Services
                 await this.CreateTagsToTransaction(command.Tags, transaction.Id);
                 await this.MergeFiles(command.FileGuid, transaction);
             }
+            SecureStorage.Remove("Balance_Total");
         }
 
         public async Task CreateTagsToTransaction(IEnumerable<int> tagsId, int transactionId)
@@ -323,6 +325,7 @@ namespace BudgetUnderControl.Mobile.Services
                 firstTransaction.Edit(command.AccountId, command.ExtendedType.ToTransactionType(), amount, command.Date, command.Name, command.Comment, user.Id, command.IsDeleted, command.CategoryId, command.Latitude, command.Longitude);
                 await this.transactionRepository.UpdateAsync(firstTransaction);
             }
+            SecureStorage.Remove("Balance_Total");
         }
 
         public async Task DeleteTransactionAsync(DeleteTransaction command)

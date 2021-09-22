@@ -164,7 +164,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task EditAccountAsync(EditAccount command)
         {
             var account = await accountRepository.GetAccountAsync(command.Id);
-            account.Edit(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive, icon: command.Icon);
+            account.Edit(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive, false, icon: command.Icon);
             await accountRepository.UpdateAsync(account);
 
             if (account.Type != AccountType.Card)

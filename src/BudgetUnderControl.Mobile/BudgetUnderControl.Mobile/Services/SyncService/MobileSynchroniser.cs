@@ -339,7 +339,7 @@ namespace BudgetUnderControl.Mobile.Services
                 {
                     if(accountToUpdate.ModifiedOn < account.ModifiedOn)
                     {
-                        accountToUpdate.Edit(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, !account.IsDeleted, userId, account.Icon);
+                        accountToUpdate.Edit(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive ,account.IsDeleted, userId, account.Icon);
                         accountToUpdate.Delete(account.IsDeleted);
                         accountToUpdate.SetModifiedOn(account.ModifiedOn);
                         await this.accountRepository.UpdateAsync(accountToUpdate);
@@ -347,7 +347,7 @@ namespace BudgetUnderControl.Mobile.Services
                 }
                 else
                 {
-                    var accountToAdd = Account.Create(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, !account.IsDeleted, userId, account.ExternalId.ToString(), account.Icon);
+                    var accountToAdd = Account.Create(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive, account.IsDeleted, userId, account.ExternalId.ToString(), account.Icon);
                     accountToAdd.Delete(account.IsDeleted);
                     accountToAdd.SetModifiedOn(account.ModifiedOn);
                     await this.accountRepository.AddAccountAsync(accountToAdd);

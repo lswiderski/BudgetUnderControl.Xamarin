@@ -230,7 +230,7 @@ namespace BudgetUnderControl.Mobile.Services
 
             foreach (var item in accounts)
             {
-                var account = Account.Create(item.Name,"", item.CurrencyId, item.AccountGroupId, item.IsIncludedToTotal, item.Comment, item.Order, item.Type, item.ParentAccountId, true, user.Id, item.ExternalId?.ToString());
+                var account = Account.Create(item.Name,"", item.CurrencyId, item.AccountGroupId, item.IsIncludedToTotal, item.Comment, item.Order, item.Type, item.ParentAccountId, item.IsActive, item.IsDeleted, user.Id, item.ExternalId?.ToString());
                 await this.accountRepository.AddAccountAsync(account);
 
                 accountsMap.Add(item.Id, account.Id);

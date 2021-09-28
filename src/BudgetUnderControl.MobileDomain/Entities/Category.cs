@@ -36,6 +36,11 @@ namespace BudgetUnderControl.MobileDomain
             }
         }
 
+        protected Category()
+        {
+
+        }
+
         public static Category Create(string name, int ownerId, string externalId = null, string icon = null)
         {
             return new Category

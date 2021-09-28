@@ -18,7 +18,6 @@ namespace BudgetUnderControl.CommonInfrastructure.Commands
         public IEnumerable<TransactionSyncDTO> Transactions { get; set; }
         public IEnumerable<TransferSyncDTO> Transfers { get; set; }
         public IEnumerable<AccountSyncDTO> Accounts { get; set; }
-        public IEnumerable<AccountGroupSyncDTO> AccountGroups { get; set; }
         public IEnumerable<UserSyncDTO> Users{ get; set; }
         public IEnumerable<CategorySyncDTO> Categories { get; set; }
         public IEnumerable<TagSyncDTO> Tags { get; set; }

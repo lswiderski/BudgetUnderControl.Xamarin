@@ -18,7 +18,6 @@ namespace BudgetUnderControl.MobileDomain
         [StringLength(250)]
         public string Name { get; protected set; }
         public int CurrencyId { get; protected set; }
-        public int AccountGroupId { get; protected set; }
         public bool IsIncludedToTotal { get; protected set; }
         public string Comment { get; protected set; }
         public int Order { get; protected set; }
@@ -33,7 +32,6 @@ namespace BudgetUnderControl.MobileDomain
         public string ExternalId { get; protected set; }
         public bool IsDeleted { get; protected set; }
 
-        public AccountGroup AccountGroup { get; protected set; }
         public Currency Currency { get; set; }
         public List<AccountSnapshot> AccountSnapshots { get; protected set; }
         public List<Transaction> Transactions { get; protected set; }
@@ -45,7 +43,7 @@ namespace BudgetUnderControl.MobileDomain
 
         }
 
-        public static Account Create(string name, string number, int currencyId, int accountGroupId,
+        public static Account Create(string name, string number, int currencyId,
             bool isIncludedToTotal, string comment, int order, AccountType type,
             int? parentAccountId, bool isActive, bool isDeleted, int ownerId, string externalId = null, string icon = null)
         {
@@ -54,7 +52,6 @@ namespace BudgetUnderControl.MobileDomain
                 Name = name,
                 Number = number,
                 CurrencyId = currencyId,
-                AccountGroupId = accountGroupId,
                 IsActive = isActive,
                 IsIncludedToTotal = isIncludedToTotal,
                 Comment = comment,
@@ -69,14 +66,13 @@ namespace BudgetUnderControl.MobileDomain
             };
         }
 
-        public void Edit(string name,string number, int currencyId, int accountGroupId,
+        public void Edit(string name,string number, int currencyId,
             bool isIncludedToTotal, string comment, int order, AccountType type,
             int? parentAccountId, bool isActive, bool isDeleted, int? ownerId = null, string icon = null)
         {
             this.Name = name;
             this.Number = number;
             this.CurrencyId = currencyId;
-            this.AccountGroupId = accountGroupId;
             this.IsActive = isActive;
             this.IsIncludedToTotal = isIncludedToTotal;
             this.Comment = comment;

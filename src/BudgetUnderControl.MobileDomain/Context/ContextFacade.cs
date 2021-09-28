@@ -69,11 +69,6 @@ namespace BudgetUnderControl.MobileDomain
             set => _context.Accounts = value;
         }
 
-        public DbSet<AccountGroup> AccountGroup
-        {
-            get => _context.AccountGroup;
-            set => _context.AccountGroup = value;
-        }
         public DbSet<AccountSnapshot> AccountSnapshot
         {
             get => _context.AccountSnapshot;

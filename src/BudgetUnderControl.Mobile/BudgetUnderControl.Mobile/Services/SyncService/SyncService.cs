@@ -24,7 +24,6 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly IAccountMobileRepository accountRepository;
         private readonly ICurrencyRepository currencyRepository;
         private readonly ICategoryRepository categoryRepository;
-        private readonly IAccountGroupRepository accountGroupRepository;
         private readonly IUserRepository userRepository;
         private readonly ISynchronizationRepository synchronizationRepository;
         private readonly IUserIdentityContext userIdentityContext;
@@ -40,7 +39,6 @@ namespace BudgetUnderControl.Mobile.Services
             IAccountMobileRepository accountRepository,
             ICurrencyRepository currencyRepository,
             ICategoryRepository categoryRepository,
-            IAccountGroupRepository accountGroupRepository,
             IUserRepository userRepository,
             ISynchronizationRepository synchronizationRepository,
             ITagRepository tagRepository,
@@ -53,7 +51,6 @@ namespace BudgetUnderControl.Mobile.Services
             this.accountRepository = accountRepository;
             this.currencyRepository = currencyRepository;
             this.categoryRepository = categoryRepository;
-            this.accountGroupRepository = accountGroupRepository;
             this.userRepository = userRepository;
             this.synchronizationRepository = synchronizationRepository;
             this.userIdentityContext = userIdentityContext;
@@ -91,7 +88,6 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = x.Id,
                 ExternalId = Guid.Parse(x.ExternalId),
-                AccountGroupId = x.AccountGroupId,
                 Comment = x.Comment,
                 CurrencyId = x.CurrencyId,
                 IsIncludedToTotal = x.IsIncludedToTotal,
@@ -229,12 +225,11 @@ namespace BudgetUnderControl.Mobile.Services
         {
             var user = await userRepository.GetFirstUserAsync();
             var currencies = await currencyRepository.GetCurriencesAsync();
-            var groups = await accountGroupRepository.GetAccountGroupsAsync();
             accountsMap = new Dictionary<int, int>();
 
             foreach (var item in accounts)
             {
-                var account = Account.Create(item.Name,"", item.CurrencyId, item.AccountGroupId, item.IsIncludedToTotal, item.Comment, item.Order, item.Type, item.ParentAccountId, item.IsActive, item.IsDeleted, user.Id, item.ExternalId?.ToString());
+                var account = Account.Create(item.Name,"", item.CurrencyId, item.IsIncludedToTotal, item.Comment, item.Order, item.Type, item.ParentAccountId, item.IsActive, item.IsDeleted, user.Id, item.ExternalId?.ToString());
                 await this.accountRepository.AddAccountAsync(account);
 
                 accountsMap.Add(item.Id, account.Id);

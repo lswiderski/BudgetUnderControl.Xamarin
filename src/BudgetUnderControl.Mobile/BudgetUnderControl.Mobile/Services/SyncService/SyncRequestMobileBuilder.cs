@@ -20,7 +20,6 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly IAccountMobileRepository accountRepository;
         private readonly ICurrencyRepository currencyRepository;
         private readonly ICategoryRepository categoryRepository;
-        private readonly IAccountGroupRepository accountGroupRepository;
         private readonly IUserRepository userRepository;
         private readonly ISynchronizationRepository synchronizationRepository;
         private readonly IUserIdentityContext userIdentityContext;
@@ -32,7 +31,6 @@ namespace BudgetUnderControl.Mobile.Services
             IAccountMobileRepository accountRepository,
             ICurrencyRepository currencyRepository,
             ICategoryRepository categoryRepository,
-            IAccountGroupRepository accountGroupRepository,
             IUserRepository userRepository,
             ISynchronizationRepository synchronizationRepository,
             IUserIdentityContext userIdentityContext,
@@ -46,7 +44,6 @@ namespace BudgetUnderControl.Mobile.Services
             this.accountRepository = accountRepository;
             this.currencyRepository = currencyRepository;
             this.categoryRepository = categoryRepository;
-            this.accountGroupRepository = accountGroupRepository;
             this.userRepository = userRepository;
             this.synchronizationRepository = synchronizationRepository;
             this.userIdentityContext = userIdentityContext;
@@ -84,7 +81,6 @@ namespace BudgetUnderControl.Mobile.Services
             syncRequest.Transactions = await this.GetTransactionsToSyncAsync(syncRequest.LastSync);
             syncRequest.Transfers = await this.GetTransfersToSyncAsync(syncRequest.LastSync);
             syncRequest.Accounts = await this.GetAccountsToSyncAsync(syncRequest.LastSync);
-            syncRequest.AccountGroups = await this.GetAccountGroupsToSyncAsync(syncRequest.LastSync);
             syncRequest.Users = await this.GetUsersToSyncAsync(syncRequest.LastSync);
             syncRequest.Categories = await this.GetCategoriesToSyncAsync(syncRequest.LastSync);
             syncRequest.Tags = await this.GetTagsToSyncAsync(syncRequest.LastSync);
@@ -175,7 +171,6 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 Id = x.Id,
                 ExternalId = Guid.Parse(x.ExternalId),
-                AccountGroupId = x.AccountGroupId,
                 Comment = x.Comment,
                 CurrencyId = x.CurrencyId,
                 IsIncludedToTotal = x.IsIncludedToTotal,
@@ -190,10 +185,8 @@ namespace BudgetUnderControl.Mobile.Services
             }).ToList();
 
             var allAccounts = (await this.accountRepository.GetAccountsAsync()).ToDictionary(x => x.Id, x => x.ExternalId);
-            var accountGroups = (await this.accountGroupRepository.GetAccountGroupsAsync()).ToDictionary(x => x.Id, x => x.ExternalId);
             foreach (var account in accounts)
             {
-                account.AccountGroupExternalId = Guid.Parse(accountGroups[account.AccountGroupId]);
                 if (account.ParentAccountId.HasValue)
                 {
                     account.ParentAccountExternalId = Guid.Parse(allAccounts[account.ParentAccountId.Value]);
@@ -201,29 +194,6 @@ namespace BudgetUnderControl.Mobile.Services
             }
 
             return accounts;
-        }
-
-        private async Task<IEnumerable<AccountGroupSyncDTO>> GetAccountGroupsToSyncAsync(DateTime changedSince)
-        {
-            var accountgroups = (await this.accountGroupRepository.GetAccountGroupsAsync())
-                .Where(x => x.ModifiedOn >= changedSince)
-                .Select(x => new AccountGroupSyncDTO
-                {
-                    Id = x.Id,
-                    ExternalId = Guid.Parse(x.ExternalId),
-                    Name = x.Name,
-                    ModifiedOn = x.ModifiedOn,
-                    IsDeleted = x.IsDeleted,
-                }).ToList();
-
-            var userExternalId = (await this.userRepository.GetFirstUserAsync()).ExternalId;
-
-            foreach (var account in accountgroups)
-            {
-                account.OwnerExternalId = Guid.Parse(userExternalId);
-            }
-
-            return accountgroups;
         }
 
         private async Task<IEnumerable<UserSyncDTO>> GetUsersToSyncAsync(DateTime changedSince)

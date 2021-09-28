@@ -20,7 +20,6 @@ namespace BudgetUnderControl.MobileDomain
         void SetEntityState(object entity, EntityState state);
 
         DbSet<Account> Accounts { get; set; }
-        DbSet<AccountGroup> AccountGroup { get; set; }
         DbSet<AccountSnapshot> AccountSnapshot { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Currency> Currencies { get; set; }

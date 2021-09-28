@@ -14,7 +14,6 @@ namespace BudgetUnderControl.Mobile.Services
     public class TestDataSeeder : ITestDataSeeder
     {
         private readonly IAccountService accountService;
-        private readonly IAccountGroupService accountGroupService;
         private readonly ITransactionService transactionService;
         private readonly IUserIdentityContext userContext;
         private readonly ICurrencyService currencyService;
@@ -22,12 +21,11 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly ICommandDispatcher commandDispatcher;
 
         public TestDataSeeder(IAccountService accountService, ITransactionService transactionService,
-            IAccountGroupService accountGroupService, ICurrencyService currencyService, ICategoryService categoryService,
+            ICurrencyService currencyService, ICategoryService categoryService,
             IUserIdentityContext userContext, ICommandDispatcher commandDispatcher)
         {
             this.accountService = accountService;
             this.transactionService = transactionService;
-            this.accountGroupService = accountGroupService;
             this.currencyService = currencyService;
             this.categoryService = categoryService;
             this.userContext = userContext;
@@ -36,11 +34,9 @@ namespace BudgetUnderControl.Mobile.Services
 
         public async Task SeedAsync()
         {
-            var accountGroup = (await this.accountGroupService.GetAccountGroupsAsync()).First();
             var currencies = await this.currencyService.GetCurriencesAsync();
             var addAccountCommand = new AddAccount
             {
-                AccountGroupId = accountGroup.Id,
                 Amount = 0,
                 CurrencyId = currencies.First().Id,
                 IsIncludedInTotal = true,

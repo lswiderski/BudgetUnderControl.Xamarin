@@ -17,7 +17,6 @@ namespace BudgetUnderControl.MobileDomain
         public bool IsDeleted { get; protected set; }
 
         public List<Account> Accounts { get; protected set; }
-        public List<AccountGroup> AccountGroups { get; protected set; }
         public List<Transaction> Transactions { get; protected set; }
 
         public void Delete(bool delete = true)

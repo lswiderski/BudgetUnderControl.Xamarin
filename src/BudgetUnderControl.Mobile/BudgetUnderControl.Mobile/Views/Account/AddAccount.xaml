@@ -10,7 +10,6 @@
         <ScrollView>
             <StackLayout>
                 <Label Text="Add Account" />
-                <Picker x:Name="group" ItemsSource="{Binding AccountGroups}" ItemDisplayBinding="{Binding Name}" SelectedIndex="{Binding  SelectedAccountGroupIndex, Mode=TwoWay}" Title="Group"/>
                 <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name"></Entry>
                 <Picker x:Name="currency" ItemsSource="{Binding Currencies}" ItemDisplayBinding="{Binding CodeWithName}"  SelectedIndex="{Binding  SelectedCurrencyIndex, Mode=TwoWay}" Title="Currency" />
                 <Entry x:Name="amount" Text="{Binding Amount}" Placeholder="Amount" Keyboard="Numeric">

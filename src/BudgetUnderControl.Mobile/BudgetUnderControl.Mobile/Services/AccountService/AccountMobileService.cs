@@ -49,7 +49,6 @@ namespace BudgetUnderControl.Mobile.Services
                 CurrencySymbol = account.Currency.Symbol,
                 CurrencyId = account.CurrencyId,
                 IsIncludedInTotal = account.IsIncludedToTotal,
-                AccountGroupId = account.AccountGroupId,
                 ParentAccountId = account.ParentAccountId,
                 Icon = account.Icon
             };
@@ -132,7 +131,6 @@ namespace BudgetUnderControl.Mobile.Services
                 IsIncludedInTotal = account.IsIncludedToTotal,
                 Name = account.Name,
                 Comment = account.Comment,
-                AccountGroupId = account.AccountGroupId,
                 Type = account.Type,
                 ParentAccountId = account.ParentAccountId,
                 Order = account.Order,
@@ -147,7 +145,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task AddAccountAsync(AddAccount command)
         {
             var user = await userRepository.GetFirstUserAsync();
-            var account = Account.Create(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, true, false, user.Id, command.ExternalId.ToString(), icon: command.Icon);
+            var account = Account.Create(command.Name, "", command.CurrencyId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, true, false, user.Id, command.ExternalId.ToString(), icon: command.Icon);
             await accountRepository.AddAccountAsync(account);
 
             if (account.Id <= 0)
@@ -164,7 +162,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task EditAccountAsync(EditAccount command)
         {
             var account = await accountRepository.GetAccountAsync(command.Id);
-            account.Edit(command.Name, "", command.CurrencyId, command.AccountGroupId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive, false, icon: command.Icon);
+            account.Edit(command.Name, "", command.CurrencyId, command.IsIncludedInTotal, command.Comment, command.Order, command.Type, command.ParentAccountId, command.IsActive, false, icon: command.Icon);
             await accountRepository.UpdateAsync(account);
 
             if (account.Type != AccountType.Card)

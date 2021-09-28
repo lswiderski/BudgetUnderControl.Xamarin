@@ -23,7 +23,6 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly IAccountMobileRepository accountRepository;
         private readonly ICurrencyRepository currencyRepository;
         private readonly ICategoryRepository categoryRepository;
-        private readonly IAccountGroupRepository accountGroupRepository;
         private readonly IUserRepository userRepository;
         private readonly ISynchronizationRepository synchronizationRepository;
         private readonly IUserIdentityContext userIdentityContext;
@@ -38,7 +37,6 @@ namespace BudgetUnderControl.Mobile.Services
             IAccountMobileRepository accountRepository,
             ICurrencyRepository currencyRepository,
             ICategoryRepository categoryRepository,
-            IAccountGroupRepository accountGroupRepository,
             IUserRepository userRepository,
             ISynchronizationRepository synchronizationRepository,
             IUserIdentityContext userIdentityContext,
@@ -53,7 +51,6 @@ namespace BudgetUnderControl.Mobile.Services
             this.accountRepository = accountRepository;
             this.currencyRepository = currencyRepository;
             this.categoryRepository = categoryRepository;
-            this.accountGroupRepository = accountGroupRepository;
             this.userRepository = userRepository;
             this.synchronizationRepository = synchronizationRepository;
             this.userIdentityContext = userIdentityContext;
@@ -71,7 +68,6 @@ namespace BudgetUnderControl.Mobile.Services
             await this.UpdateUsersAsync(syncRequest.Users);
             await this.UpdateTagsAsync(syncRequest.Tags);
             await this.UpdateCategoriesAsync(syncRequest.Categories);
-            await this.UpdateAccountGroupsAsync(syncRequest.AccountGroups);
             await this.UpdateAccountsAsync(syncRequest.Accounts);
             await this.UpdateFilesAsync(syncRequest.Files);
             _tags = (await this.tagRepository.GetAsync()).ToDictionary(x => x.ExternalId, x => x.Id, StringComparer.InvariantCultureIgnoreCase);
@@ -333,14 +329,13 @@ namespace BudgetUnderControl.Mobile.Services
             foreach (var account in accounts)
             {
                 var parentAccountId = account.ParentAccountExternalId.HasValue ? (await this.accountRepository.GetAccountAsync(account.ParentAccountExternalId.Value.ToString())).Id : (int?)null;
-                var accountGroupId = (await this.accountGroupRepository.GetAccountGroupAsync(account.AccountGroupExternalId.ToString())).Id;
                 var userId = this.userIdentityContext.UserId;
                 var accountToUpdate = await this.accountRepository.GetAccountAsync(account.ExternalId.Value.ToString());
                 if (accountToUpdate != null)
                 {
                     if(accountToUpdate.ModifiedOn < account.ModifiedOn)
                     {
-                        accountToUpdate.Edit(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive ,account.IsDeleted, userId, account.Icon);
+                        accountToUpdate.Edit(account.Name,"", account.CurrencyId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive ,account.IsDeleted, userId, account.Icon);
                         accountToUpdate.Delete(account.IsDeleted);
                         accountToUpdate.SetModifiedOn(account.ModifiedOn);
                         await this.accountRepository.UpdateAsync(accountToUpdate);
@@ -348,41 +343,10 @@ namespace BudgetUnderControl.Mobile.Services
                 }
                 else
                 {
-                    var accountToAdd = Account.Create(account.Name,"", account.CurrencyId, accountGroupId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive, account.IsDeleted, userId, account.ExternalId.ToString(), account.Icon);
+                    var accountToAdd = Account.Create(account.Name,"", account.CurrencyId, account.IsIncludedToTotal, account.Comment, account.Order, account.Type, parentAccountId, account.IsActive, account.IsDeleted, userId, account.ExternalId.ToString(), account.Icon);
                     accountToAdd.Delete(account.IsDeleted);
                     accountToAdd.SetModifiedOn(account.ModifiedOn);
                     await this.accountRepository.AddAccountAsync(accountToAdd);
-                }
-            }
-        }
-
-        private async Task UpdateAccountGroupsAsync(IEnumerable<AccountGroupSyncDTO> accountGroups)
-        {
-            if (accountGroups == null || !accountGroups.Any())
-            {
-                return;
-            }
-
-            foreach (var accountGroup in accountGroups)
-            {
-                var userId = (await this.userRepository.GetFirstUserAsync()).Id;
-                var accountGroupToUpdate = await this.accountGroupRepository.GetAccountGroupAsync(accountGroup.ExternalId.ToString());
-                if (accountGroupToUpdate != null )
-                {
-                    if(accountGroupToUpdate.ModifiedOn < accountGroup.ModifiedOn)
-                    {
-                        accountGroupToUpdate.Edit(accountGroup.Name);
-                        accountGroupToUpdate.Delete(accountGroup.IsDeleted);
-                        accountGroupToUpdate.SetModifiedOn(accountGroup.ModifiedOn);
-                        await this.accountGroupRepository.UpdateAsync(accountGroupToUpdate);
-                    }
-                }
-                else
-                {
-                    var accounGroupToAdd = AccountGroup.Create(accountGroup.Name, userId, accountGroup.ExternalId.ToString());
-                    accounGroupToAdd.Delete(accountGroup.IsDeleted);
-                    accounGroupToAdd.SetModifiedOn(accountGroup.ModifiedOn);
-                    await this.accountGroupRepository.AddAccountGroupAsync(accounGroupToAdd);
                 }
             }
         }

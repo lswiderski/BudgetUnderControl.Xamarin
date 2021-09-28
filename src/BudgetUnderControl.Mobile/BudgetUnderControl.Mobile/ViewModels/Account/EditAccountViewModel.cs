@@ -19,7 +19,6 @@ namespace BudgetUnderControl.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         IAccountService accountService;
         ICurrencyService currencyService;
-        IAccountGroupService accountGroupService;
         ICommandDispatcher commandDispatcher;
         IIconService iconService;
 
@@ -27,8 +26,6 @@ namespace BudgetUnderControl.ViewModel
         Guid ExternalId;
 
         List<CurrencyDTO> currencies;
-        List<AccountGroupItemDTO> accountGroups;
-        public List<AccountGroupItemDTO> AccountGroups => accountGroups;
         public List<CurrencyDTO> Currencies => currencies;
 
         List<AccountTypeDTO> accountTypes;
@@ -73,25 +70,6 @@ namespace BudgetUnderControl.ViewModel
                 {
                     selectedCurrencyIndex = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCurrencyIndex)));
-                }
-
-            }
-        }
-
-        int selectedAccountGroupIndex;
-
-        public int SelectedAccountGroupIndex
-        {
-            get
-            {
-                return selectedAccountGroupIndex;
-            }
-            set
-            {
-                if (selectedAccountGroupIndex != value)
-                {
-                    selectedAccountGroupIndex  = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedAccountGroupIndex)));
                 }
 
             }
@@ -219,12 +197,11 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
-        public EditAccountViewModel(ICurrencyService currencyService, IAccountGroupService accountGroupService,
+        public EditAccountViewModel(ICurrencyService currencyService,
             IAccountService accountService, IIconService iconService, 
             ICommandDispatcher commandDispatcher)
         {
             this.currencyService = currencyService;
-            this.accountGroupService = accountGroupService;
             this.accountService = accountService;
             this.iconService = iconService;
             this.commandDispatcher = commandDispatcher;
@@ -235,7 +212,6 @@ namespace BudgetUnderControl.ViewModel
         async void GetDropdowns()
         {
             currencies = (await currencyService.GetCurriencesAsync()).ToList();
-            accountGroups = (await accountGroupService.GetAccountGroupsAsync()).ToList();
             accounts = (await accountService.GetAccountsWithBalanceAsync()).ToList();
             accountTypes = this.GetAccountTypes().ToList();
             icons = this.iconService.GetAvailableAccountIcons();
@@ -250,7 +226,6 @@ namespace BudgetUnderControl.ViewModel
             Comment = account.Comment;
             IsInTotal = account.IsIncludedInTotal;
             IsActive = account.IsActive;
-            SelectedAccountGroupIndex = AccountGroups.IndexOf(AccountGroups.FirstOrDefault(y => y.Id == account.AccountGroupId));
             SelectedCurrencyIndex = Currencies.IndexOf(Currencies.FirstOrDefault(y => y.Id == account.CurrencyId));
             SelectedAccountIndex = account.ParentAccountId.HasValue ? Accounts.IndexOf(Accounts.FirstOrDefault(y => y.Id == account.ParentAccountId)) : -1;
             SelectedAccountTypeIndex = AccountTypes.IndexOf(AccountTypes.FirstOrDefault(y => y.Id == (int)account.Type));
@@ -280,7 +255,6 @@ namespace BudgetUnderControl.ViewModel
                 Comment = Comment,
                 Amount = amountValue,
                 Order = _order,
-                AccountGroupId = AccountGroups[SelectedAccountGroupIndex].Id,
                 CurrencyId = Currencies[SelectedCurrencyIndex].Id,
                 IsIncludedInTotal = IsInTotal,
                 Id = accountId,

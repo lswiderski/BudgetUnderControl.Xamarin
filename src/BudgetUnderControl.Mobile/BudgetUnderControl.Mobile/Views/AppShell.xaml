@@ -72,6 +72,9 @@
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:DebugMenu}" />
     </FlyoutItem>
+    <ShellItem Route="FirstRun">
+        <ShellContent ContentTemplate="{DataTemplate local:FirstRunPage}" />
+    </ShellItem>
     <ShellContent Title="About" ContentTemplate="{DataTemplate local:AboutPage}">
         <ShellContent.Icon>
             <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.InfoCircle}" FontFamily="FAS" Size="24" Color="Black" />

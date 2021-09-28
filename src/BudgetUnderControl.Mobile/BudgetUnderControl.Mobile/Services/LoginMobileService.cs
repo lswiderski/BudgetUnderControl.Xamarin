@@ -48,7 +48,6 @@ namespace BudgetUnderControl.Mobile.Services
             if(!string.IsNullOrEmpty(token))
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                SecurityToken validatedToken;
                 var tokenValidationParameters = new TokenValidationParameters();
                 var readToken =  tokenHandler.ReadJwtToken(token);
                 var claim = readToken.Claims.First(c => c.Type == "unique_name");
@@ -80,6 +79,13 @@ namespace BudgetUnderControl.Mobile.Services
                 return false;
             }
 
+        }
+
+        public async Task CreateNewUserAsync()
+        {
+            //clear DB
+            await syncMobileService.CleanDataBaseAsync();
+            await this.syncMobileService.CreateNewUserAsync();
         }
 
         public async Task LogoutAsync()

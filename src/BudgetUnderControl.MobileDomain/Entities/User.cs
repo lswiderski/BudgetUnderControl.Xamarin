@@ -11,13 +11,6 @@ namespace BudgetUnderControl.MobileDomain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; protected set; }
-        [StringLength(50)]
-        public string Username { get; protected set; }
-        public string Role { get; protected set; }
-        [StringLength(150)]
-        public string Email { get; protected set; }
-        public string Password { get; protected set; }
-        public string Salt { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime? ModifiedOn { get; protected set; }
         public string ExternalId { get; protected set; }
@@ -42,6 +35,25 @@ namespace BudgetUnderControl.MobileDomain
         {
             this.ExternalId = newId;
             this.UpdateModify();
+        }
+
+        protected User()
+        {
+
+        }
+
+        public static User Create(string externalId)
+        {
+            return new User()
+            {
+                ExternalId = !string.IsNullOrEmpty(externalId) ? externalId : Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.UtcNow,
+            };
+        }
+
+        public void SetModifiedOn(DateTime? dateTime)
+        {
+            this.ModifiedOn = dateTime;
         }
     }
 }

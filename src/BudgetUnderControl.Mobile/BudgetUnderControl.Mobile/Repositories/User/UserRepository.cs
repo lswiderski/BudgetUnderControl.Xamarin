@@ -21,17 +21,16 @@ namespace BudgetUnderControl.Mobile.Repositories
             return user;
         }
 
-        public async Task<User> GetAsync(string username)
-        {
-            var user = await this.Context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
-
-            return user;
-        }
-
         public async Task UpdateUserAsync(User user)
         {
             user.UpdateModify();
             this.Context.Users.Update(user);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            this.Context.Users.Add(user);
             await this.Context.SaveChangesAsync();
         }
     }

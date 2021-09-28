@@ -36,7 +36,7 @@ namespace BudgetUnderControl.MobileDomain
             }
         }
 
-        public static Category Create(string name, int ownerId, string externalId, string icon = null)
+        public static Category Create(string name, int ownerId, string externalId = null, string icon = null)
         {
             return new Category
             {
@@ -71,6 +71,12 @@ namespace BudgetUnderControl.MobileDomain
         public void UpdateModify()
         {
             this.ModifiedOn = DateTime.UtcNow;
+        }
+
+        public Category SetDefault(bool isDefault = true)
+        {
+            this.IsDefault = true;
+            return this;
         }
     }
 }

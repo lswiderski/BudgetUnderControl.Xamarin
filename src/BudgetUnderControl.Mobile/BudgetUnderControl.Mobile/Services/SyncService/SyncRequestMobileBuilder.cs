@@ -235,12 +235,9 @@ namespace BudgetUnderControl.Mobile.Services
             result.Add(new UserSyncDTO
             {
                 ExternalId = Guid.Parse(user.ExternalId),
-                Email = user.Email,
                 ModifiedOn = user.ModifiedOn,
                 CreatedAt = user.CreatedAt,
                 IsDeleted = user.IsDeleted,
-                Role = user.Role,
-                Username = user.Username
             });
             
 

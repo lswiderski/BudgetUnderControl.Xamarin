@@ -111,6 +111,7 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<OverviewViewModel>().As<IOverviewViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<SyncMobileService>().As<ISyncMobileService>().InstancePerLifetimeScope();
             builder.RegisterType<LoginMobileService>().As<ILoginMobileService>().InstancePerLifetimeScope();
+            builder.RegisterType<SeedService>().As<ISeedService>().InstancePerLifetimeScope();
             builder.RegisterType<LoginViewModel>().As<ILoginViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<TagViewModel>().As<ITagViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<CurrencyViewModel>().As<ICurrencyViewModel>().InstancePerLifetimeScope();

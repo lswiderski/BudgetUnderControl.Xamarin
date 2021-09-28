@@ -37,6 +37,12 @@ namespace BudgetUnderControl
             AutoFacInit();
             MainPage = AppShell = new AppShell();
 
+            /*
+            if(true)
+            {
+                await AppShell.OpenFirstRunAsync();
+            }
+            */
             if(Mobile.PlatformSpecific.Properties.REDIRECT_TO.HasValue )
             {
                 switch (Mobile.PlatformSpecific.Properties.REDIRECT_TO.Value)

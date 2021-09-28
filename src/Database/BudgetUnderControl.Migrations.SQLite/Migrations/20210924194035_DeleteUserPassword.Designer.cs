@@ -3,14 +3,16 @@ using System;
 using BudgetUnderControl.MobileDomain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Migrations.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210924194035_DeleteUserPassword")]
+    partial class DeleteUserPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -500,10 +502,6 @@ namespace Migrations.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Username")
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

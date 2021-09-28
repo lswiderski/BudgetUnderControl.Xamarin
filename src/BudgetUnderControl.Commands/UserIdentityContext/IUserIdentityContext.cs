@@ -10,9 +10,5 @@ namespace BudgetUnderControl.CommonInfrastructure
         int UserId { get; }
 
         Guid ExternalId { get; }
-
-        UserRole Role { get; }
-
-        string RoleName { get; }
     }
 }

@@ -16,5 +16,7 @@ namespace BudgetUnderControl.MobileDomain.Repositiories
         Task<Category> GetCategoryByNameAsync(string name);
         Task UpdateAsync(Category category);
         Task AddCategoryAsync(Category category);
+        Task AddCategoriesAsync(IEnumerable<Category> categories);
+        Task HardRemoveCategoriesAsync(IEnumerable<Category> categories);
     }
 }

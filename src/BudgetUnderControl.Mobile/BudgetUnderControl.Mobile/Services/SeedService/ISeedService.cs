@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace BudgetUnderControl.Mobile.Services
 {
-    public interface ILoginMobileService
+    public interface ISeedService
     {
-        Task<bool> LoginAsync(string username, string password, bool clearLocalData);
-        Task LogoutAsync();
         Task CreateNewUserAsync();
     }
 }

@@ -37,6 +37,7 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly ISynchroniser synchroniser;
         private readonly HttpClient httpClient;
         private readonly GeneralSettings settings;
+        private readonly ISeedService seedService;
         public SyncMobileService(IFileHelper fileHelper,
             ISyncService syncService,
             ITransactionRepository transactionRepository,
@@ -44,7 +45,8 @@ namespace BudgetUnderControl.Mobile.Services
             ISynchroniser synchroniser,
             ISynchronizationRepository synchronizationRepository,
             ILogger logger,
-            GeneralSettings settings
+            GeneralSettings settings,
+            ISeedService seedService
             )
         {
             this.fileHelper = fileHelper;
@@ -56,6 +58,7 @@ namespace BudgetUnderControl.Mobile.Services
             this.httpClient = App.Container.ResolveNamed<HttpClient>("api");
             this.settings = settings;
             this.logger = logger;
+            this.seedService = seedService;
         }
 
         public async Task<string> GetBackUpJSONAsync()
@@ -89,6 +92,11 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task CleanDataBaseAsync()
         {
             await this.syncService.CleanDataBaseAsync();
+        }
+
+        public async Task CreateNewUserAsync()
+        {
+            await this.seedService.CreateNewUserAsync();
         }
 
         public async Task SaveBackupFileAsync()

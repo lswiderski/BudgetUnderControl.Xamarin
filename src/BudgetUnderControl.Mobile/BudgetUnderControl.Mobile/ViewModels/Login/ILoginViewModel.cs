@@ -17,5 +17,7 @@ namespace BudgetUnderControl.Mobile.ViewModels
 
         Task LoginAsync();
         Task LogoutAsync();
+
+        Task CreateNewUserAsync();
     }
 }

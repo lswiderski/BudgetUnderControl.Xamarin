@@ -15,5 +15,6 @@ namespace BudgetUnderControl.Mobile.Services
         Task SyncAsync();
         Task TaskClearSyncDB();
         Task CleanDataBaseAsync();
+        Task CreateNewUserAsync();
     }
 }

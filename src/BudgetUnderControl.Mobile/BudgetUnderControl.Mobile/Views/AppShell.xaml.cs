@@ -35,8 +35,14 @@ namespace BudgetUnderControl.Views
 
         public async Task OpenAddTransactionAsync(string value, string title)
         {
-            var addAccount = new AddTransaction(value.ToString(), title);
-            await Navigation.PushModalAsync(addAccount);
+            var addTransaction = new AddTransaction(value.ToString(), title);
+            await Navigation.PushModalAsync(addTransaction);
+        }
+
+        public async Task OpenFirstRunAsync()
+        {
+            var firstRunPage = new FirstRunPage();
+            await Navigation.PushModalAsync(firstRunPage);
         }
     }
 }

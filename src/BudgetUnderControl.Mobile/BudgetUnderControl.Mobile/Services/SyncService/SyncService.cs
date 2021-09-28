@@ -220,7 +220,9 @@ namespace BudgetUnderControl.Mobile.Services
             var tags = await this.tagRepository.GetAsync();
             await this.tagRepository.RemoveAsync(tags);
 
-            //this.Context.Currencies.RemoveRange(this.Context.Currencies);
+            var categories = await this.categoryRepository.GetAllCategoriesAsync();
+            await this.categoryRepository.HardRemoveCategoriesAsync(categories);
+
         }
 
         private async Task ImportAccountsAsync(List<AccountSyncDTO> accounts)

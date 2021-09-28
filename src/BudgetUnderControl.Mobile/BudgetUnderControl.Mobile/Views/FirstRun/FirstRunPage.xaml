@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BudgetUnderControl.Views.FirstRunPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="End">
+            <Label Text="Welcome in Budget Under Control App"
+                HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" FontFamily="FAS" />
+            <Label Text="Or"
+                HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="createLocalAccount" Text="Create local account" Clicked="OnCreateNewUserAsync" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

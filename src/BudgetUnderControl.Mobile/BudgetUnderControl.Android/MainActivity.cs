@@ -37,7 +37,7 @@ namespace BudgetUnderControl.Droid
 
             Android.Gms.Ads.MobileAds.Initialize(this, "ca-app-pub-1938975042085430~4938848442");
             global::Xamarin.Forms.Forms.SetFlags("Expander_Experimental");
-           global::Xamarin.Forms.Forms.Init(this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, bundle);
             global::Xamarin.Forms.FormsMaterial.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
             DisplayCrashReport();

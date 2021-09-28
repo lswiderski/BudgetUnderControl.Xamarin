@@ -92,6 +92,12 @@ namespace BudgetUnderControl.Mobile.ViewModels
             }
         }
 
+        public async Task CreateNewUserAsync()
+        {
+            await loginMobileService.CreateNewUserAsync();
+            await Shell.Current.GoToAsync("..");
+        }
+
         public async Task LogoutAsync()
         {
             await loginMobileService.LogoutAsync();

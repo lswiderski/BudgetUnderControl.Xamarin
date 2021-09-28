@@ -8,8 +8,7 @@ namespace BudgetUnderControl.MobileDomain.Repositiories
     public interface IUserRepository
     {
         Task<User> GetFirstUserAsync();
-
-        Task<User> GetAsync(string username);
         Task UpdateUserAsync(User user);
+        Task AddUserAsync(User user);
     }
 }

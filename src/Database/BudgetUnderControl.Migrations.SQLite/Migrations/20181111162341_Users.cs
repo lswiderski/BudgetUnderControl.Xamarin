@@ -173,7 +173,7 @@ namespace Migrations.Migrations
                 onDelete: ReferentialAction.Cascade);
             */
             migrationBuilder.Sql("INSERT INTO USER (Username,Role,Email,Password,Salt,CreatedAt,ExternalId)" +
-                                                "VALUES ('demo', 'User', 'demo@swiderski.xyz','11a78a6a43d03d06489bf0611735acd0', 's0mRIdlKvI','2018-11-11 15:29:09.584149','10000000-0000-0000-0000-000000000001')"); //password:asdfg
+                                                "VALUES ('user', 'User', 'user@buc.xyz','11a78a6a43d03d06489bf0611735acd0', 's0mRIdlKvI','2018-11-11 15:29:09.584149','10000000-0000-0000-0000-000000000000')"); //password:asdfg
             migrationBuilder.Sql("UPDATE [Transaction] SET [AddedById] = 1");
             migrationBuilder.Sql("UPDATE [Tag] SET [OwnerId] = 1");
             migrationBuilder.Sql("UPDATE [Category] SET [OwnerId] = 1");

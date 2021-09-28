@@ -12,14 +12,5 @@ namespace BudgetUnderControl.CommonInfrastructure
 
         public Guid ExternalId { get; set; }
 
-        public UserRole Role
-        {
-            get
-            {
-                return this.RoleName.GetEnumValue<UserRole>();
-            }
-        }
-
-        public string RoleName { get; set; }
     }
 }

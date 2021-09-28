@@ -25,7 +25,6 @@ namespace BudgetUnderControl.Mobile.Services
             {
                 UserId = user.Id,
                 ExternalId = externalId,
-                RoleName = user.Role
             };
             return context;
         }

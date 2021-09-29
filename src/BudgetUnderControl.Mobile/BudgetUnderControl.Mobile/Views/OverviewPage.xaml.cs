@@ -49,10 +49,10 @@ namespace BudgetUnderControl.Views
                 lines.Add("EUR", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "EUR").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
                 lines.Add("USD", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "USD").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
 
-                await SecureStorage.SetAsync("Balance_Total", lines["Total"]);
-                await SecureStorage.SetAsync("Balance_PLN", lines["PLN"]);
-                await SecureStorage.SetAsync("Balance_EUR", lines["EUR"]);
-                await SecureStorage.SetAsync("Balance_USD", lines["USD"]);
+                await SecureStorage.SetAsync("Balance_Total", !string.IsNullOrEmpty(lines["Total"]) ? lines["Total"] : string.Empty);
+                await SecureStorage.SetAsync("Balance_PLN", !string.IsNullOrEmpty(lines["PLN"]) ? lines["PLN"] : string.Empty);
+                await SecureStorage.SetAsync("Balance_EUR", !string.IsNullOrEmpty(lines["EUR"]) ? lines["EUR"] : string.Empty);
+                await SecureStorage.SetAsync("Balance_USD", !string.IsNullOrEmpty(lines["USD"]) ? lines["USD"] : string.Empty);
             }
             else
             {

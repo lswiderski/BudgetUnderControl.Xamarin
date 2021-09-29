@@ -33,5 +33,18 @@ namespace BudgetUnderControl.Mobile.Repositories
             this.Context.Users.Add(user);
             await this.Context.SaveChangesAsync();
         }
+
+        public async Task RemoveLocalUsersAsync()
+        {
+            var allUsers = await this.Context.Users.ToListAsync();
+            this.Context.Users.RemoveRange(allUsers);
+
+            await this.Context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsUserExistAsync()
+        {
+             return await this.GetFirstUserAsync() != null;
+        }
     }
 }

@@ -16,14 +16,14 @@ namespace BudgetUnderControl.Mobile.Services
         {
             var user =  this.userRepository.GetFirstUserAsync().Result;
             var externalId = Guid.NewGuid();
-            if (!string.IsNullOrWhiteSpace(user.ExternalId))
+            if (!string.IsNullOrWhiteSpace(user?.ExternalId))
             {
-                externalId = Guid.Parse(user.ExternalId);
+                externalId = Guid.Parse(user?.ExternalId);
             }
 
             var context = new UserIdentityContext
             {
-                UserId = user.Id,
+                UserId = user?.Id ?? 0,
                 ExternalId = externalId,
             };
             return context;

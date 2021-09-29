@@ -8,6 +8,7 @@ using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using BudgetUnderControl.Mobile.IoC;
+using BudgetUnderControl.MobileDomain.Repositiories;
 
 [assembly: ExportFont("FontAwesome5Brands.otf", Alias = "FAB")]
 [assembly: ExportFont("FontAwesome5Regular.otf", Alias = "FAR")]
@@ -36,14 +37,19 @@ namespace BudgetUnderControl
             
             AutoFacInit();
             MainPage = AppShell = new AppShell();
-
-            /*
-            if(true)
+            using (var scope = App.Container.BeginLifetimeScope())
             {
-                await AppShell.OpenFirstRunAsync();
+                var userRepository = scope.Resolve<IUserRepository>();
+
+                var isUserExist = await userRepository.IsUserExistAsync();
+
+                if (!isUserExist)
+                {
+                    await AppShell.OpenFirstRunAsync();
+                }
             }
-            */
-            if(Mobile.PlatformSpecific.Properties.REDIRECT_TO.HasValue )
+
+            if (Mobile.PlatformSpecific.Properties.REDIRECT_TO.HasValue )
             {
                 switch (Mobile.PlatformSpecific.Properties.REDIRECT_TO.Value)
                 {

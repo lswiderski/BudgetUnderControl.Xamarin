@@ -31,6 +31,7 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly ISyncRequestBuilder syncRequestBuilder;
         private readonly ISynchroniser synchroniser;
         private readonly ITagRepository tagRepository;
+        private readonly ISeedService seedService;
 
         private Dictionary<int, int> accountsMap; // key - old AccountId, value - new AccountId
         private Dictionary<int, int> transactionsMap; // key - old TransactionId, value - new TransactionId
@@ -45,7 +46,8 @@ namespace BudgetUnderControl.Mobile.Services
             IUserIdentityContext userIdentityContext,
             GeneralSettings settings,
             ISyncRequestBuilder syncRequestBuilder,
-            ISynchroniser synchroniser)
+            ISeedService seedService,
+        ISynchroniser synchroniser)
         {
             this.transactionRepository = transactionRepository;
             this.accountRepository = accountRepository;
@@ -58,11 +60,13 @@ namespace BudgetUnderControl.Mobile.Services
             this.syncRequestBuilder = syncRequestBuilder;
             this.synchroniser = synchroniser;
             this.tagRepository = tagRepository;
+            this.seedService = seedService;
         }
 
         public async Task ImportBackUpAsync(BackUpDTO backupDto)
         {
             await CleanDataBaseAsync();
+            await this.seedService.CreateNewUserAsync();
             //ImportCurrencies(backupDto.Currencies);
             await ImportAccountsAsync(backupDto.Accounts);
             await ImportTransactionsAsync(backupDto.Transactions);
@@ -218,6 +222,8 @@ namespace BudgetUnderControl.Mobile.Services
 
             var categories = await this.categoryRepository.GetAllCategoriesAsync();
             await this.categoryRepository.HardRemoveCategoriesAsync(categories);
+
+            await this.userRepository.RemoveLocalUsersAsync();
 
         }
 

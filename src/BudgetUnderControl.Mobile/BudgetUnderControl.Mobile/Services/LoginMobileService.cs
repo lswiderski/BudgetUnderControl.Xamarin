@@ -62,12 +62,20 @@ namespace BudgetUnderControl.Mobile.Services
                 {
                     //clear DB
                     await syncMobileService.CleanDataBaseAsync();
+                    await this.CreateNewUserAsync();
                 }
 
                 //set externalId
                 var user = await this.userRepository.GetFirstUserAsync();
+
+                if(user == null)
+                {
+                    await this.CreateNewUserAsync();
+                    user = await this.userRepository.GetFirstUserAsync();
+                }
                 user.EditExternalId(userId.ToString());
                 await userRepository.UpdateUserAsync(user);
+
 
                 //sync
                 //await syncMobileService.SyncAsync();

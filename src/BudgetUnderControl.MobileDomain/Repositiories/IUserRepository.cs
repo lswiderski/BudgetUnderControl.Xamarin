@@ -10,5 +10,7 @@ namespace BudgetUnderControl.MobileDomain.Repositiories
         Task<User> GetFirstUserAsync();
         Task UpdateUserAsync(User user);
         Task AddUserAsync(User user);
+        Task RemoveLocalUsersAsync();
+        Task<bool> IsUserExistAsync();
     }
 }

@@ -14,9 +14,9 @@ namespace BudgetUnderControl.Mobile.Repositories
     {
         private readonly IUserIdentityContext userIdentityContext;
 
-        public TagRepository(IContextFacade context, IUserIdentityContext userIdentityContext) : base(context)
+        public TagRepository(IContextFacade context, Func<IUserIdentityContext> userIdentityContextFunc) : base(context)
         {
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContext = userIdentityContextFunc();
         }
 
         public async Task AddAsync(Tag tag)

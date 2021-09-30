@@ -17,6 +17,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using BudgetUnderControl.ViewModel;
 using Xamarin.Forms;
+using BudgetUnderControl.Mobile.IoC;
 
 namespace BudgetUnderControl.Mobile.Services
 {
@@ -75,7 +76,6 @@ namespace BudgetUnderControl.Mobile.Services
                 }
                 user.EditExternalId(userId.ToString());
                 await userRepository.UpdateUserAsync(user);
-
 
                 //sync
                 //await syncMobileService.SyncAsync();

@@ -53,8 +53,12 @@ namespace BudgetUnderControl.Mobile.Repositories
         public async Task ClearSynchronizationAsync()
         {
             var entities = await this.Context.Synchronizations.ToListAsync();
-            this.Context.Synchronizations.RemoveRange(entities);
-            await this.Context.SaveChangesAsync();
+            if(entities.Count> 0 )
+            {
+                this.Context.Synchronizations.RemoveRange(entities);
+                await this.Context.SaveChangesAsync();
+            }
+           
         }
     }
 }

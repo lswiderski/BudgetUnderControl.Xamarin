@@ -39,7 +39,7 @@ namespace BudgetUnderControl.Mobile.Services
             ICategoryRepository categoryRepository,
             IUserRepository userRepository,
             ISynchronizationRepository synchronizationRepository,
-            IUserIdentityContext userIdentityContext,
+            Func<IUserIdentityContext> userIdentityContextFunc,
             ITagRepository tagRepository,
             ITransactionService transactionService,
             ILogger logger,
@@ -53,7 +53,7 @@ namespace BudgetUnderControl.Mobile.Services
             this.categoryRepository = categoryRepository;
             this.userRepository = userRepository;
             this.synchronizationRepository = synchronizationRepository;
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContext = userIdentityContextFunc();
             this.settings = settings;
             this.tagRepository = tagRepository;
             this.transactionService = transactionService;

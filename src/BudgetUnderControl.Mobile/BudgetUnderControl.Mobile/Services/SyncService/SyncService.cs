@@ -43,7 +43,7 @@ namespace BudgetUnderControl.Mobile.Services
             IUserRepository userRepository,
             ISynchronizationRepository synchronizationRepository,
             ITagRepository tagRepository,
-            IUserIdentityContext userIdentityContext,
+             Func<IUserIdentityContext> userIdentityContextFunc,
             GeneralSettings settings,
             ISyncRequestBuilder syncRequestBuilder,
             ISeedService seedService,
@@ -55,7 +55,7 @@ namespace BudgetUnderControl.Mobile.Services
             this.categoryRepository = categoryRepository;
             this.userRepository = userRepository;
             this.synchronizationRepository = synchronizationRepository;
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContext = userIdentityContextFunc();
             this.settings = settings;
             this.syncRequestBuilder = syncRequestBuilder;
             this.synchroniser = synchroniser;
@@ -222,6 +222,8 @@ namespace BudgetUnderControl.Mobile.Services
 
             var categories = await this.categoryRepository.GetAllCategoriesAsync();
             await this.categoryRepository.HardRemoveCategoriesAsync(categories);
+
+            await this.synchronizationRepository.ClearSynchronizationAsync();
 
             await this.userRepository.RemoveLocalUsersAsync();
 

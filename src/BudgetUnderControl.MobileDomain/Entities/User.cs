@@ -18,6 +18,7 @@ namespace BudgetUnderControl.MobileDomain
 
         public List<Account> Accounts { get; protected set; }
         public List<Transaction> Transactions { get; protected set; }
+        public List<Synchronization> Synchronizations { get; protected set; }
 
         public void Delete(bool delete = true)
         {

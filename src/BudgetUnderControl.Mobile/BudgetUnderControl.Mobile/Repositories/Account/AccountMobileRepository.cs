@@ -15,11 +15,18 @@ namespace BudgetUnderControl.Mobile.Repositories
 {
     public class AccountMobileRepository : BaseModel, IAccountMobileRepository
     {
-        private readonly IUserIdentityContext userIdentityContext;
-
-        public AccountMobileRepository(IContextFacade context, IUserIdentityContext userIdentityContext) : base(context)
+        private Func<IUserIdentityContext> userIdentityContextFunc;
+        private IUserIdentityContext userIdentityContext
         {
-            this.userIdentityContext = userIdentityContext;
+            get
+            {
+                return this.userIdentityContextFunc();
+            }
+        }
+
+        public AccountMobileRepository(IContextFacade context, Func<IUserIdentityContext> userIdentityContextFunc) : base(context)
+        {
+            this.userIdentityContextFunc = userIdentityContextFunc;
         }
 
         public async Task<IEnumerable<Account>> GetAccountsAsync(bool? active = null)

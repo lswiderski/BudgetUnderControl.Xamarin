@@ -56,19 +56,13 @@ namespace BudgetUnderControl.Mobile.IoC
 
             builder.Register<Func<IUserIdentityContext>>(c =>
             {
-                var context = c.Resolve<IComponentContext>();
+                var userService = c.Resolve<IUserService>();
                 return () =>
                 {
-                    var service = context.Resolve<IUserService>();
-                    var identity = service.CreateUserIdentityContext();
+                    var identity = userService.CreateUserIdentityContext();
                     return identity;
                 };
-            });
-
-            builder.Register<IUserIdentityContext>(c =>
-            {
-                return c.Resolve<Func<IUserIdentityContext>>()();
-            });
+            }).InstancePerLifetimeScope();
 
             builder.RegisterInstance(new ContextConfig() { DbName = settings.BUC_DB_Name, DbPath = dbPath, Application = ApplicationType.Mobile , ConnectionString = "Filename=" }).As<IContextConfig>();
             builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions() {  })).As<IMemoryCache>();
@@ -82,7 +76,7 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<AccountMobileRepository>().As<IAccountMobileRepository>().InstancePerLifetimeScope();
             builder.RegisterType<TransactionRepository>().As<ITransactionRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<TagRepository>().As<ITagRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<TagRepository>().As<ITagRepository>().InstancePerLifetimeScope(); ;
             builder.RegisterType<FileRepository>().As<IFileRepository>().InstancePerLifetimeScope();
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<SyncService>().As<ISyncService>().InstancePerLifetimeScope();

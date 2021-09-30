@@ -22,13 +22,13 @@ namespace BudgetUnderControl.Mobile.Services
 
         public TestDataSeeder(IAccountService accountService, ITransactionService transactionService,
             ICurrencyService currencyService, ICategoryService categoryService,
-            IUserIdentityContext userContext, ICommandDispatcher commandDispatcher)
+             Func<IUserIdentityContext> userIdentityContextFunc, ICommandDispatcher commandDispatcher)
         {
             this.accountService = accountService;
             this.transactionService = transactionService;
             this.currencyService = currencyService;
             this.categoryService = categoryService;
-            this.userContext = userContext;
+            this.userContext = userIdentityContextFunc();
             this.commandDispatcher = commandDispatcher;
         }
 

@@ -1,4 +1,7 @@
-﻿using BudgetUnderControl.MobileDomain;
+﻿using Autofac;
+using BudgetUnderControl.CommonInfrastructure;
+using BudgetUnderControl.Mobile.IoC;
+using BudgetUnderControl.MobileDomain;
 using BudgetUnderControl.MobileDomain.Repositiories;
 using System;
 using System.Collections.Generic;
@@ -24,7 +27,6 @@ namespace BudgetUnderControl.Mobile.Services
             await userRepository.AddUserAsync(user);
             await this.SeedCategoriesAsync(user.Id);
         }
-
         private async Task SeedCategoriesAsync(int userId)
         {
             var categories = new List<Category>()

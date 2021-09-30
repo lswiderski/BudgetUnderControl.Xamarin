@@ -15,10 +15,10 @@ namespace BudgetUnderControl.Mobile.Services
     {
         private readonly ITagRepository tagRepository;
         private readonly IUserIdentityContext userIdentityContext;
-        public TagService(ITagRepository tagRepository, IUserIdentityContext userIdentityContext)
+        public TagService(ITagRepository tagRepository, Func<IUserIdentityContext> userIdentityContextFunc)
         {
             this.tagRepository = tagRepository;
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContext = userIdentityContextFunc();
         }
 
 

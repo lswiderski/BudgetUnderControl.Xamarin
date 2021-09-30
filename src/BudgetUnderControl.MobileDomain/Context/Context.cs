@@ -206,6 +206,13 @@ namespace BudgetUnderControl.MobileDomain
                .WithMany(y => y.FilesToTransaction)
                .HasForeignKey(x => x.TransactionId)
                .HasConstraintName("ForeignKey_FileToTransaction_Transaction");
+
+            modelBuilder.Entity<Synchronization>()
+               .HasOne(x => x.User)
+              .WithMany(y => y.Synchronizations)
+              .HasForeignKey(x => x.UserId)
+              .HasConstraintName("ForeignKey_Synchronization_User")
+              .OnDelete(DeleteBehavior.Restrict);
         }
 
         }

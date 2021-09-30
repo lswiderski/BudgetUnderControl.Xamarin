@@ -16,10 +16,10 @@ namespace BudgetUnderControl.Mobile.Repositories
         private readonly IFileHelper fileHelper;
 
         public FileRepository(IContextFacade context,
-            IUserIdentityContext userIdentityContext,
+             Func<IUserIdentityContext> userIdentityContextFunc,
             IFileHelper fileHelper) : base(context)
         {
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContext = userIdentityContextFunc();
             this.fileHelper = fileHelper;
         }
 

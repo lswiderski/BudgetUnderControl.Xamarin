@@ -13,13 +13,21 @@ namespace BudgetUnderControl.Mobile.Repositories
     public class TransactionRepository : BaseModel, ITransactionRepository
     {
         private readonly IAccountMobileRepository accountRepository;
-        private readonly IUserIdentityContext userIdentityContext;
+       
+        private Func<IUserIdentityContext> userIdentityContextFunc;
+        private IUserIdentityContext userIdentityContext
+        {
+            get
+            {
+                return this.userIdentityContextFunc();
+            }
+        }
 
         public TransactionRepository(IContextFacade context, IAccountMobileRepository accountRepository,
-            IUserIdentityContext userIdentityContext) : base(context)
+            Func<IUserIdentityContext> userIdentityContextFunc) : base(context)
         {
             this.accountRepository = accountRepository;
-            this.userIdentityContext = userIdentityContext;
+            this.userIdentityContextFunc = userIdentityContextFunc;
         }
 
         public async Task AddTransactionAsync(Transaction transaction)
@@ -97,7 +105,7 @@ namespace BudgetUnderControl.Mobile.Repositories
 
         public async Task<ICollection<Transaction>> GetTransactionsAsync(TransactionsFilter filter = null)
         {
-
+            //var userId = userIdentityContext.UserId;
             var query = this.Context.Transactions
                         .Include(p => p.Category)
                         .Include(p => p.Account)

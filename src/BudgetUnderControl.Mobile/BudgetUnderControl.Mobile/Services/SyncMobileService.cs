@@ -93,6 +93,8 @@ namespace BudgetUnderControl.Mobile.Services
         {
             await this.syncService.CleanDataBaseAsync();
             SecureStorage.Remove(SecurityStorageKeys.UserExternalId);
+            Preferences.Set(PreferencesKeys.IsUserLogged, false);
+            Preferences.Remove(PreferencesKeys.JWTTOKEN);
         }
 
         public async Task CreateNewUserAsync()

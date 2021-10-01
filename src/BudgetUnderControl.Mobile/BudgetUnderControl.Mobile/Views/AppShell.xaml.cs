@@ -10,6 +10,9 @@ using BudgetUnderControl;
 using BudgetUnderControl.Mobile.Views;
 using Autofac;
 using BudgetUnderControl.CommonInfrastructure.Settings;
+using System.ComponentModel;
+using Xamarin.Essentials;
+using BudgetUnderControl.Mobile.Keys;
 
 namespace BudgetUnderControl.Views
 {
@@ -25,7 +28,8 @@ namespace BudgetUnderControl.Views
             }
 
             InitializeComponent();
-          
+            PropertyChanged += Shell_PropertyChanged;
+
             Routing.RegisterRoute("login", typeof(Login));
             Routing.RegisterRoute("logout", typeof(Logout));
             Routing.RegisterRoute("exchangeRates", typeof(ExchangeRates));
@@ -43,6 +47,34 @@ namespace BudgetUnderControl.Views
         {
             var firstRunPage = new FirstRunPage();
             await Navigation.PushModalAsync(firstRunPage);
+        }
+
+        private void Shell_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("FlyoutIsPresented"))
+                if (FlyoutIsPresented)
+                    Task.WhenAll(OnFlyoutOpenedAsync()); 
+                else
+                    Task.WhenAll(OnFlyoutClosedAsync());
+        }
+
+        private async Task OnFlyoutOpenedAsync()
+        {
+            await this.CheckUserExistanceAsync();
+        }
+
+        private async Task OnFlyoutClosedAsync()
+        {
+            await this.CheckUserExistanceAsync();
+        }
+
+        private async Task CheckUserExistanceAsync()
+        {
+            if(await SecureStorage.GetAsync(SecurityStorageKeys.UserExternalId) == null)
+            {
+                await OpenFirstRunAsync();
+            }
+
         }
     }
 }

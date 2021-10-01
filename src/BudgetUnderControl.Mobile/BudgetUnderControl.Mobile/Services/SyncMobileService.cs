@@ -92,6 +92,7 @@ namespace BudgetUnderControl.Mobile.Services
         public async Task CleanDataBaseAsync()
         {
             await this.syncService.CleanDataBaseAsync();
+            SecureStorage.Remove(SecurityStorageKeys.UserExternalId);
         }
 
         public async Task CreateNewUserAsync()

@@ -56,7 +56,6 @@ namespace BudgetUnderControl.Mobile.Services
                 var userId = Guid.Parse(claim.Value);
                 Preferences.Set(PreferencesKeys.JWTTOKEN, token);
                 Preferences.Set(PreferencesKeys.IsUserLogged, true);
-                Preferences.Set(PreferencesKeys.UserExternalId, userId.ToString());
                 settingsViewModel.RefreshUserButtons();
 
                 if (clearLocalData)
@@ -76,7 +75,7 @@ namespace BudgetUnderControl.Mobile.Services
                 }
                 user.EditExternalId(userId.ToString());
                 await userRepository.UpdateUserAsync(user);
-
+                await SecureStorage.SetAsync(SecurityStorageKeys.UserExternalId, user.ExternalId);
                 //sync
                 //await syncMobileService.SyncAsync();
 
@@ -94,12 +93,13 @@ namespace BudgetUnderControl.Mobile.Services
             //clear DB
             await syncMobileService.CleanDataBaseAsync();
             await this.syncMobileService.CreateNewUserAsync();
+            var user = await this.userRepository.GetFirstUserAsync();
+            await SecureStorage.SetAsync(SecurityStorageKeys.UserExternalId, user.ExternalId);
         }
 
         public async Task LogoutAsync()
         {
             Preferences.Set(PreferencesKeys.IsUserLogged, false);
-            Preferences.Remove(PreferencesKeys.UserExternalId);
             Preferences.Remove(PreferencesKeys.JWTTOKEN);
             settingsViewModel.RefreshUserButtons();
         }

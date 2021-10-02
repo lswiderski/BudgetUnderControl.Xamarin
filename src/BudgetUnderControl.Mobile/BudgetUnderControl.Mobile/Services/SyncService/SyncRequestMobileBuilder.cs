@@ -217,7 +217,7 @@ namespace BudgetUnderControl.Mobile.Services
         private async Task<IEnumerable<CategorySyncDTO>> GetCategoriesToSyncAsync(DateTime changedSince)
         {
             var categories = (await this.categoryRepository.GetCategoriesAsync())
-                .Where(x => x.ModifiedOn >= changedSince)
+                //.Where(x => x.ModifiedOn >= changedSince)
                 .Select(x => new CategorySyncDTO
                 {
                     Id = x.Id,

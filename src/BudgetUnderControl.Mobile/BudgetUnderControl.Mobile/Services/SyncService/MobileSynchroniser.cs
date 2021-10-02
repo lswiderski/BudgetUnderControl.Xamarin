@@ -297,11 +297,13 @@ namespace BudgetUnderControl.Mobile.Services
                 var categoryToUpdate = await this.categoryRepository.GetCategoryByNameAsync(category.Name);
                 if (categoryToUpdate != null)
                 {
-                    if(categoryToUpdate.ModifiedOn < category.ModifiedOn)
+                    if(categoryToUpdate.ModifiedOn < category.ModifiedOn
+                        || categoryToUpdate.ExternalId != category.ExternalId.ToString())
                     {
                         categoryToUpdate.Edit(category.Name, category.Icon);
                         categoryToUpdate.Delete(category.IsDeleted);
                         categoryToUpdate.SetModifiedOn(category.ModifiedOn);
+                        categoryToUpdate.SetExternalId(category.ExternalId.ToString());
                         await this.categoryRepository.UpdateAsync(categoryToUpdate);
                         logger.Info("Category Updated:" + category.ExternalId.ToString());
                     }
@@ -312,6 +314,7 @@ namespace BudgetUnderControl.Mobile.Services
                     var categoryToAdd = Category.Create(category.Name, userId, category.ExternalId.ToString(), category.Icon);
                     categoryToAdd.Delete(category.IsDeleted);
                     categoryToAdd.SetModifiedOn(category.ModifiedOn);
+                    categoryToAdd.SetExternalId(category.ExternalId.ToString());
                     await this.categoryRepository.AddCategoryAsync(categoryToAdd);
                     logger.Info("Category Created:" + category.ExternalId.ToString());
                 }

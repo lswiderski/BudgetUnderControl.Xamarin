@@ -27,15 +27,6 @@ namespace BudgetUnderControl.MobileDomain
         public virtual User Owner { get; set; }
         public List<Transaction> Transactions { get; set; }
 
-        [NotMapped]
-        public string ExternalIdString
-        {
-            get
-            {
-                return this.ExternalId.ToString();
-            }
-        }
-
         protected Category()
         {
 
@@ -87,6 +78,12 @@ namespace BudgetUnderControl.MobileDomain
         public Category SetIcon(string icon)
         {
             this.Icon = icon;
+            return this;
+        }
+
+        public Category SetExternalId(string externalId)
+        {
+            this.ExternalId = externalId;
             return this;
         }
     }

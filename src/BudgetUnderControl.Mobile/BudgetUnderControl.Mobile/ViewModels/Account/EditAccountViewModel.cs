@@ -242,7 +242,7 @@ namespace BudgetUnderControl.ViewModel
         public async Task SaveAccount()
         {
             decimal amountValue;
-            if(!decimal.TryParse(Amount.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amountValue))
+            if(!decimal.TryParse(Amount?.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amountValue))
             {
                 amountValue = decimal.Parse(Amount);
             }

@@ -216,11 +216,15 @@ namespace BudgetUnderControl.ViewModel
         {
             decimal value;
             int _order = 0;
-            if(!int.TryParse(order, out _order))
+            if (!int.TryParse(order, out _order))
             {
                 _order = 0;
             }
-            decimal.TryParse(amount.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value);
+            if (!decimal.TryParse(amount?.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value))
+            {
+                value = 0;
+            }
+
             var command = new AddAccount
             {
                 Name = Name,

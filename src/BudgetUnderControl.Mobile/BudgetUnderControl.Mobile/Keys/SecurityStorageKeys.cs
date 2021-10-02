@@ -8,5 +8,6 @@ namespace BudgetUnderControl.Mobile.Keys
     {
         public static string IsUserLogged = "IsUserLogged";
         public static string UserExternalId = "UserExternalId";
+        public static string BalanceTotal = "Balance_Total";
     }
 }

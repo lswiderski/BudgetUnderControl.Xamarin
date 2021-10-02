@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BudgetUnderControl.CommonInfrastructure;
 using Xamarin.Essentials;
+using BudgetUnderControl.Mobile.Keys;
 
 namespace BudgetUnderControl.Mobile.Repositories
 {
@@ -172,11 +173,11 @@ namespace BudgetUnderControl.Mobile.Repositories
                 var user = await this.Context.Users.FirstOrDefaultAsync();
                 var type = Math.Sign(amount) < 0 ? TransactionType.Expense : TransactionType.Income;
                 var defaultCategoryId = this.Context.Categories.Where(x => x.IsDefault && !x.IsDeleted).Select(x => (int?)x.Id).FirstOrDefault();
-                var transaction = Transaction.Create(accountId, type, amount, DateTime.UtcNow, "BalanceAdjustment", string.Empty, user.Id, false, defaultCategoryId);
+                var transaction = Transaction.Create(accountId, type, amount, DateTime.UtcNow, "Balance Adjustment", string.Empty, user.Id, false, defaultCategoryId);
 
                 this.Context.Transactions.Add(transaction);
                 await this.Context.SaveChangesAsync();
-                SecureStorage.Remove("Balance_Total");
+                SecureStorage.Remove(SecurityStorageKeys.BalanceTotal);
             }
         }
 

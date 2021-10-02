@@ -95,6 +95,7 @@ namespace BudgetUnderControl.Mobile.Services
             SecureStorage.Remove(SecurityStorageKeys.UserExternalId);
             Preferences.Set(PreferencesKeys.IsUserLogged, false);
             Preferences.Remove(PreferencesKeys.JWTTOKEN);
+            SecureStorage.Remove(SecurityStorageKeys.BalanceTotal);
         }
 
         public async Task CreateNewUserAsync()

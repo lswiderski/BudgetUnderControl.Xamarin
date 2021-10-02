@@ -2,6 +2,7 @@
 using BudgetUnderControl.CommonInfrastructure;
 using BudgetUnderControl.CommonInfrastructure.Commands;
 using BudgetUnderControl.CommonInfrastructure.Settings;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.Mobile.Services;
 using BudgetUnderControl.MobileDomain;
 using BudgetUnderControl.MobileDomain.Repositiories;
@@ -75,7 +76,7 @@ namespace BudgetUnderControl.Mobile.Services
             await this.UpdateTransfersAsync(syncRequest.Transfers);
             await this.UpdateExchangeRatesAsync(syncRequest.ExchangeRates);
             await this.UpdateLastSyncDateAsync(syncRequest);
-            SecureStorage.Remove("Balance_Total");
+            SecureStorage.Remove(SecurityStorageKeys.BalanceTotal);
         }
 
         private async Task UpdateLastSyncDateAsync(SyncRequest syncRequest)

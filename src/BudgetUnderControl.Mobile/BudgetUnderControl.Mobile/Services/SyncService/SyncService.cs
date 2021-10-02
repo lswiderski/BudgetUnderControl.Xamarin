@@ -4,6 +4,7 @@ using BudgetUnderControl.Common.Enums;
 using BudgetUnderControl.CommonInfrastructure;
 using BudgetUnderControl.CommonInfrastructure.Commands;
 using BudgetUnderControl.CommonInfrastructure.Settings;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.MobileDomain;
 using BudgetUnderControl.MobileDomain.Repositiories;
 using System;
@@ -74,7 +75,7 @@ namespace BudgetUnderControl.Mobile.Services
             await ImportTagsAsync(backupDto.Tags);
             await ImportTagsToTransactionsAsync(backupDto.TagsToTransactions);
             await ImportExchangeRatesAsync(backupDto.ExchangeRates);
-            SecureStorage.Remove("Balance_Total");
+            SecureStorage.Remove(SecurityStorageKeys.BalanceTotal);
         }
 
         public async Task<BackUpDTO> GetBackUpAsync()

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using BudgetUnderControl.Mobile.Keys;
 
 namespace BudgetUnderControl.Views
 {
@@ -38,7 +39,7 @@ namespace BudgetUnderControl.Views
 
             var lines = new Dictionary<string, string>();
 
-            var total = await SecureStorage.GetAsync("Balance_Total");
+            var total = await SecureStorage.GetAsync(SecurityStorageKeys.BalanceTotal);
             if (total == null)
             {
                 var balance = await vm.GetCurrentBalanceAsync();
@@ -49,7 +50,7 @@ namespace BudgetUnderControl.Views
                 lines.Add("EUR", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "EUR").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
                 lines.Add("USD", balance.Where(x => !x.IsExchanged && x.Value != 0 && x.Currency == "USD").OrderBy(x => x.Currency).Select(item => $"{item.Currency}: {item.Value}").FirstOrDefault());
 
-                await SecureStorage.SetAsync("Balance_Total", !string.IsNullOrEmpty(lines["Total"]) ? lines["Total"] : string.Empty);
+                await SecureStorage.SetAsync(SecurityStorageKeys.BalanceTotal, !string.IsNullOrEmpty(lines["Total"]) ? lines["Total"] : string.Empty);
                 await SecureStorage.SetAsync("Balance_PLN", !string.IsNullOrEmpty(lines["PLN"]) ? lines["PLN"] : string.Empty);
                 await SecureStorage.SetAsync("Balance_EUR", !string.IsNullOrEmpty(lines["EUR"]) ? lines["EUR"] : string.Empty);
                 await SecureStorage.SetAsync("Balance_USD", !string.IsNullOrEmpty(lines["USD"]) ? lines["USD"] : string.Empty);

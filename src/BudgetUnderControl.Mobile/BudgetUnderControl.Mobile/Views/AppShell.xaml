@@ -5,7 +5,6 @@
              xmlns:fontawesome="clr-namespace:FontAwesome"
              x:Class="BudgetUnderControl.Views.AppShell"
              Title="Budget Under Control">
-
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="Transparent"
               HeightRequest="200">
@@ -66,15 +65,12 @@
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" />
     </FlyoutItem>
-    <FlyoutItem  Route="debug" Title="Developer Options" >
-        <FlyoutItem.Icon>
-            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.LaptopCode}" FontFamily="FAS" Size="24" Color="Black" />
-        </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate local:DebugMenu}" />
-    </FlyoutItem>
-    <ShellContent Title="About" ContentTemplate="{DataTemplate local:AboutPage}">
-        <ShellContent.Icon>
-            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.InfoCircle}" FontFamily="FAS" Size="24" Color="Black" />
-        </ShellContent.Icon>
-    </ShellContent>
+    <Shell.FlyoutFooter>
+        <StackLayout>
+            <Label Text="Budget Under Control"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+          
+        </StackLayout>
+    </Shell.FlyoutFooter>
 </Shell>

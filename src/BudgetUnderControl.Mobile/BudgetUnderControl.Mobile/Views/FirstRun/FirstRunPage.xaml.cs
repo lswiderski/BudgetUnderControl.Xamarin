@@ -24,14 +24,20 @@ namespace BudgetUnderControl.Views
             return true;
         }
 
-        async void OnLoginButtonClicked(object sender, EventArgs args)
+        async void OnLoginButtonClickedAsync(object sender, EventArgs args)
         {
             await Shell.Current.GoToAsync("login");
         }
 
-        async void OnCreateNewUserAsync(object sender, EventArgs args)
+        async void OnCreateNewUserClickedAsync(object sender, EventArgs args)
         {
             await vm.CreateNewUserAsync();
+
+        }
+        async void OnSettingsClickedAsync(object sender, EventArgs args)
+        {
+            var settingsPage = new SettingsPage();
+            await Navigation.PushModalAsync(settingsPage);
 
         }
     }

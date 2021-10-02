@@ -48,5 +48,14 @@ namespace BudgetUnderControl.Views
             await Shell.Current.GoToAsync("logout");
         }
 
+        async void OnDeveloperOptionsButtonClicked(object sender, EventArgs args)
+        {
+            await Shell.Current.GoToAsync("debug");
+        }
+
+        async void OnAboutButtonClicked(object sender, EventArgs args)
+        {
+            await Shell.Current.GoToAsync("about");
+        }
     }
 }

@@ -3,13 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.FirstRunPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="End">
-            <Label Text="Welcome in Budget Under Control App"
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Start">
+                <Button x:Name="settings" Text="&#xf013;" Clicked="OnSettingsClickedAsync" FontFamily="FAS" AbsoluteLayout.LayoutBounds="0.94,1.18,0.5,0.25" />
+            </StackLayout>
+            <StackLayout VerticalOptions="CenterAndExpand">
+                <Label Text="Welcome in Budget Under Control App"
                 HorizontalOptions="CenterAndExpand" />
-            <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" FontFamily="FAS" />
-            <Label Text="Or"
+            </StackLayout>
+            <StackLayout VerticalOptions="End">
+                <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClickedAsync" FontFamily="FAS" />
+                <Label Text="Or"
                 HorizontalOptions="CenterAndExpand" />
-            <Button x:Name="createLocalAccount" Text="Create local account" Clicked="OnCreateNewUserAsync" />
+                <Button x:Name="createLocalAccount" Text="Create local account" Clicked="OnCreateNewUserClickedAsync" />
+            </StackLayout>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

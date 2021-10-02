@@ -9,6 +9,9 @@
             <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" IsVisible="{Binding IsNotLogged}" FontFamily="FAS" />
 
             <Button x:Name="logout" Text="&#xf2f5; Logout" Clicked="OnLogoutButtonClicked" IsVisible="{Binding IsLogged}" FontFamily="FAS" />
+            <Button x:Name="about" Text="&#xf05a; About" Clicked="OnAboutButtonClicked"  FontFamily="FAS" />
+
+            <Button x:Name="developerOptions" Text="&#xf5fc; Developer Options" Clicked="OnDeveloperOptionsButtonClicked"  FontFamily="FAS" />
 
             <Label Text="Please Wait, Working in Background..." IsVisible="{Binding IsLoading}"></Label>
             <ActivityIndicator IsRunning="{Binding IsLoading, Mode =TwoWay}" IsVisible="{Binding IsLoading, Mode=TwoWay}"

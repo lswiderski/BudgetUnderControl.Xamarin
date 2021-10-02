@@ -35,6 +35,8 @@ namespace BudgetUnderControl.Views
             Routing.RegisterRoute("exchangeRates", typeof(ExchangeRates));
             Routing.RegisterRoute("editTag", typeof(EditTag));
             Routing.RegisterRoute("accountDetails", typeof(AccountDetails));
+            Routing.RegisterRoute("debug", typeof(DebugMenu));
+            Routing.RegisterRoute("about", typeof(AboutPage));
         }
 
         public async Task OpenAddTransactionAsync(string value, string title)

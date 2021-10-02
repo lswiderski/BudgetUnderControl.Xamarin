@@ -83,5 +83,11 @@ namespace BudgetUnderControl.MobileDomain
             this.IsDefault = true;
             return this;
         }
+
+        public Category SetIcon(string icon)
+        {
+            this.Icon = icon;
+            return this;
+        }
     }
 }

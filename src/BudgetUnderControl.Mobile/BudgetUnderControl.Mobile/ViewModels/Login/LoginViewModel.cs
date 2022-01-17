@@ -84,7 +84,7 @@ namespace BudgetUnderControl.Mobile.ViewModels
             var result = await loginMobileService.LoginAsync(Username, Password, ClearLocalData);
             if(result)
             {
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync("///Overview");
             }
             else
             {

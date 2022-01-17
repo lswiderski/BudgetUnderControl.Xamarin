@@ -37,6 +37,7 @@ namespace BudgetUnderControl.Views
             Routing.RegisterRoute("accountDetails", typeof(AccountDetails));
             Routing.RegisterRoute("debug", typeof(DebugMenu));
             Routing.RegisterRoute("about", typeof(AboutPage));
+            Routing.RegisterRoute("FirstRunPage", typeof(FirstRunPage));
         }
 
         public async Task OpenAddTransactionAsync(string value, string title)
@@ -47,8 +48,7 @@ namespace BudgetUnderControl.Views
 
         public async Task OpenFirstRunAsync()
         {
-            var firstRunPage = new FirstRunPage();
-            await Navigation.PushModalAsync(firstRunPage);
+            await CheckUserExistanceAsync();
         }
 
         private void Shell_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -74,7 +74,12 @@ namespace BudgetUnderControl.Views
         {
             if(await SecureStorage.GetAsync(SecurityStorageKeys.UserExternalId) == null)
             {
-                await OpenFirstRunAsync();
+                var currentPage = Shell.Current.CurrentPage;
+                if (currentPage.GetType() != typeof(FirstRunPage))
+                {
+                    await Shell.Current.GoToAsync("FirstRunPage");
+                }
+               
             }
 
         }

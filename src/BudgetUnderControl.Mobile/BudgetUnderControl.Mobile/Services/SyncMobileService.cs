@@ -31,31 +31,29 @@ namespace BudgetUnderControl.Mobile.Services
         private readonly ILogger logger;
         private readonly IFileHelper fileHelper;
         private readonly ISyncService syncService;
-        private readonly ITransactionRepository transactionRepository;
         private readonly ISynchronizationRepository synchronizationRepository;
         private readonly ISyncRequestBuilder syncRequestBuilder;
         private readonly ISynchroniser synchroniser;
-        private readonly HttpClient httpClient;
+        private readonly IApiHttpClient httpClient;
         private readonly GeneralSettings settings;
         private readonly ISeedService seedService;
         public SyncMobileService(IFileHelper fileHelper,
             ISyncService syncService,
-            ITransactionRepository transactionRepository,
             ISyncRequestBuilder syncRequestBuilder,
             ISynchroniser synchroniser,
             ISynchronizationRepository synchronizationRepository,
             ILogger logger,
             GeneralSettings settings,
-            ISeedService seedService
+            ISeedService seedService,
+            IApiHttpClient httpClient
             )
         {
             this.fileHelper = fileHelper;
             this.syncService = syncService;
-            this.transactionRepository = transactionRepository;
             this.syncRequestBuilder = syncRequestBuilder;
             this.synchroniser = synchroniser;
             this.synchronizationRepository = synchronizationRepository;
-            this.httpClient = App.Container.ResolveNamed<HttpClient>("api");
+            this.httpClient = httpClient;
             this.settings = settings;
             this.logger = logger;
             this.seedService = seedService;
@@ -162,7 +160,7 @@ namespace BudgetUnderControl.Mobile.Services
                     await Shell.Current.GoToAsync("Login");
                     return;
                 }
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                httpClient.SetAuthorization(new AuthenticationHeaderValue("Bearer", token));
                 var response = await httpClient.PostAsync(url, content);
 
                 if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -188,8 +186,6 @@ namespace BudgetUnderControl.Mobile.Services
                 //just for development purpose
                 logger.Error(e);
             }
-            
-
         }
     }
 }

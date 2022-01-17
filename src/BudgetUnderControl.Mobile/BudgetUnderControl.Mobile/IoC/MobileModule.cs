@@ -113,14 +113,11 @@ namespace BudgetUnderControl.Mobile.IoC
             builder.RegisterType<ChartsViewModel>().As<IChartsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<CategoryReportService>().As<ICategoryReportService>().InstancePerLifetimeScope();
             builder.RegisterType<ExpensesReportService>().As<IExpensesReportService>().InstancePerLifetimeScope();
-
-            var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
-            var apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;
-            builder.Register(ctx => new HttpClient() { BaseAddress = new Uri(apiUrl), Timeout = TimeSpan.FromMinutes(5)
-        })
-            .Named<HttpClient>("api")
-            .SingleInstance();
-
+            builder.RegisterType<OptionService>().As<IOptionService>().InstancePerLifetimeScope();
+            builder.RegisterType<ApiHttpClient>().As<IApiHttpClient>().InstancePerLifetimeScope();
+            builder.Register(ctx => new HttpClient() {  Timeout = TimeSpan.FromMinutes(5)})
+                .Named<HttpClient>("api")
+                .SingleInstance();
         }
 
     }

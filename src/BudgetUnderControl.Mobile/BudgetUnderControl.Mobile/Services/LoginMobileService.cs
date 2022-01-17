@@ -1,44 +1,44 @@
-﻿using Autofac;
-using BudgetUnderControl.MobileDomain.Repositiories;
+﻿using BudgetUnderControl.MobileDomain.Repositiories;
 using BudgetUnderControl.Mobile.Keys;
-using BudgetUnderControl.Views;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using BudgetUnderControl.CommonInfrastructure.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using BudgetUnderControl.ViewModel;
-using Xamarin.Forms;
-using BudgetUnderControl.Mobile.IoC;
+using NLog;
 
 namespace BudgetUnderControl.Mobile.Services
 {
     public class LoginMobileService : ILoginMobileService
     {
 
-        private readonly HttpClient httpClient;
+        private readonly IApiHttpClient httpClient;
         private readonly GeneralSettings settings;
-
+        private readonly ILogger logger;
         private readonly ISettingsViewModel settingsViewModel;
         private readonly ISyncMobileService syncMobileService;
         private readonly IUserRepository userRepository;
 
-        public LoginMobileService(GeneralSettings settings, ISettingsViewModel settingsViewModel, ISyncMobileService syncMobileService,
-            IUserRepository userRepository)
+        public LoginMobileService(GeneralSettings settings,
+            ISettingsViewModel settingsViewModel,
+            ISyncMobileService syncMobileService,
+            IUserRepository userRepository,
+            IApiHttpClient apiHttpClient,
+            ILogger logger)
         {
-            this.httpClient = App.Container.ResolveNamed<HttpClient>("api");
+            this.httpClient = apiHttpClient;
             this.settings = settings;
             this.settingsViewModel = settingsViewModel;
             this.syncMobileService = syncMobileService;
             this.userRepository = userRepository;
+            this.logger = logger;
         }
 
         public async Task<bool> LoginAsync(string username, string password, bool clearLocalData)
@@ -46,11 +46,11 @@ namespace BudgetUnderControl.Mobile.Services
             // login
             var token = await RemoteLoginAsync(username, password);
             //if logged
-            if(!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token))
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenValidationParameters = new TokenValidationParameters();
-                var readToken =  tokenHandler.ReadJwtToken(token);
+                var readToken = tokenHandler.ReadJwtToken(token);
                 var claim = readToken.Claims.First(c => c.Type == "unique_name");
 
                 var userId = Guid.Parse(claim.Value);
@@ -68,7 +68,7 @@ namespace BudgetUnderControl.Mobile.Services
                 //set externalId
                 var user = await this.userRepository.GetFirstUserAsync();
 
-                if(user == null)
+                if (user == null)
                 {
                     await this.CreateNewUserAsync();
                     user = await this.userRepository.GetFirstUserAsync();
@@ -110,17 +110,17 @@ namespace BudgetUnderControl.Mobile.Services
             try
             {
                 var url = "login/mobile";
-                var dataAsString = JsonConvert.SerializeObject(new {Username = username, Password = password });
+                var dataAsString = JsonConvert.SerializeObject(new { Username = username, Password = password });
                 var content = new StringContent(dataAsString);
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 content.Headers.Add("Api-Key", settings.ApiKey);
-                
+
                 var response = await httpClient.PostAsync(url, content);
-                if(!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
                     return string.Empty;
                 }
-               var statusCode = response.EnsureSuccessStatusCode();
+                var statusCode = response.EnsureSuccessStatusCode();
 
                 using (var stream = await response.Content.ReadAsStreamAsync())
                 using (var reader = new StreamReader(stream))
@@ -132,7 +132,8 @@ namespace BudgetUnderControl.Mobile.Services
             catch (Exception e)
             {
                 //just for development purpose
-                throw e;
+                logger.Error(e);
+                return string.Empty;
             }
         }
     }

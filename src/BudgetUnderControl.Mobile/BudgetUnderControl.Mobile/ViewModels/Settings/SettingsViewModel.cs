@@ -138,8 +138,6 @@ namespace BudgetUnderControl.ViewModel
         public void OnApiUrlChange()
         {
             Preferences.Set(PreferencesKeys.APIURL, ApiUrl);
-            var httpClient =  App.Container.ResolveNamed<HttpClient>("api");
-            httpClient.BaseAddress = new Uri(ApiUrl);
         }
     }
 }

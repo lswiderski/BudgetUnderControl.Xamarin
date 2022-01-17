@@ -102,6 +102,7 @@ namespace BudgetUnderControl.Mobile.Services
             Preferences.Set(PreferencesKeys.IsUserLogged, false);
             Preferences.Remove(PreferencesKeys.JWTTOKEN);
             settingsViewModel.RefreshUserButtons();
+            await Task.CompletedTask;
         }
 
         private async Task<string> RemoteLoginAsync(string username, string password)

@@ -82,7 +82,7 @@ namespace BudgetUnderControl.Mobile.Services
             catch (Exception e)
             {
                 //Problem with JSON file
-                throw;
+                logger.Error(e);
             }
 
         }
@@ -125,6 +125,7 @@ namespace BudgetUnderControl.Mobile.Services
         {
             //temporary
             ExtractDB();
+            await Task.CompletedTask;
         }
 
         public async Task TaskClearSyncDB()

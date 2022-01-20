@@ -2,18 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.SettingsPage"
-             Title="Settings Page">
+             Title="Settings Page"
+             Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
 
         <StackLayout>
             <Button x:Name="login" Text="&#xf2f6; Login" Clicked="OnLoginButtonClicked" IsVisible="{Binding IsNotLogged}" FontFamily="FAS" />
-
             <Button x:Name="logout" Text="&#xf2f5; Logout" Clicked="OnLogoutButtonClicked" IsVisible="{Binding IsLogged}" FontFamily="FAS" />
+
             <Button x:Name="about" Text="&#xf05a; About" Clicked="OnAboutButtonClicked"  FontFamily="FAS" />
-
             <Button x:Name="developerOptions" Text="&#xf5fc; Developer Options" Clicked="OnDeveloperOptionsButtonClicked"  FontFamily="FAS" />
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Spacing="0"
+                     Grid.Row="0"
+                     VerticalOptions="Center">
+                    <Label Text="Dark Mode"  Style="{StaticResource BaseLabel}"/>
+                </StackLayout>
 
-            <Label Text="Please Wait, Working in Background..." IsVisible="{Binding IsLoading}"></Label>
+                <Switch IsToggled="{Binding IsDarkModeOn}"
+                VerticalOptions="Center"
+                Grid.Column="1"/>
+            </Grid>
+
+            <Label Text="Please Wait, Working in Background..." IsVisible="{Binding IsLoading}" Style="{StaticResource BaseLabel}"></Label>
             <ActivityIndicator IsRunning="{Binding IsLoading, Mode =TwoWay}" IsVisible="{Binding IsLoading, Mode=TwoWay}"
                                AbsoluteLayout.LayoutFlags="PositionProportional"
                                AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"/>

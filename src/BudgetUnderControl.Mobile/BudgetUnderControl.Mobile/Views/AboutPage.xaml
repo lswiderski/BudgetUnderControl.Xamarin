@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="BudgetUnderControl.Views.AboutPage"
              xmlns:local="clr-namespace:BudgetUnderControl.Mobile.ViewModels"
-              Title="{Binding Title}">
+              Title="{Binding Title}"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.BindingContext>
         <local:AboutViewModel />
     </ContentPage.BindingContext>

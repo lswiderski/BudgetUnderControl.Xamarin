@@ -44,7 +44,7 @@ namespace BudgetUnderControl.Views
         {
             Guid tagId = vm.SelectedTag.ExternalId;
             parentPage.AddTagToList(tagId);
-           await Navigation.PopModalAsync();
+           await Navigation.PopAsync();
         }
     }
 }

@@ -56,14 +56,14 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             var addAccount = new AddTransaction();
-            await Navigation.PushModalAsync(addAccount);
+            await Navigation.PushAsync(addAccount);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var transactionId = vm.SelectedTransaction.ExternalId;
             var editTransaction = new EditTransaction(transactionId);
-            await Navigation.PushModalAsync(editTransaction);
+            await Navigation.PushAsync(editTransaction);
         }
 
         protected async void OnNextMonthButtonClicked(object sender, EventArgs args)
@@ -80,7 +80,7 @@ namespace BudgetUnderControl.Views
         {
             App.Current.ModalPopping += HandleModalPopping;
             filtersModal = new Filters(vm.Filter);
-            await Navigation.PushModalAsync(filtersModal);
+            await Navigation.PushAsync(filtersModal);
         }
 
         private async void HandleModalPopping(object sender, ModalPoppingEventArgs e)

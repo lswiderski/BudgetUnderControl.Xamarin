@@ -77,6 +77,23 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+
+        private bool isDarkModeOn;
+        public bool IsDarkModeOn
+        {
+            get => isDarkModeOn;
+            set
+            {
+                if (isDarkModeOn != value)
+                {
+                    isDarkModeOn = value;
+                    Preferences.Set(PreferencesKeys.IsDarkModeOn, value);
+                    ((Xamarin.Forms.Application.Current) as App).ThemeChanger.ApplyTheme(value, true);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDarkModeOn)));
+                }
+            }
+        }
+
         ISyncMobileService syncMobileService;
 
         public SettingsViewModel(ISyncMobileService syncMobileService, GeneralSettings settings)
@@ -84,6 +101,7 @@ namespace BudgetUnderControl.ViewModel
             this.syncMobileService = syncMobileService;
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;
+            isDarkModeOn = Preferences.Get(PreferencesKeys.IsDarkModeOn, false);
 
         }
 

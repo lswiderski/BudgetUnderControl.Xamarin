@@ -33,7 +33,7 @@ namespace BudgetUnderControl.Views
         async void OnEditButtonClicked(object sender, EventArgs args)
         {
             await vm.EditTransactionAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         protected override async void OnAppearing()
@@ -54,13 +54,13 @@ namespace BudgetUnderControl.Views
             var remove = await this.DisplayAlert("Remove", "Do you want to remove this Transaction?", "Yes", "No");
             if (!remove) return;
             await vm.DeleteTransactionAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         async void OnSelectTagsButtonClicked(object sender, EventArgs args)
         {
             var selectTags = new SelectTags(this);
-            await Navigation.PushModalAsync(selectTags);
+            await Navigation.PushAsync(selectTags);
         }
 
         async void OnDeleteTagButtonClicked(object sender, SelectedItemChangedEventArgs e)

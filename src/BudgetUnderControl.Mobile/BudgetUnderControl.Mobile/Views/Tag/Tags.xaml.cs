@@ -27,7 +27,7 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             var addTag = new AddTag();
-            await Navigation.PushModalAsync(addTag);
+            await Navigation.PushAsync(addTag);
         }
 
         protected override async void OnAppearing()

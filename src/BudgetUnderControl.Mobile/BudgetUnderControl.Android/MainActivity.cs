@@ -17,11 +17,15 @@ using BudgetUnderControl.Mobile.PlatformSpecific;
 using BudgetUnderControl.Common.Enums;
 using Android.Content;
 using BudgetUnderControl.Mobile.CommonDTOs;
+using BudgetUnderControl.Mobile;
+using Xamarin.Essentials;
+using BudgetUnderControl.Mobile.Keys;
+using System.Collections.Generic;
 
 namespace BudgetUnderControl.Droid
 {
     [Activity(Label = "Budget Under Control", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IThemeChanger
     {
         private static ILogger logger;
         internal static MainActivity Instance { get; private set; }
@@ -31,6 +35,7 @@ namespace BudgetUnderControl.Droid
             Instance = this;
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+           
             base.OnCreate(bundle);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
@@ -41,9 +46,10 @@ namespace BudgetUnderControl.Droid
             global::Xamarin.Forms.FormsMaterial.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
             DisplayCrashReport();
-            var app = new App();
+            
+            var app = new App(this);
             logger = DependencyService.Get<ILogManager>().GetLog();
-
+            ApplyTheme(Preferences.Get(PreferencesKeys.IsDarkModeOn, false), false);
             LoadApplication(app);
             CheckIfComeFromNotification();
         }
@@ -169,6 +175,21 @@ namespace BudgetUnderControl.Droid
                 .SetMessage(errorText)
                 .SetTitle("Crash Report")
                 .Show();
+        }
+
+        public void ApplyTheme(bool darkmodeOn, bool refresh)
+        {
+           
+            if (darkmodeOn)
+            {
+                Theme.ApplyStyle(Resource.Style.MainThemeDark, refresh);
+                App.Current.UserAppTheme = OSAppTheme.Dark;
+            }
+            else
+            {
+                Theme.ApplyStyle(Resource.Style.MainTheme, refresh);
+                App.Current.UserAppTheme = OSAppTheme.Light;
+            }
         }
     }
 }

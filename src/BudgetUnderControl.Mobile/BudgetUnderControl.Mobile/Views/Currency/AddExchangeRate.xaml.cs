@@ -33,12 +33,12 @@ namespace BudgetUnderControl.Mobile.Views
         private async void OnAddExchangeRateButtonClicked(object sender, EventArgs e)
         {
             await vm.AddExchangeRateAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         private async void OnCancelButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
     }

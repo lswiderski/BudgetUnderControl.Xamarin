@@ -4,34 +4,113 @@
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:fontawesome="clr-namespace:FontAwesome"
              x:Class="BudgetUnderControl.Views.AppShell"
-             Title="Budget Under Control">
+             Title="Budget Under Control"
+       FlyoutBackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"
+      >
+    <Shell.Resources>
+        <Color x:Key="FontColorLight">#f2f2f2</Color>
+        <Color x:Key="FontColorDark">#2f2f2f</Color>
+        <Color x:Key="BackgroundColorLight">#f2f2f2</Color>
+        <Color x:Key="BackgroundColorDark">#2f2f2f</Color>
+        <Style x:Key="BaseLabel" TargetType="Label">
+            <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+        </Style>
+        
+        <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}" />
+        </Style>
+        <Style
+             TargetType="Layout"
+        ApplyToDerivedTypes="True"
+        Class="FlyoutItemLayoutStyle">
+            <Setter
+        Property="HeightRequest"
+        Value="44" />
+            <Setter
+        Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup
+                x:Name="CommonStates">
+                        <VisualState
+                    x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter
+                                    TargetName="FlyoutItemLabel"
+                            Property="Label.TextColor"
+                           Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}" />
+                             
+                                <Setter
+                            Property="BackgroundColor"
+                           Value="{AppThemeBinding Dark={StaticResource FontColorDark},
+                                                Light={StaticResource FontColorLight}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState
+                    x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter
+                                    TargetName="FlyoutItemLabel"
+                            Property="Label.TextColor"
+                           Value="{AppThemeBinding Dark={StaticResource FontColorDark},
+                                                Light={StaticResource FontColorLight}}" />
+
+                                <Setter
+                            Property="BackgroundColor"
+                           Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}" />
+
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState
+                    x:Name="Disabled">
+                            <VisualState.Setters>
+
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+
+
+        </Style>
+        
+    </Shell.Resources>
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="Transparent"
               HeightRequest="200">
             <Image Source="icon.png" Aspect="AspectFit"/>
-            <Label Text="Budget Under Control" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" TextColor="White"></Label>
+            <Label Text="Budget Under Control" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" Style="{StaticResource BaseLabel}"></Label>
         </Grid>
       
     </Shell.FlyoutHeader>
     <FlyoutItem Route="Overview" Title="Overview">
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.Home}" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.Home}" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:OverviewPage}" />
     </FlyoutItem>
     <FlyoutItem  Route="Accounts"  Title="Accounts">
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf0c0;" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="&#xf0c0;" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Accounts}" />
     </FlyoutItem>
-    <FlyoutItem Route="Transactions"  Title="Transactions">
+    <FlyoutItem Route="Transactions"  Title="Transactions" >
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf3d1;" FontFamily="FAR" Size="24" Color="Black" />
+            <FontImageSource Glyph="&#xf3d1;" FontFamily="FAR" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <Tab Title="List">
             <Tab.Icon>
-                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.List}" FontFamily="FAS" Size="24" Color="Black" />
+                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.List}" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
             </Tab.Icon>
             <ShellContent>
                 <local:Transactions />
@@ -39,7 +118,8 @@
         </Tab>
         <Tab Title="Charts">
             <Tab.Icon>
-                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.ChartPie}" FontFamily="FAS" Size="24" Color="Black" />
+                <FontImageSource Glyph="{x:Static fontawesome:FontAwesomeIcons.ChartPie}" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
             </Tab.Icon>
             <ShellContent>
                 <local:Charts />
@@ -49,19 +129,22 @@
     </FlyoutItem>
     <FlyoutItem  Route="Currencies" Title="Currencies">
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf155;" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="&#xf155;" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Currencies}" />
     </FlyoutItem>
     <FlyoutItem  Route="Tags" Title="Tags">
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf02c;" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="&#xf02c;" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:Tags}" />
     </FlyoutItem>
     <FlyoutItem  Route="Settings" Title="Settings" >
         <FlyoutItem.Icon>
-            <FontImageSource Glyph="&#xf013;" FontFamily="FAS" Size="24" Color="Black" />
+            <FontImageSource Glyph="&#xf013;" FontFamily="FAS" Size="24" Color="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"  />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" />
     </FlyoutItem>

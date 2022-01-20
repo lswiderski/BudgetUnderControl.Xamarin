@@ -28,7 +28,7 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             var addAccount = new AddAccount();
-            await Navigation.PushModalAsync(addAccount);
+            await Navigation.PushAsync(addAccount);
         }
 
         protected override async void OnAppearing()

@@ -37,7 +37,7 @@ namespace BudgetUnderControl.Views
         {
             App.Current.ModalPopping += HandleModalPopping;
             filtersModal = new Filters(vm.Filter);
-            await Navigation.PushModalAsync(filtersModal);
+            await Navigation.PushAsync(filtersModal);
         }
 
         private async void HandleModalPopping(object sender, ModalPoppingEventArgs e)

@@ -31,13 +31,13 @@ namespace BudgetUnderControl.Views
         protected async void OnSearchButtonClicked(object sender, EventArgs args)
         {
             vm.BuildFilter();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         protected async void OnResetButtonClicked(object sender, EventArgs args)
         {
             vm.ResetFilter();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         protected async void Tags_SelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)

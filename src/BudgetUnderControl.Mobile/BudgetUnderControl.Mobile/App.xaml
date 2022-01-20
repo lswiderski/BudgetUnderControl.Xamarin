@@ -1,0 +1,36 @@
+﻿<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BudgetUnderControl.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="FontColorLight">#f2f2f2</Color>
+            <Color x:Key="FontColorDark">#2f2f2f</Color>
+            <Color x:Key="BackgroundColorLight">#f2f2f2</Color>
+            <Color x:Key="BackgroundColorDark">#2f2f2f</Color>
+            <Color x:Key="FrameBackgroundColorLight">#ffffff</Color>
+            <Color x:Key="FrameBackgroundColorDark">#1f1f1f</Color>
+
+            <Style x:Key="BaseContentPage" TargetType="ContentPage">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"/>
+            </Style>
+            <Style x:Key="BaseAbsoluteLayout" TargetType="AbsoluteLayout">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"/>
+            </Style>
+            <Style x:Key="BaseFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark},
+                                                Light={StaticResource FrameBackgroundColorLight}}"/>
+            </Style>
+            <Style x:Key="BaseLabel" TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

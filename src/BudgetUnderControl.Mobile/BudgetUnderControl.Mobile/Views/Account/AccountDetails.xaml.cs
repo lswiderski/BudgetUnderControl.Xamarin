@@ -59,13 +59,13 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             var addAccount = new AddTransaction();
-            await Navigation.PushModalAsync(addAccount);
+            await Navigation.PushAsync(addAccount);
         }
 
         private async void Button_Edit_Clicked(object sender, EventArgs e)
         {
             var editAccount = new EditAccount(accountId);
-            await Navigation.PushModalAsync(editAccount);
+            await Navigation.PushAsync(editAccount);
         }
 
         private async void Button_Remove_Clicked(object sender, EventArgs e)
@@ -103,7 +103,7 @@ namespace BudgetUnderControl.Views
         {
             var transactionId = vm.SelectedTransaction.ExternalId;
             var editTransaction = new EditTransaction(transactionId);
-            await Navigation.PushModalAsync(editTransaction);
+            await Navigation.PushAsync(editTransaction);
         }
     }
 }

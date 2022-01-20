@@ -69,11 +69,11 @@ namespace BudgetUnderControl.Views
 
         private void DisplayBalance(Dictionary<string, string> lines)
         {
-            mainFrame.Children.Add(new Label { Text = lines["Total"] });
+            mainFrame.Children.Add(new Label { Text = lines["Total"], Style= (Style)Application.Current.Resources["BaseLabel"] });
             mainFrame.Children.Add(new Label { Text = string.Empty });
-            mainFrame.Children.Add(new Label { Text = lines["PLN"] });
-            mainFrame.Children.Add(new Label { Text = lines["EUR"] });
-            mainFrame.Children.Add(new Label { Text = lines["USD"] });
+            mainFrame.Children.Add(new Label { Text = lines["PLN"], Style = (Style)Application.Current.Resources["BaseLabel"] });
+            mainFrame.Children.Add(new Label { Text = lines["EUR"], Style = (Style)Application.Current.Resources["BaseLabel"] });
+            mainFrame.Children.Add(new Label { Text = lines["USD"], Style = (Style)Application.Current.Resources["BaseLabel"] });
         }
 
 
@@ -97,7 +97,7 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             var addAccount = new AddTransaction();
-            await Navigation.PushModalAsync(addAccount);
+            await Navigation.PushAsync(addAccount);
         }
 
     }

@@ -27,7 +27,7 @@ namespace BudgetUnderControl.Views
         protected async void OnAddButtonClicked(object sender, EventArgs args)
         {
             await vm.AddTagAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
     }

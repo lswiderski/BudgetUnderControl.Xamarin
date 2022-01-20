@@ -30,7 +30,7 @@ namespace BudgetUnderControl.Views
         async void OnAddButtonClicked(object sender, EventArgs args)
         {
             await vm.AddAccount();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         private void OnClearParentButtonClicked(object sender, EventArgs e)

@@ -33,7 +33,7 @@ namespace BudgetUnderControl.Views
         async void OnEditButtonClicked(object sender, EventArgs args)
         {
             await vm.EditTransactionAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         async void OnDeleteButtonClicked(object sender, EventArgs args)
@@ -41,7 +41,7 @@ namespace BudgetUnderControl.Views
             var remove = await this.DisplayAlert("Remove", "Do you want to remove this Transaction?", "Yes", "No");
             if (!remove) return;
             await vm.DeleteTransactionAsync();
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
        

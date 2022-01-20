@@ -30,7 +30,7 @@ namespace BudgetUnderControl.Views
         async void OnEditButtonClicked(object sender, EventArgs args)
         {
             await vm.SaveAccount();
-            await Navigation.PopModalAsync(true);
+            await Navigation.PopAsync(true);
         }
 
         protected override void OnAppearing()

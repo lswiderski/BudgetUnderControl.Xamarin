@@ -32,6 +32,8 @@ namespace BudgetUnderControl.ViewModel
 
         bool IsNotLogged { get; set; }
 
+        bool IsDarkModeOn { get; set; }
+
         void RefreshUserButtons();
     }
 }

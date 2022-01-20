@@ -54,7 +54,7 @@ namespace BudgetUnderControl.Views
 
             if (Navigation.ModalStack.Any())
             {
-                await Navigation.PopModalAsync();
+                await Navigation.PopAsync();
             }
             else
             {

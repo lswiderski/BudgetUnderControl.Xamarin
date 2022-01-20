@@ -43,7 +43,7 @@ namespace BudgetUnderControl.Views
         async void OnSelectTagsButtonClicked(object sender, EventArgs args)
         {
             var selectTags = new SelectTags(this);
-            await Navigation.PushModalAsync(selectTags);
+            await Navigation.PushAsync(selectTags);
         }
 
         async void OnDeleteTagButtonClicked(object sender, SelectedItemChangedEventArgs e)

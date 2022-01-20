@@ -28,7 +28,7 @@ namespace BudgetUnderControl.Mobile.Views
         private async void OnAddExchangeRateButtonClicked(object sender, EventArgs e)
         {
             var addExchangeRate = new AddExchangeRate();
-            await Navigation.PushModalAsync(addExchangeRate);
+            await Navigation.PushAsync(addExchangeRate);
         }
 
         protected override async void OnAppearing()

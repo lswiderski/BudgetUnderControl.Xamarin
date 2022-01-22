@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
              mc:Ignorable="d"
-             x:Class="BudgetUnderControl.Views.PieChart">
+             x:Class="BudgetUnderControl.Views.PieChart"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <StackLayout>
             <chart:SfChart VerticalOptions="FillAndExpand">

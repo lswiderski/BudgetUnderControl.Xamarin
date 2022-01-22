@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.AccountDetails"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
-             Title="{Binding Name, Mode=TwoWay}">
+             Title="{Binding Name, Mode=TwoWay}"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <StackLayout Padding="0,0,0,0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">

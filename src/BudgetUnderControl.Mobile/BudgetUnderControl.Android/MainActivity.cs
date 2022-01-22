@@ -49,7 +49,7 @@ namespace BudgetUnderControl.Droid
             
             var app = new App(this);
             logger = DependencyService.Get<ILogManager>().GetLog();
-            ApplyTheme(Preferences.Get(PreferencesKeys.IsDarkModeOn, false), false);
+            ApplyTheme(Preferences.Get(PreferencesKeys.IsDarkModeOn, false));
             LoadApplication(app);
             CheckIfComeFromNotification();
         }
@@ -177,17 +177,17 @@ namespace BudgetUnderControl.Droid
                 .Show();
         }
 
-        public void ApplyTheme(bool darkmodeOn, bool refresh)
+        public void ApplyTheme(bool darkmodeOn)
         {
            
             if (darkmodeOn)
             {
-                Theme.ApplyStyle(Resource.Style.MainThemeDark, refresh);
+                Theme.ApplyStyle(Resource.Style.MainThemeDark, true);
                 App.Current.UserAppTheme = OSAppTheme.Dark;
             }
             else
             {
-                Theme.ApplyStyle(Resource.Style.MainTheme, refresh);
+                Theme.ApplyStyle(Resource.Style.MainTheme, true);
                 App.Current.UserAppTheme = OSAppTheme.Light;
             }
         }

@@ -7,19 +7,20 @@
               xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
-             x:Class="BudgetUnderControl.Views.AddTransactionOverview">
+             x:Class="BudgetUnderControl.Views.AddTransactionOverview"
+             Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout VerticalOptions="Start" Padding="10,0">
-                <Entry x:Name="amount" Text="{Binding Amount}" Placeholder="Amount"  Keyboard="Numeric">
+                <Entry x:Name="amount" Text="{Binding Amount}" Placeholder="Amount"  Keyboard="Numeric" Style="{StaticResource BaseEntry}">
                     <Entry.Behaviors>
                         <behaviors:NumericValidationBehavior />
                     </Entry.Behaviors>
                 </Entry>
-                <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name"></Entry>
+                <Entry x:Name="name" Text="{Binding Name}" Placeholder="Name" Style="{StaticResource BaseEntry}"></Entry>
                
                 <Picker x:Name="type" ItemsSource="{Binding Types}" SelectedIndex="{Binding  SelectedTypeIndex, Mode=TwoWay}" Title="Type" />
-                <syncfusion:SfComboBox HeightRequest="40" x:Name="account" DataSource="{ Binding Accounts}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedAccountIndex, Mode=TwoWay}" Watermark="Account" ShowSuggestionsOnFocus="True" IsEditableMode="True">
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="account" DataSource="{ Binding Accounts}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedAccountIndex, Mode=TwoWay}" Watermark="Account" ShowSuggestionsOnFocus="True" IsEditableMode="True" Style="{StaticResource BaseSfComboBox}">
                     <syncfusion:SfComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
@@ -29,7 +30,7 @@
                         </DataTemplate>
                     </syncfusion:SfComboBox.ItemTemplate>
                 </syncfusion:SfComboBox>
-                <syncfusion:SfComboBox HeightRequest="40" x:Name="categories" DataSource="{ Binding Categories}" DisplayMemberPath="Name" SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Watermark="Category" ShowSuggestionsOnFocus="True" IsEditableMode="True">
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="categories" DataSource="{ Binding Categories}" DisplayMemberPath="Name" SelectedIndex="{Binding  SelectedCategoryIndex, Mode=TwoWay}" Watermark="Category" ShowSuggestionsOnFocus="True" IsEditableMode="True" Style="{StaticResource BaseSfComboBox}">
                     <syncfusion:SfComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
@@ -46,7 +47,7 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical" IsVisible="{Binding IsTransferOptionsVisible, Mode=TwoWay}">
                     <Label Text="Transfer to"></Label>
-                    <syncfusion:SfComboBox HeightRequest="40" x:Name="transferAccount" DataSource="{ Binding Accounts}" DisplayMemberPath="Name"  SelectedIndex="{Binding  SelectedTransferAccountIndex, Mode=TwoWay}" Watermark="Transfer Account" >
+                    <syncfusion:SfComboBox HeightRequest="40" x:Name="transferAccount" DataSource="{ Binding Accounts}" DisplayMemberPath="Name"  SelectedIndex="{Binding  SelectedTransferAccountIndex, Mode=TwoWay}" Watermark="Transfer Account" Style="{StaticResource BaseSfComboBox}">
                         <syncfusion:SfComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Orientation="Horizontal">
@@ -56,12 +57,12 @@
                             </DataTemplate>
                         </syncfusion:SfComboBox.ItemTemplate>
                     </syncfusion:SfComboBox>
-                    <Entry x:Name="transferAmount" Text="{Binding TransferAmount}" Placeholder="Amount" Keyboard="Numeric" IsVisible="{Binding IsTransferInOtherCurrency}" >
+                    <Entry x:Name="transferAmount" Text="{Binding TransferAmount}" Placeholder="Amount" Keyboard="Numeric" IsVisible="{Binding IsTransferInOtherCurrency}" Style="{StaticResource BaseEntry}">
                         <Entry.Behaviors>
                             <behaviors:NumericValidationBehavior />
                         </Entry.Behaviors>
                     </Entry>
-                    <Entry x:Name="transferRate" Text="{Binding TransferRate}" Placeholder="Exchange Rate" IsVisible="{Binding IsTransferInOtherCurrency}" >
+                    <Entry x:Name="transferRate" Text="{Binding TransferRate}" Placeholder="Exchange Rate" IsVisible="{Binding IsTransferInOtherCurrency}" Style="{StaticResource BaseEntry}">
                         <Entry.Behaviors>
                             <behaviors:NumericValidationBehavior />
                         </Entry.Behaviors>

@@ -4,7 +4,8 @@
              x:Class="BudgetUnderControl.Views.OverviewPage"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:fontawesome="clr-namespace:FontAwesome"
-             Title="Overview Page">
+             Title="Overview Page"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource BaseAbsoluteLayout}">
             <Frame AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,.5" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Margin="10" Style="{StaticResource BaseFrame}">

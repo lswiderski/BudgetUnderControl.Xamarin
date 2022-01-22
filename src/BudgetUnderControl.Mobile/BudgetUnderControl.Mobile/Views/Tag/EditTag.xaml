@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Views.EditTag"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
-             Title="Edit Tag">
+             Title="Edit Tag"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>

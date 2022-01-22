@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BudgetUnderControl.Mobile.Keys;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace BudgetUnderControl.Behaviors
@@ -25,7 +27,9 @@ namespace BudgetUnderControl.Behaviors
         {
             double result;
             bool isValid = double.TryParse(args.NewTextValue, out result);
-            ((Entry)sender).TextColor = isValid ? Color.Default : Color.Red;
+            var isDarkModeOn = Preferences.Get(PreferencesKeys.IsDarkModeOn, false);
+            var defaultColor = isDarkModeOn ? (Color)App.Current.Resources["FontColorLight"] : (Color)App.Current.Resources["FontColorDark"];
+            ((Entry)sender).TextColor = isValid ? defaultColor : Color.Red;
         }
     }
 }

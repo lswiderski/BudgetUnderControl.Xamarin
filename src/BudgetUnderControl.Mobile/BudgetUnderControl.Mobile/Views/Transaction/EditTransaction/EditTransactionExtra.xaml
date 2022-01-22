@@ -4,14 +4,25 @@
              x:Class="BudgetUnderControl.Views.EditTransactionExtra"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
+             Style="{StaticResource BaseContentPage}"
              >
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10,0">
                 <Button x:Name="getLocation" Text="Get Location" Clicked="OnGetLocationButtonClicked" Margin="0,10,0,10" />
-                <Entry x:Name="latitude" Text="{Binding Latitude}" Placeholder="Latitude"></Entry>
-                <Entry x:Name="longitude" Text="{Binding Longitude}" Placeholder="Longitude"></Entry>
-                <Editor x:Name="comment"  Text="{Binding Comment}" Placeholder="Comment" VerticalOptions="FillAndExpand" HeightRequest="60"></Editor>
+                <Entry x:Name="latitude" Text="{Binding Latitude}"
+                       Placeholder="Latitude"
+                       Style="{StaticResource BaseEntry}"></Entry>
+                <Entry x:Name="longitude"
+                       Text="{Binding Longitude}"
+                       Placeholder="Longitude"
+                        Style="{StaticResource BaseEntry}"></Entry>
+                <Editor x:Name="comment" 
+                        Text="{Binding Comment}"
+                        Placeholder="Comment"
+                        VerticalOptions="FillAndExpand"
+                        HeightRequest="60"
+                        Style="{StaticResource BaseEntry}"></Editor>
                 <Button x:Name="selectTags" Text="Add Tags" Clicked="OnSelectTagsButtonClicked" Margin="0,10,0,10" />
                 <ListView x:Name="tags" ItemSelected="OnDeleteTagButtonClicked" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" HasUnevenRows="True"  HeightRequest="{Binding TagListHeight}">
                     <ListView.ItemTemplate>

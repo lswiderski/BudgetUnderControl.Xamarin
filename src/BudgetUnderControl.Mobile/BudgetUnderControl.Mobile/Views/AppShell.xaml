@@ -7,6 +7,8 @@
              Title="Budget Under Control"
        FlyoutBackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
                                                 Light={StaticResource BackgroundColorLight}}"
+       Shell.TabBarBackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"
       >
     <Shell.Resources>
         <Color x:Key="FontColorLight">#f2f2f2</Color>

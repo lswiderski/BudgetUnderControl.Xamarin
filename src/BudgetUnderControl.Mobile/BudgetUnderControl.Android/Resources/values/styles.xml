@@ -21,7 +21,7 @@
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
-
+		<item name="android:textColorPrimary">#000000</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
 
@@ -40,9 +40,9 @@
 				<item name="windowActionBar">false</item>
 				<!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
 				<!-- colorPrimary is used for the default action bar background -->
-			
+				
 				<item name="windowActionModeOverlay">true</item>
-
+        <item name="android:textColorPrimary">#FFFFFF</item>
 				<item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
 		</style>
 </resources>

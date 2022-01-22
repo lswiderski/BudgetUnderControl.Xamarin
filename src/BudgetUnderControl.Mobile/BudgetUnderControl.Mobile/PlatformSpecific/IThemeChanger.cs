@@ -6,6 +6,6 @@ namespace BudgetUnderControl.Mobile
 {
     public interface IThemeChanger
     {
-        void ApplyTheme(bool darkmodeOn, bool refresh);
+        void ApplyTheme(bool darkmodeOn);
     }
 }

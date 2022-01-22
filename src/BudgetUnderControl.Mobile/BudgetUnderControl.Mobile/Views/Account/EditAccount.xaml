@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+              Style="{StaticResource BaseContentPage}"
              >
     <ContentPage.Content>
         <ScrollView>
@@ -35,7 +36,7 @@
                 </Entry>
                 <Entry x:Name="number" Text="{Binding Number}" Placeholder="Number"></Entry>
                 <Label Text="Icon"></Label>
-                <syncfusion:SfComboBox HeightRequest="40" x:Name="iconComboBox" DataSource="{ Binding Icons}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedIcon}">
+                <syncfusion:SfComboBox HeightRequest="40" x:Name="iconComboBox" DataSource="{ Binding Icons}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedIcon}" Style="{StaticResource BaseSfComboBox}">
                     <syncfusion:SfComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">

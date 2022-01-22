@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BudgetUnderControl.Mobile.Views.ExchangeRates"
              xmlns:local="clr-namespace:BudgetUnderControl.Mobile.Templates;assembly=BudgetUnderControl.Mobile"
-             Title="Exchange Rates">
+             Title="Exchange Rates"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <StackLayout  Padding="0,0,0,0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">

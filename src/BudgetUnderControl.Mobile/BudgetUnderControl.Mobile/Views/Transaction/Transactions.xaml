@@ -4,10 +4,11 @@
              x:Class="BudgetUnderControl.Views.Transactions"
              xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
-             Title="Transactions">
+             Title="Transactions"
+              Style="{StaticResource BaseContentPage}">
 
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
             <StackLayout  Padding="0,0,0,0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <StackLayout>
                     <Grid>
@@ -20,16 +21,30 @@
                             <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleLeft}" FontFamily="FAS" Clicked="OnPreviousMonthButtonClicked" Grid.Row="0" Grid.Column="0" />
-                        <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" HorizontalOptions="CenterAndExpand" >
-                            <Label x:Name="month" Text="{Binding ActualRange}" HorizontalTextAlignment="Center" />
+                        <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleLeft}"
+                                FontFamily="FAS"
+                                Clicked="OnPreviousMonthButtonClicked"
+                                Grid.Row="0"
+                                Grid.Column="0" />
+                        <StackLayout Orientation="Vertical"
+                                     Grid.Row="0"
+                                     Grid.Column="1"
+                                     HorizontalOptions="CenterAndExpand" >
+                            <Label x:Name="month" Text="{Binding ActualRange}"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}"/>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="No. Trans: "/>
-                                <Label Text="{Binding NumberOfTransactions, Mode=TwoWay}" />
+                                <Label Text="No. Trans: " Style="{StaticResource ReversedLabel}"/>
+                                <Label Text="{Binding NumberOfTransactions, Mode=TwoWay}"
+                                       Style="{StaticResource ReversedLabel}" />
                             </StackLayout>
                         </StackLayout>
 
-                        <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleRight}" FontFamily="FAS" Clicked="OnNextMonthButtonClicked" Grid.Row="0" Grid.Column="2" />
+                        <Button Text="{x:Static fontawesome:FontAwesomeIcons.AngleRight}"
+                                FontFamily="FAS"
+                                Clicked="OnNextMonthButtonClicked"
+                                Grid.Row="0"
+                                Grid.Column="2" />
                     </Grid>
 
                 </StackLayout>
@@ -43,27 +58,55 @@
                     </Grid.RowDefinitions>
                     <Frame Grid.Column="0" Grid.Row="0" Margin="3"  HorizontalOptions="Fill" BackgroundColor="#439FF8" CornerRadius="5" Padding="10" >
                         <StackLayout Orientation="Vertical">
-                            <Label Text="Income" HorizontalTextAlignment="Center"  TextColor="White"/>
-                            <Label  Text="{Binding Income, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="20"/>
-                            <Label Text="{Binding OtherIncome, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="10"/>
+                            <Label Text="Income" HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}"/>
+                            <Label  Text="{Binding Income, Mode=TwoWay}"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource ReversedLabel}"
+                                    FontSize="20"/>
+                            <Label Text="{Binding OtherIncome, Mode=TwoWay}"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}"
+                                   FontSize="10"/>
                         </StackLayout>
                     </Frame>
                     <Frame Grid.Column="1" Grid.Row="0" Margin="5" HorizontalOptions="Fill"  BackgroundColor="#C80909" CornerRadius="5" Padding="10">
                         <StackLayout Orientation="Vertical">
-                            <Label Text="Expense" HorizontalTextAlignment="Center"  TextColor="White" />
-                            <Label Text="{Binding Expense, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="20"/>
-                            <Label Text="{Binding OtherExpense, Mode=TwoWay}"  HorizontalTextAlignment="Center"  TextColor="White" FontSize="10"/>
+                            <Label Text="Expense" HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}" />
+                            <Label Text="{Binding Expense, Mode=TwoWay}"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}"
+                                   FontSize="20"/>
+                            <Label Text="{Binding OtherExpense, Mode=TwoWay}"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ReversedLabel}"
+                                   FontSize="10"/>
                         </StackLayout>
                     </Frame>
                 </Grid>
-                <ListView x:Name="transactions" ItemsSource="{Binding Transactions}"  IsGroupingEnabled="True" GroupDisplayBinding="{Binding Key}" SelectedItem="{Binding SelectedTransaction}"   ItemSelected="OnItemSelected" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="#F7F7F7">
+                <ListView x:Name="transactions" ItemsSource="{Binding Transactions}"
+                          IsGroupingEnabled="True"
+                          GroupDisplayBinding="{Binding Key}"
+                          SelectedItem="{Binding SelectedTransaction}"
+                          ItemSelected="OnItemSelected"
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="None"
+                            Style="{StaticResource BaseListView}">
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                    >
+                                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                                     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding Key}" FontSize="Small"  VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Margin="10,20,0,0" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Key}"
+                                               FontSize="Small"
+                                               VerticalOptions="CenterAndExpand"
+                                               HorizontalOptions="StartAndExpand"
+                                               Margin="10,20,0,0"
+                                               FontAttributes="Bold"
+                                               Style="{StaticResource BaseLabel}"/>
                                     </Grid>
                                 </StackLayout>
                             </ViewCell>

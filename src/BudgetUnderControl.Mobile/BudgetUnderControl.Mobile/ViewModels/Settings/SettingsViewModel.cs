@@ -88,7 +88,7 @@ namespace BudgetUnderControl.ViewModel
                 {
                     isDarkModeOn = value;
                     Preferences.Set(PreferencesKeys.IsDarkModeOn, value);
-                    ((Xamarin.Forms.Application.Current) as App).ThemeChanger.ApplyTheme(value, true);
+                    ((Xamarin.Forms.Application.Current) as App).ThemeChanger.ApplyTheme(value);
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDarkModeOn)));
                 }
             }

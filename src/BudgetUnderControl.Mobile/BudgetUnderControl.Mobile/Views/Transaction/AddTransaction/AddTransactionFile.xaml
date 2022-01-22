@@ -6,7 +6,8 @@
              mc:Ignorable="d"
               xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:behaviors="clr-namespace:BudgetUnderControl.Behaviors;assembly=BudgetUnderControl.Mobile"
-             x:Class="BudgetUnderControl.Views.AddTransactionFile">
+             x:Class="BudgetUnderControl.Views.AddTransactionFile"
+             Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout VerticalOptions="Start" Padding="10,0">

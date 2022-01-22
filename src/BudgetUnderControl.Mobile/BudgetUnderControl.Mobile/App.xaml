@@ -1,5 +1,7 @@
 ﻿<Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              x:Class="BudgetUnderControl.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,13 +11,26 @@
             <Color x:Key="BackgroundColorDark">#2f2f2f</Color>
             <Color x:Key="FrameBackgroundColorLight">#ffffff</Color>
             <Color x:Key="FrameBackgroundColorDark">#1f1f1f</Color>
+            <Color x:Key="PrimaryColor" >#2196F3</Color>
+
+            
 
             <Style x:Key="BaseContentPage" TargetType="ContentPage">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
                                                 Light={StaticResource BackgroundColorLight}}"/>
             </Style>
+            <Style x:Key="BaseListView" TargetType="ListView">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"/>
+            </Style>
             <Style x:Key="BaseAbsoluteLayout" TargetType="AbsoluteLayout">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"/>
+            </Style>
+            <Style x:Key="BaseTabbedPage" TargetType="TabbedPage">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
                                                 Light={StaticResource BackgroundColorLight}}"/>
@@ -30,6 +45,52 @@
                         Value="{AppThemeBinding Dark={StaticResource FontColorLight},
                                                 Light={StaticResource FontColorDark}}"/>
             </Style>
+            <Style x:Key="ReversedLabel" TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+            </Style>
+            <Style x:Key="BaseEntry" TargetType="Entry">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+
+            </Style>
+            <Style x:Key="BaseSfComboBox" TargetType="syncfusion:SfComboBox">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+                <Setter Property="DropDownTextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+                <Setter Property="ClearButtonColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+                <Setter Property="DropDownBackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                                                Light={StaticResource BackgroundColorLight}}"/>
+                <Setter Property="SelectedDropDownItemColor"
+                        Value="{StaticResource PrimaryColor}"/>
+
+            </Style>
+
+            <Style x:Key="BaseSfTextInputLayout" TargetType="inputLayout:SfTextInputLayout">
+                <Setter Property="UnfocusedColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+                <Setter Property="FocusedColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+
+            </Style>
+
+            <Style x:Key="BaseTokenSettings" TargetType="syncfusion:TokenSettings">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Dark={StaticResource FontColorLight},
+                                                Light={StaticResource FontColorDark}}"/>
+
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 

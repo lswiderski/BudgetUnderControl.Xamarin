@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:BudgetUnderControl.Views;assembly=BudgetUnderControl.Mobile"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             x:Class="BudgetUnderControl.Views.Filters">
+             x:Class="BudgetUnderControl.Views.Filters"
+              Style="{StaticResource BaseContentPage}">
     <ContentPage.Content>
         <StackLayout Padding="10">
                 <Grid>
@@ -28,7 +29,9 @@
                     </StackLayout >
                 </Grid>
                 <Entry Text="{Binding Text}" Placeholder="Search" HeightRequest="60" Margin="0,10" />
-                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Tags">
+            <inputLayout:SfTextInputLayout ContainerType="None"
+                                           Hint="Tags"
+                                           Style="{StaticResource BaseSfTextInputLayout}">
                 <syncfusion:SfComboBox  x:Name="tagComboBox" 
                                         DataSource="{ Binding Tags}" 
                                         DisplayMemberPath="Name" 
@@ -39,10 +42,18 @@
                                         AllowFiltering="true" 
                                         SuggestionMode="Contains" 
                                         SelectionChanged="Tags_SelectionChanged" 
-                                        SelectedIndices="{Binding SelectedTagIndices}">
-                    </syncfusion:SfComboBox>
+                                        SelectedIndices="{Binding SelectedTagIndices}"
+                                        Style="{StaticResource BaseSfComboBox}">
+                    <syncfusion:SfComboBox.TokenSettings >
+                        <syncfusion:TokenSettings Style="{StaticResource BaseTokenSettings}">
+
+                        </syncfusion:TokenSettings>
+                    </syncfusion:SfComboBox.TokenSettings>
+                </syncfusion:SfComboBox>
                 </inputLayout:SfTextInputLayout>
-                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Categories">
+            <inputLayout:SfTextInputLayout ContainerType="None"
+                                           Hint="Categories"
+                                           Style="{StaticResource BaseSfTextInputLayout}">
                 <syncfusion:SfComboBox x:Name="categoryComboBox" 
                                        DataSource="{ Binding Categories}" 
                                        DisplayMemberPath="Name" 
@@ -53,10 +64,18 @@
                                        AllowFiltering="true" 
                                        SuggestionMode="Contains" 
                                        SelectionChanged="Category_SelectionChanged" 
-                                       SelectedIndices="{Binding SelectedCategoryIndices}">
-                    </syncfusion:SfComboBox>
+                                       SelectedIndices="{Binding SelectedCategoryIndices}"
+                                       Style="{StaticResource BaseSfComboBox}">
+                    <syncfusion:SfComboBox.TokenSettings >
+                        <syncfusion:TokenSettings  Style="{StaticResource BaseTokenSettings}">
+
+                        </syncfusion:TokenSettings>
+                    </syncfusion:SfComboBox.TokenSettings>
+                </syncfusion:SfComboBox>
                 </inputLayout:SfTextInputLayout>
-                <inputLayout:SfTextInputLayout ContainerType="None" Hint="Accounts">
+            <inputLayout:SfTextInputLayout ContainerType="None"
+                                           Hint="Accounts"
+                                           Style="{StaticResource BaseSfTextInputLayout}">
                 <syncfusion:SfComboBox x:Name="accountComboBox" 
                                        DataSource="{ Binding Accounts}"
                                        DisplayMemberPath="Name" 
@@ -67,7 +86,13 @@
                                        AllowFiltering="true" 
                                        SuggestionMode="Contains"  
                                        SelectionChanged="Account_SelectionChanged"  
-                                       SelectedIndices="{Binding SelectedAccountIndices}">
+                                       SelectedIndices="{Binding SelectedAccountIndices}"
+                                       Style="{StaticResource BaseSfComboBox}">
+                    <syncfusion:SfComboBox.TokenSettings >
+                        <syncfusion:TokenSettings Style="{StaticResource BaseTokenSettings}">
+                            
+                        </syncfusion:TokenSettings>
+                    </syncfusion:SfComboBox.TokenSettings>
                     </syncfusion:SfComboBox>
                 </inputLayout:SfTextInputLayout>
                 <StackLayout Orientation="Horizontal">

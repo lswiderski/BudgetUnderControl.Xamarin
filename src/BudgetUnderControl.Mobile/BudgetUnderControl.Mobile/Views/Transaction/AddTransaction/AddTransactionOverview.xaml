@@ -62,7 +62,7 @@
                             <behaviors:NumericValidationBehavior />
                         </Entry.Behaviors>
                     </Entry>
-                    <Entry x:Name="transferRate" Text="{Binding TransferRate}" Placeholder="Exchange Rate" IsVisible="{Binding IsTransferInOtherCurrency}" Style="{StaticResource BaseEntry}">
+                    <Entry x:Name="transferRate" Text="{Binding TransferRate}" Placeholder="Exchange Rate" Keyboard="Numeric" IsVisible="{Binding IsTransferInOtherCurrency}" Style="{StaticResource BaseEntry}">
                         <Entry.Behaviors>
                             <behaviors:NumericValidationBehavior />
                         </Entry.Behaviors>

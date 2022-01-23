@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BudgetUnderControl.Mobile.Keys;
 using BudgetUnderControl.Mobile.Markers;
 using BudgetUnderControl.Mobile.PlatformSpecific;
 using BudgetUnderControl.ViewModel;
@@ -52,30 +53,33 @@ namespace BudgetUnderControl.Views
 
         async Task GetLocationAsync()
         {
-            try
+            if (Preferences.Get(PreferencesKeys.IsLocationEnabled, false))
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
-
-                if (location != null)
+                try
                 {
-                    vm.Latitude = location.Latitude;
-                    vm.Longitude = location.Longitude;
-                }
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                await DisplayAlert("Faild", fnsEx.Message, "OK");
-            }
-            catch (PermissionException pEx)
-            {
-                await DisplayAlert("Faild", pEx.Message, "OK");
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Faild", ex.Message, "OK");
-            }
+                    var location = await Geolocation.GetLastKnownLocationAsync();
 
-            GetRealLocationAsync();
+                    if (location != null)
+                    {
+                        vm.Latitude = location.Latitude;
+                        vm.Longitude = location.Longitude;
+                    }
+                }
+                catch (FeatureNotSupportedException fnsEx)
+                {
+                    await DisplayAlert("Faild", fnsEx.Message, "OK");
+                }
+                catch (PermissionException pEx)
+                {
+                    await DisplayAlert("Faild", pEx.Message, "OK");
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Faild", ex.Message, "OK");
+                }
+
+                GetRealLocationAsync();
+            }
         }
 
         async void GetRealLocationAsync()
@@ -109,6 +113,6 @@ namespace BudgetUnderControl.Views
             }
         }
 
-       
+
     }
 }

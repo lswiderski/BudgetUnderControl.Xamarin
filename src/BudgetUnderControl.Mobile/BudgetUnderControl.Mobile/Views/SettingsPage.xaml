@@ -28,6 +28,22 @@
                 Grid.Column="1"/>
             </Grid>
 
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Spacing="0"
+                     Grid.Row="0"
+                     VerticalOptions="Center">
+                    <Label Text="Collect location info about transactions"  Style="{StaticResource BaseLabel}"/>
+                </StackLayout>
+
+                <Switch IsToggled="{Binding IsLocationEnabled}"
+                VerticalOptions="Center"
+                Grid.Column="1"/>
+            </Grid>
+
             <Label Text="Please Wait, Working in Background..." IsVisible="{Binding IsLoading}" Style="{StaticResource BaseLabel}"></Label>
             <ActivityIndicator IsRunning="{Binding IsLoading, Mode =TwoWay}" IsVisible="{Binding IsLoading, Mode=TwoWay}"
                                AbsoluteLayout.LayoutFlags="PositionProportional"

@@ -94,6 +94,21 @@ namespace BudgetUnderControl.ViewModel
             }
         }
 
+        private bool isLocationEnabled;
+        public bool IsLocationEnabled
+        {
+            get => isLocationEnabled;
+            set
+            {
+                if (isLocationEnabled != value)
+                {
+                    isLocationEnabled = value;
+                    Preferences.Set(PreferencesKeys.IsLocationEnabled, value);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLocationEnabled)));
+                }
+            }
+        }
+
         ISyncMobileService syncMobileService;
 
         public SettingsViewModel(ISyncMobileService syncMobileService, GeneralSettings settings)
@@ -102,7 +117,7 @@ namespace BudgetUnderControl.ViewModel
             var url = Preferences.Get(PreferencesKeys.APIURL, string.Empty);
             apiUrl = string.IsNullOrEmpty(url) || string.IsNullOrWhiteSpace(url) ? settings.ApiBaseUri : url;
             isDarkModeOn = Preferences.Get(PreferencesKeys.IsDarkModeOn, false);
-
+            isLocationEnabled = Preferences.Get(PreferencesKeys.IsLocationEnabled, false);
         }
 
         public async Task ExportBackupAsync()

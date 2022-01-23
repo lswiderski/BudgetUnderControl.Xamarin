@@ -34,6 +34,8 @@ namespace BudgetUnderControl.ViewModel
 
         bool IsDarkModeOn { get; set; }
 
+        bool IsLocationEnabled { get; set; }
+
         void RefreshUserButtons();
     }
 }
